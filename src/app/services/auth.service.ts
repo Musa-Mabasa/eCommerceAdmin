@@ -14,19 +14,18 @@ import {
 export class AuthService {
   private _auth = inject(Auth);
 
-  byGoogle(){
-    signInWithPopup(this._auth, new GoogleAuthProvider()).then(
-      (result) => {
+  byGoogle() {
+    signInWithPopup(this._auth, new GoogleAuthProvider())
+      .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        console.log(result.user);
-        
+
         if (!credential) {
           throw new Error("Credential Error");
         }
         const token = credential.accessToken;
         const user = result.user;
-      }
-    ).catch(err => console.error(err));
+      })
+      .catch((err) => console.error(err));
   }
 
   signup(email: string, password: string): Promise<UserCredential> {
@@ -39,11 +38,11 @@ export class AuthService {
 
   login(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(
-        this._auth,
-        email.trim(),
-        password.trim()
-      );
-    }
+      this._auth,
+      email.trim(),
+      password.trim()
+    );
+  }
 
   constructor() {}
 }
