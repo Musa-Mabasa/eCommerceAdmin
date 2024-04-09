@@ -4,7 +4,7 @@
 >
   <h1 class="font-rubik font-extrabold text-2xl">Sign Up</h1>
   <form
-    [formGroup]="signInForm"
+    [formGroup]="signUpForm"
     (ngSubmit)="byForm()"
     class="w-4/5 flex flex-col items-center gap-5"
   >
@@ -81,4 +81,7 @@
     </svg>
     <span class="font-bold font-rubik"> Sign Up with Google </span>
   </button>
+  <p class="font-semibold">
+    Already have an account? <span class="text-blue" routerLink="/login">Sign In</span>
+  </p>
 </div>

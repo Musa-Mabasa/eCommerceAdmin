@@ -6,11 +6,12 @@ import {
   matEmailOutline,
   matLockOutline,
 } from "@ng-icons/material-icons/outline";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-sign-in",
   standalone: true,
-  imports: [NgIconComponent, ReactiveFormsModule],
+  imports: [NgIconComponent, ReactiveFormsModule, RouterLink],
   templateUrl: "./sign-in.component.html",
   styleUrl: "./sign-in.component.scss",
   viewProviders: [provideIcons({ matEmailOutline, matLockOutline })],
@@ -18,7 +19,7 @@ import {
 export class SignInComponent {
   private _service = inject(AuthService);
 
-  signInForm = new FormGroup({
+  signUpForm = new FormGroup({
     email: new FormControl(""),
     password: new FormControl(""),
     confirmPassword: new FormControl(""),
@@ -29,7 +30,7 @@ export class SignInComponent {
   }
 
   byForm(): void {
-    const { email, password } = this.signInForm.value;
+    const { email, password } = this.signUpForm.value;
     if (email) this._service.signup(email, password!);
   }
 }

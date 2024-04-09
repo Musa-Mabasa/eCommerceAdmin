@@ -7,6 +7,7 @@ export default {
       "primary-color": "#20a3b8",
       "secondary-color": "#24bbab",
       whiteSmoke: "whiteSmoke",
+      blue: "blue",
     },
     extend: {
       fontFamily: {
