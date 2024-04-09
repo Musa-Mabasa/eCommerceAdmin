@@ -9,6 +9,7 @@ tmp/
 app/**/*.js
 app/**/*.js.map
 .prettierrc
+.env
 
 # dependencies
 node_modules/
