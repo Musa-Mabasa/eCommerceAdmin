@@ -5,7 +5,6 @@ import { Auth } from "@angular/fire/auth";
 export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(Auth);
   const user = auth.currentUser;
-  console.log(user);
 
   if (user) {
     return true;
