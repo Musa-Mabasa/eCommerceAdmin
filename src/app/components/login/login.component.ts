@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
 import {
   FormGroup,
@@ -22,24 +22,22 @@ import { NgIf } from "@angular/common";
   styleUrl: "./login.component.scss",
   viewProviders: [provideIcons({ matEmailOutline, matLockOutline })],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private _service = inject(AuthService);
+  signInForm!: FormGroup;
 
-  signInForm = new FormGroup({
-    email: new FormControl("", {
-      updateOn: "change",
-      validators: [Validators.email, Validators.required],
-    }),
-    password: new FormControl("", {
-      updateOn: "submit",
-      validators: [
-        Validators.pattern(
-          /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
-        ),
-        Validators.required,
-      ],
-    }),
-  });
+  ngOnInit(): void {
+    this.signInForm = new FormGroup({
+      email: new FormControl("", {
+        updateOn: "change",
+        validators: [Validators.email, Validators.required],
+      }),
+      password: new FormControl("", {
+        updateOn: "submit",
+        validators: [Validators.required],
+      }),
+    });
+  }
 
   get email() {
     return this.signInForm.get("email");

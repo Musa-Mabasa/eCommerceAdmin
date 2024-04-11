@@ -8,39 +8,62 @@
     (ngSubmit)="byForm()"
     class="w-4/5 flex flex-col items-center gap-5"
   >
-    <label
-      class="input input-bordered flex items-center gap-2 bg-transparent w-full"
-    >
-      <ng-icon name="matEmailOutline" class="text-xl" />
-      <input
-        type="text"
-        class="grow"
-        placeholder="Email"
-        formControlName="email"
-      />
-    </label>
-    <label
-      class="input input-bordered flex items-center gap-2 bg-transparent w-full"
-    >
-      <ng-icon name="matLockOutline" class="text-xl" />
-      <input
-        type="password"
-        class="grow"
-        placeholder="Password"
-        formControlName="password"
-      />
-    </label>
-    <label
-      class="input input-bordered flex items-center gap-2 bg-transparent w-full"
-    >
-      <ng-icon name="matLockOutline" class="text-xl" />
-      <input
-        type="password"
-        class="grow"
-        placeholder="Confirm Password"
-        formControlName="confirmPassword"
-      />
-    </label>
+    <div class="flex flex-col w-full">
+      <div
+        class="tooltip tooltip-open tooltip-error"
+        data-tip="Invalid Email Address"
+        *ngIf="email?.invalid && email?.errors?.['email']"
+      ></div>
+      <label
+        class="input input-bordered flex items-center gap-2 bg-transparent w-full"
+      >
+        <ng-icon name="matEmailOutline" class="text-xl" />
+        <input
+          type="text"
+          class="grow"
+          placeholder="Email"
+          formControlName="email"
+        />
+      </label>
+    </div>
+    <div class="flex flex-col w-full">
+      <div
+        id="password-tooltip"
+        class="tooltip tooltip-open tooltip-error"
+        data-tip="Password must be atleast 8 characters long, with atleast one uppercase, one lowercase and one special character."
+        *ngIf="password?.invalid && password?.errors?.['pattern']"
+      ></div>
+      <label
+        class="input input-bordered flex items-center gap-2 bg-transparent w-full"
+      >
+        <ng-icon name="matLockOutline" class="text-xl" />
+        <input
+          type="password"
+          class="grow"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </label>
+    </div>
+    <div class="flex flex-col w-full">
+      <div
+        id="password-tooltip"
+        class="tooltip tooltip-open tooltip-error"
+        data-tip="Passwords don't match"
+        *ngIf="confirmPassword?.invalid && confirmPassword?.errors?.['passwordsMatch'] && !password?.invalid "
+      ></div>
+      <label
+        class="input input-bordered flex items-center gap-2 bg-transparent w-full"
+      >
+        <ng-icon name="matLockOutline" class="text-xl" />
+        <input
+          type="password"
+          class="grow"
+          placeholder="ConfirmPassword"
+          formControlName="confirmPassword"
+        />
+      </label>
+    </div>
     <input
       type="submit"
       name="Signup"
@@ -82,6 +105,7 @@
     <span class="font-bold font-rubik"> Sign Up with Google </span>
   </button>
   <p class="font-semibold">
-    Already have an account? <span class="text-blue" routerLink="/login">Sign In</span>
+    Already have an account?
+    <span class="text-blue" routerLink="/login">Sign In</span>
   </p>
 </div>
