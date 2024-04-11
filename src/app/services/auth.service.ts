@@ -2,17 +2,22 @@ import { Injectable, inject } from "@angular/core";
 import {
   Auth,
   GoogleAuthProvider,
-  UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+  browserLocalPersistence,
 } from "@angular/fire/auth";
+import { setPersistence } from "firebase/auth";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private _auth = inject(Auth);
+  private _router = inject(Router);
 
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
@@ -22,25 +27,27 @@ export class AuthService {
         if (!credential) {
           throw new Error("Credential Error");
         }
-        const token = credential.accessToken;
-        const user = result.user;
+        setPersistence(this._auth, browserLocalPersistence);
+        this._router.navigate(["/home"]);
       })
       .catch((err) => console.error(err));
   }
 
-  signup(email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(
+  signup(email: string, password: string) {
+    createUserWithEmailAndPassword(
       this._auth,
       email.trim(),
       password.trim()
-    );
+    ).then((result) => {
+      this._router.navigate(["/home"]);
+    });
   }
 
-  login(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(
-      this._auth,
-      email.trim(),
-      password.trim()
+  login(email: string, password: string) {
+    signInWithEmailAndPassword(this._auth, email.trim(), password.trim()).then(
+      (result) => {
+        this._router.navigate(["/home"]);
+      }
     );
   }
 
