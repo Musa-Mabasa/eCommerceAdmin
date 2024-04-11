@@ -34,22 +34,18 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-    createUserWithEmailAndPassword(
-      this._auth,
-      email.trim(),
-      password.trim()
-    ).then((result) => {
-      this._router.navigate(["/home"]);
-    });
+    createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
+      .then((result) => {
+        this._router.navigate(["/home"]);
+      })
+      .catch((err) => console.error(err));
   }
 
   login(email: string, password: string) {
-    signInWithEmailAndPassword(this._auth, email.trim(), password.trim()).then(
-      (result) => {
+    signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
+      .then((result) => {
         this._router.navigate(["/home"]);
-      }
-    );
+      })
+      .catch((err) => console.error(err));
   }
-
-  constructor() {}
 }
