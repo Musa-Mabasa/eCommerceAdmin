@@ -9,6 +9,7 @@ export default {
       whiteSmoke: "whiteSmoke",
       blue: "blue",
       white: "white",
+      red: "red",
     },
     extend: {
       fontFamily: {
