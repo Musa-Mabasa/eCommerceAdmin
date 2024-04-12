@@ -52,6 +52,9 @@ export class LoginComponent implements OnInit {
   }
 
   byForm() {
+    if (this.signInForm.invalid) {
+      return;
+    }
     const { email, password } = this.signInForm.value;
     if (email && password) this._service.login(email, password);
   }

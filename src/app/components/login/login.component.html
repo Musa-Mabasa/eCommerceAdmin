@@ -2,7 +2,7 @@
   id="signup"
   class="w-full h-full flex flex-col items-center justify-center py-20 gap-10"
 >
-  <h1 class="font-rubik font-extrabold text-2xl">Sign In</h1>
+  <h1 class="font-rubik font-extrabold text-2xl">Login</h1>
   <form
     [formGroup]="signInForm"
     (ngSubmit)="byForm()"
@@ -39,12 +39,13 @@
         />
       </label>
     </div>
-    <input
+    <button
       type="submit"
       name="Signup"
-      value="Sign In"
       class="btn rounded-xl w-full text-whiteSmoke bg-gradient-to-tr from-primary-color to-secondary-color"
-    />
+    >
+      Login
+    </button>
     <p>Forgot Password? <span class="text-blue">Reset</span></p>
   </form>
 
@@ -79,11 +80,11 @@
         d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
       ></path>
     </svg>
-    <span class="font-bold font-rubik"> Sign Up with Google </span>
+    <span class="font-bold font-rubik"> Log in with Google </span>
   </button>
   <p class="font-semibold">
     Don't have an account?<span class="text-blue" routerLink="/sign-up">
-      Sign up</span
+      Sign in</span
     >
   </p>
 </div>

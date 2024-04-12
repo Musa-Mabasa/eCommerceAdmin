@@ -11,6 +11,8 @@ import {
 } from "@angular/fire/auth";
 import { setPersistence } from "firebase/auth";
 import { Router } from "@angular/router";
+import { NzNotificationService } from "ng-zorro-antd/notification";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,6 +20,7 @@ import { Router } from "@angular/router";
 export class AuthService {
   private _auth = inject(Auth);
   private _router = inject(Router);
+  private notification = inject(NzNotificationService);
 
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
@@ -38,7 +41,9 @@ export class AuthService {
       .then((result) => {
         this._router.navigate(["/home"]);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.notification.create("error", "Sign In failed", err);
+      });
   }
 
   login(email: string, password: string) {
@@ -46,6 +51,12 @@ export class AuthService {
       .then((result) => {
         this._router.navigate(["/home"]);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.notification.create(
+          "error",
+          "Login failed",
+          "Incorrect Email or password"
+        );
+      });
   }
 }
