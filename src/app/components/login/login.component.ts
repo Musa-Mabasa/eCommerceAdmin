@@ -27,7 +27,7 @@ import { NgIf } from "@angular/common";
 })
 export class LoginComponent implements OnInit {
   private _service = inject(AuthService);
-  signInForm!: FormGroup;
+  signInForm: FormGroup | undefined;
   hidePassword = true;
 
   ngOnInit(): void {
@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
   }
 
   get email() {
-    return this.signInForm.get("email");
+    return this.signInForm?.get("email");
   }
 
   get password() {
-    return this.signInForm.get("password");
+    return this.signInForm?.get("password");
   }
 
   toggleHidePassword() {
@@ -60,10 +60,10 @@ export class LoginComponent implements OnInit {
   }
 
   byForm() {
-    if (this.signInForm.invalid) {
+    if (this.signInForm?.invalid) {
       return;
     }
-    const { email, password } = this.signInForm.value;
+    const { email, password } = this.signInForm?.value;
     if (email && password) this._service.login(email, password);
   }
 }

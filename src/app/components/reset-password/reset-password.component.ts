@@ -21,7 +21,7 @@ import { RouterLink } from "@angular/router";
 })
 export class ResetPasswordComponent {
   private _service = inject(AuthService);
-  resetForm!: FormGroup;
+  resetForm: FormGroup | undefined;
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
@@ -33,7 +33,7 @@ export class ResetPasswordComponent {
   }
 
   get email() {
-    return this.resetForm.get("email");
+    return this.resetForm?.get("email");
   }
 
   reset() {

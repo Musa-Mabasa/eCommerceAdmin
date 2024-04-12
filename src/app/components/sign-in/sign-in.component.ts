@@ -30,7 +30,7 @@ import { NgIf } from "@angular/common";
 })
 export class SignInComponent implements OnInit {
   private _service = inject(AuthService);
-  signUpForm!: FormGroup;
+  signUpForm: FormGroup | undefined;
   hidePassword = true;
   hideConfirmPassword = true;
 
@@ -63,15 +63,15 @@ export class SignInComponent implements OnInit {
   }
 
   get email() {
-    return this.signUpForm.get("email");
+    return this.signUpForm?.get("email");
   }
 
   get password() {
-    return this.signUpForm.get("password");
+    return this.signUpForm?.get("password");
   }
 
   get confirmPassword() {
-    return this.signUpForm.get("confirmPassword");
+    return this.signUpForm?.get("confirmPassword");
   }
 
   toggleHidePassword() {
@@ -97,11 +97,11 @@ export class SignInComponent implements OnInit {
   }
 
   byForm(): void {
-    if (this.signUpForm.invalid) {
+    if (this.signUpForm?.invalid) {
       return;
     }
 
-    const { email, password } = this.signUpForm.value;
+    const { email, password } = this.signUpForm?.value;
     if (email) this._service.signup(email, password!);
   }
 }
