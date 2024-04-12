@@ -61,8 +61,6 @@ export class AuthService {
   }
 
   resetPassword(email: string) {
-    console.log(email);
-
     sendPasswordResetEmail(this._auth, email.trim())
       .then(() => {
         this.notification.create(

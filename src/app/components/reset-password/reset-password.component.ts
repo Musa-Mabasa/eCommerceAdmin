@@ -40,7 +40,6 @@ export class ResetPasswordComponent {
     if (this.resetForm?.invalid) {
       return;
     }
-    console.log("here");
 
     this._service.resetPassword(this.resetForm?.value?.email);
   }
