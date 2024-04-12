@@ -32,10 +32,16 @@
       >
         <ng-icon name="matLockOutline" class="text-xl" />
         <input
-          type="password"
+          [type]="hidePassword ? 'password' : 'text'"
           class="grow"
           placeholder="Password"
           formControlName="password"
+        />
+
+        <ng-icon
+          [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
+          class="text-xl"
+          (click)="toggleHidePassword()"
         />
       </label>
     </div>
@@ -46,7 +52,9 @@
     >
       Login
     </button>
-    <p>Forgot Password? <span class="text-blue">Reset</span></p>
+    <p>
+      Forgot Password? <span class="text-blue" routerLink="/reset">Reset</span>
+    </p>
   </form>
 
   <div class="divider">OR</div>

@@ -42,7 +42,7 @@ export class AuthService {
         this._router.navigate(["/home"]);
       })
       .catch((err) => {
-        this.notification.create("error", "Sign In failed", err);
+        this.notification.create("error", "Sign In failed", err.message);
       });
   }
 
@@ -58,5 +58,20 @@ export class AuthService {
           "Incorrect Email or password"
         );
       });
+  }
+
+  resetPassword(email: string) {
+    console.log(email);
+
+    sendPasswordResetEmail(this._auth, email.trim())
+      .then(() => {
+        this.notification.create(
+          "success",
+          "Email Sent",
+          "Check emails and reset your password."
+        );
+        this._router.navigate(["/login"]);
+      })
+      .catch((err) => console.error(err));
   }
 }

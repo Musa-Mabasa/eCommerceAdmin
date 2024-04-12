@@ -38,10 +38,15 @@
       >
         <ng-icon name="matLockOutline" class="text-xl" />
         <input
-          type="password"
+          [type]="hidePassword ? 'password' : 'text'"
           class="grow"
           placeholder="Password"
           formControlName="password"
+        />
+        <ng-icon
+          [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
+          class="text-xl"
+          (click)="toggleHidePassword()"
         />
       </label>
     </div>
@@ -57,10 +62,15 @@
       >
         <ng-icon name="matLockOutline" class="text-xl" />
         <input
-          type="password"
+          [type]="hideConfirmPassword ? 'password' : 'text'"
           class="grow"
           placeholder="ConfirmPassword"
           formControlName="confirmPassword"
+        />
+        <ng-icon
+          [name]="hideConfirmPassword ? 'faEyeSlash' : 'faEye'"
+          class="text-xl"
+          (click)="toggleHideConfirmPassword()"
         />
       </label>
     </div>

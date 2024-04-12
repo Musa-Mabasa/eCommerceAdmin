@@ -14,6 +14,7 @@ import {
   matEmailOutline,
   matLockOutline,
 } from "@ng-icons/material-icons/outline";
+import { faEye, faEyeSlash } from "@ng-icons/font-awesome/regular";
 import { RouterLink } from "@angular/router";
 import { NgIf } from "@angular/common";
 
@@ -23,11 +24,15 @@ import { NgIf } from "@angular/common";
   imports: [NgIconComponent, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: "./sign-in.component.html",
   styleUrl: "./sign-in.component.scss",
-  viewProviders: [provideIcons({ matEmailOutline, matLockOutline })],
+  viewProviders: [
+    provideIcons({ matEmailOutline, matLockOutline, faEye, faEyeSlash }),
+  ],
 })
 export class SignInComponent implements OnInit {
   private _service = inject(AuthService);
   signUpForm!: FormGroup;
+  hidePassword = true;
+  hideConfirmPassword = true;
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
@@ -67,6 +72,14 @@ export class SignInComponent implements OnInit {
 
   get confirmPassword() {
     return this.signUpForm.get("confirmPassword");
+  }
+
+  toggleHidePassword() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleHideConfirmPassword() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
   passwordsMatchValidator(): ValidatorFn {

@@ -12,6 +12,7 @@ import {
   matEmailOutline,
   matLockOutline,
 } from "@ng-icons/material-icons/outline";
+import { faEye, faEyeSlash } from "@ng-icons/font-awesome/regular";
 import { NgIf } from "@angular/common";
 
 @Component({
@@ -20,11 +21,14 @@ import { NgIf } from "@angular/common";
   imports: [NgIconComponent, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: "./login.component.html",
   styleUrl: "./login.component.scss",
-  viewProviders: [provideIcons({ matEmailOutline, matLockOutline })],
+  viewProviders: [
+    provideIcons({ matEmailOutline, matLockOutline, faEye, faEyeSlash }),
+  ],
 })
 export class LoginComponent implements OnInit {
   private _service = inject(AuthService);
   signInForm!: FormGroup;
+  hidePassword = true;
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -45,6 +49,10 @@ export class LoginComponent implements OnInit {
 
   get password() {
     return this.signInForm.get("password");
+  }
+
+  toggleHidePassword() {
+    this.hidePassword = !this.hidePassword;
   }
 
   byGoogle() {
