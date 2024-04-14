@@ -1,17 +1,8 @@
 import { isDevMode } from "@angular/core";
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  MetaReducer,
-  on,
-} from "@ngrx/store";
+import { createReducer, MetaReducer, on } from "@ngrx/store";
 import { Cart, Product } from "../models/admin";
 import {
   getAdminCartComplete,
-  getAdminProducts,
   getAdminProductsComplete,
   getAllStoreProductsComplete,
 } from "./actions";
@@ -29,7 +20,7 @@ const initialState: AdminState = {
   allProducts: [],
 };
 
-export const adminReducers = createReducer(
+export const adminReducer = createReducer(
   initialState,
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
