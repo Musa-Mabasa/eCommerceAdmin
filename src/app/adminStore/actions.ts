@@ -27,3 +27,13 @@ export const getAdminCartComplete = createAction(
   "[ADMIN] GetAdminCartComplete",
   props<{ cart: Cart }>()
 );
+
+export const setSelectEditProduct = createAction(
+  "[ADMIN] SetSelectEditProduct",
+  props<{ selectedEditProduct: Product }>()
+);
+
+export const setSelectPreviewProduct = createAction(
+  "[ADMIN] SetSelectPreviewProduct",
+  props<{ selectedPreviewProduct: Product }>()
+);

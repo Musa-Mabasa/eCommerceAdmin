@@ -5,6 +5,8 @@ import {
   getAdminCartComplete,
   getAdminProductsComplete,
   getAllStoreProductsComplete,
+  setSelectEditProduct,
+  setSelectPreviewProduct,
 } from "./actions";
 
 export const adminFeatureKey = "admin";
@@ -12,12 +14,14 @@ export const adminFeatureKey = "admin";
 export interface AdminState {
   adminProducts: Product[];
   allProducts: Product[];
+  selectedProductId: string;
   cart?: Cart;
 }
 
 const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
+  selectedProductId: "",
 };
 
 export const adminReducer = createReducer(
@@ -33,6 +37,14 @@ export const adminReducer = createReducer(
   on(getAdminCartComplete, (state, { cart }) => ({
     ...state,
     cart,
+  })),
+  on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
+    ...state,
+    selectedEditProduct,
+  })),
+  on(setSelectPreviewProduct, (state, { selectedPreviewProduct }) => ({
+    ...state,
+    selectedPreviewProduct,
   }))
 );
 

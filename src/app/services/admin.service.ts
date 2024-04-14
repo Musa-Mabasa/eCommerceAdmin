@@ -6,6 +6,7 @@ import { Cart, Product } from "../models/admin";
   providedIn: "root",
 })
 export class AdminService {
+  //These are placeholder functions and will be implemented later.
   getAdminProducts(adminId: string): Observable<Product[]> {
     return from(EMPTY);
   }
