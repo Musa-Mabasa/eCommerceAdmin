@@ -4,6 +4,7 @@
 >
   <h1 class="font-rubik font-extrabold text-2xl">Sign In</h1>
   <form
+    *ngIf="signUpForm"
     [formGroup]="signUpForm"
     (ngSubmit)="byForm()"
     class="w-4/5 flex flex-col items-center gap-5"
