@@ -74,14 +74,6 @@ export class SignInComponent implements OnInit {
     return this.signUpForm?.get("confirmPassword");
   }
 
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
-  }
-
-  toggleHideConfirmPassword() {
-    this.hideConfirmPassword = !this.hideConfirmPassword;
-  }
-
   passwordsMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (this.signUpForm?.get("password")?.value === control.value) {

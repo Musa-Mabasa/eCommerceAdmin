@@ -51,10 +51,6 @@ export class LoginComponent implements OnInit {
     return this.signInForm?.get("password");
   }
 
-  toggleHidePassword() {
-    this.hidePassword = !this.hidePassword;
-  }
-
   byGoogle() {
     this._service.byGoogle();
   }

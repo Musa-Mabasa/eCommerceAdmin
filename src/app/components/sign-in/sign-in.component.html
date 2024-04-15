@@ -47,7 +47,7 @@
         <ng-icon
           [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
           class="text-xl"
-          (click)="toggleHidePassword()"
+          (click)="hidePassword = !hidePassword"
         />
       </label>
     </div>
@@ -71,7 +71,7 @@
         <ng-icon
           [name]="hideConfirmPassword ? 'faEyeSlash' : 'faEye'"
           class="text-xl"
-          (click)="toggleHideConfirmPassword()"
+          (click)="hideConfirmPassword = !hideConfirmPassword"
         />
       </label>
     </div>
