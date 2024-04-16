@@ -7,7 +7,6 @@ export interface Product {
   currency: string;
   category: string;
   quantity: number;
-  tags: Tag[];
 }
 
 export interface Cart {

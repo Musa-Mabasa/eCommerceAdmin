@@ -1,10 +1,11 @@
 import { isDevMode } from "@angular/core";
 import { createReducer, MetaReducer, on } from "@ngrx/store";
-import { Cart, Product } from "../models/admin";
+import { Cart, Product, Tag } from "../models/admin";
 import {
   getAdminCartComplete,
   getAdminProductsComplete,
   getAllStoreProductsComplete,
+  getAllTagsComplete,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
   setSelectEditProduct,
@@ -17,6 +18,7 @@ export interface AdminState {
   adminProducts: Product[];
   allProducts: Product[];
   selectedProductId: string;
+  allTags: Tag[];
   cart?: Cart;
   isAuthLoading: boolean;
 }
@@ -25,6 +27,7 @@ const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
   selectedProductId: "",
+  allTags: [],
   isAuthLoading: false,
 };
 
@@ -37,6 +40,10 @@ export const adminReducer = createReducer(
   on(getAllStoreProductsComplete, (state, { allProducts }) => ({
     ...state,
     allProducts,
+  })),
+  on(getAllTagsComplete, (state, { allTags }) => ({
+    ...state,
+    allTags,
   })),
   on(getAdminCartComplete, (state, { cart }) => ({
     ...state,

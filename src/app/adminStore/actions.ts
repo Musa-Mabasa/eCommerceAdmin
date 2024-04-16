@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Cart, Product } from "../models/admin";
+import { Cart, Product, Tag } from "../models/admin";
 
 export const getAdminProducts = createAction(
   "[ADMIN] GetAdminProducts",
@@ -16,6 +16,13 @@ export const getAllStoreProducts = createAction("[ADMIN] GetAllStoreProducts");
 export const getAllStoreProductsComplete = createAction(
   "[ADMIN] GetAllStoreProductsComplete",
   props<{ allProducts: Product[] }>()
+);
+
+export const getAllTags = createAction("[ADMIN] GetAllTags");
+
+export const getAllTagsComplete = createAction(
+  "[ADMIN] GetAllTagsComplete",
+  props<{ allTags: Tag[] }>()
 );
 
 export const getAdminCart = createAction(
