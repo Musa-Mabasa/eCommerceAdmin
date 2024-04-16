@@ -4,16 +4,6 @@ import { CorrelatedProduct } from "../models/admin";
 
 export const selectFeature = createFeatureSelector<AdminState>(adminFeatureKey);
 
-export const selectAdminProducts = createSelector(
-  selectFeature,
-  (state) => state.adminProducts
-);
-
-export const selectAllProducts = createSelector(
-  selectFeature,
-  (state) => state.allProducts
-);
-
 export const selectAdminProductsWithTags = createSelector(
   selectFeature,
   (state): CorrelatedProduct[] => {
