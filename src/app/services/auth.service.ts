@@ -15,7 +15,7 @@ import {
   setIsAuthLoading,
   setIsAuthLoadingComplete,
 } from "../adminStore/actions";
-import setCookie from "../utils/utils";
+import { setCookie } from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
