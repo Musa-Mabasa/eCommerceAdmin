@@ -6,19 +6,16 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   sendPasswordResetEmail,
-  confirmPasswordReset,
-  browserLocalPersistence,
 } from "@angular/fire/auth";
-import { setPersistence } from "firebase/auth";
 import { Router } from "@angular/router";
 import { NzNotificationService } from "ng-zorro-antd/notification";
-import { BehaviorSubject } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../adminStore/reducer";
 import {
   setIsAuthLoading,
   setIsAuthLoadingComplete,
 } from "../adminStore/actions";
+import setCookie from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -32,12 +29,11 @@ export class AuthService {
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-
-        if (!credential) {
-          throw new Error("Credential Error");
+        if (!result) {
+          throw new Error("No result came back");
         }
-        setPersistence(this._auth, browserLocalPersistence);
+        setCookie("userId", result.user?.uid);
+
         this._router.navigate(["/home"]);
       })
       .catch((err) => console.error(err));
@@ -47,6 +43,10 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
+        if (!result) {
+          throw new Error("No result came back");
+        }
+        setCookie("userId", result.user?.uid);
         this._router.navigate(["/home"]);
       })
       .catch((err) => {
@@ -59,6 +59,10 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
+        if (!result) {
+          throw new Error("No result came back");
+        }
+        setCookie("userId", result.user?.uid);
         this._router.navigate(["/home"]);
       })
       .catch((err) => {
