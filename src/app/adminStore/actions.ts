@@ -37,3 +37,9 @@ export const setSelectPreviewProduct = createAction(
   "[ADMIN] SetSelectPreviewProduct",
   props<{ selectedPreviewProduct: Product }>()
 );
+
+export const setIsAuthLoading = createAction("[ADMIN] SetAuthLoading");
+
+export const setIsAuthLoadingComplete = createAction(
+  "[ADMIN] SetAuthLoadingComplete"
+);

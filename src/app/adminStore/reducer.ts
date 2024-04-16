@@ -5,6 +5,8 @@ import {
   getAdminCartComplete,
   getAdminProductsComplete,
   getAllStoreProductsComplete,
+  setIsAuthLoading,
+  setIsAuthLoadingComplete,
   setSelectEditProduct,
   setSelectPreviewProduct,
 } from "./actions";
@@ -16,12 +18,14 @@ export interface AdminState {
   allProducts: Product[];
   selectedProductId: string;
   cart?: Cart;
+  isAuthLoading: boolean;
 }
 
 const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
   selectedProductId: "",
+  isAuthLoading: false,
 };
 
 export const adminReducer = createReducer(
@@ -45,6 +49,14 @@ export const adminReducer = createReducer(
   on(setSelectPreviewProduct, (state, { selectedPreviewProduct }) => ({
     ...state,
     selectedPreviewProduct,
+  })),
+  on(setIsAuthLoading, (state) => ({
+    ...state,
+    isAuthLoading: true,
+  })),
+  on(setIsAuthLoadingComplete, (state) => ({
+    ...state,
+    isAuthLoading: false,
   }))
 );
 
