@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { EMPTY, Observable, from } from "rxjs";
-import { Cart, Product } from "../models/admin";
+import { Cart, Product, Tag } from "../models/admin";
 
 @Injectable({
   providedIn: "root",
@@ -12,6 +12,10 @@ export class AdminService {
   }
 
   getAllStoreProducts(): Observable<Product[]> {
+    return from(EMPTY);
+  }
+
+  getAllTags(): Observable<Tag[]> {
     return from(EMPTY);
   }
 

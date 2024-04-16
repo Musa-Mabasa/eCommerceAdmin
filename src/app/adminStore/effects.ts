@@ -2,12 +2,14 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AdminService } from "../services/admin.service";
 import {
-    getAdminCart,
+  getAdminCart,
   getAdminCartComplete,
   getAdminProducts,
   getAdminProductsComplete,
   getAllStoreProducts,
   getAllStoreProductsComplete,
+  getAllTags,
+  getAllTagsComplete,
 } from "./actions";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
 
@@ -33,6 +35,18 @@ export class AdminEffects {
       switchMap(() =>
         this.adminService.getAllStoreProducts().pipe(
           map((allProducts) => getAllStoreProductsComplete({ allProducts })),
+          catchError((err) => EMPTY)
+        )
+      )
+    )
+  );
+
+  getAllTags$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getAllTags.type),
+      switchMap(() =>
+        this.adminService.getAllTags().pipe(
+          map((allTags) => getAllTagsComplete({ allTags })),
           catchError((err) => EMPTY)
         )
       )

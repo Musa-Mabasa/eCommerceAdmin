@@ -21,3 +21,8 @@ export interface Tag {
   name: string;
   productId;
 }
+
+export interface CorrelatedProduct {
+  product: Product;
+  tags: Tag[];
+}

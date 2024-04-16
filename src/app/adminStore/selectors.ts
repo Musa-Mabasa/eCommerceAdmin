@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AdminState, adminFeatureKey } from "./reducer";
+import { CorrelatedProduct } from "../models/admin";
 
 export const selectFeature = createFeatureSelector<AdminState>(adminFeatureKey);
 
@@ -11,6 +12,34 @@ export const selectAdminProducts = createSelector(
 export const selectAllProducts = createSelector(
   selectFeature,
   (state) => state.allProducts
+);
+
+export const selectAdminProductsWithTags = createSelector(
+  selectFeature,
+  (state): CorrelatedProduct[] => {
+    if (!(state.adminProducts && state.allTags)) {
+      return [];
+    }
+
+    return state.adminProducts.map((product) => {
+      const tags = state.allTags.filter((tag) => tag.productId == product.id);
+      return { product, tags };
+    });
+  }
+);
+
+export const selectAllProductsWithTags = createSelector(
+  selectFeature,
+  (state): CorrelatedProduct[] => {
+    if (!(state.allProducts && state.allTags)) {
+      return [];
+    }
+
+    return state.allProducts.map((product) => {
+      const tags = state.allTags.filter((tag) => tag.productId == product.id);
+      return { product, tags };
+    });
+  }
 );
 
 export const selectSelectedEditProduct = createSelector(
