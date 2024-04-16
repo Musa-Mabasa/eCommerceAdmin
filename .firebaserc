@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ecommerce-admin-d6768": {
+      "hosting": {
+        "my-app": [
+          "ecommerce-admin-d6768"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ecommerce-admin-d6768"
+  }
+}
