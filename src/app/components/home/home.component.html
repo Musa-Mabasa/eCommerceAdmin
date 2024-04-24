@@ -1,1 +1,50 @@
-<p>home works!</p>
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col items-center justify-start">
+    <!-- Page content here -->
+    <header class="w-full p-3 flex justify-between lg:justify-end items-center">
+      <label
+        for="my-drawer-2"
+        class="drawer-button lg:hidden flex gap-2 items-center"
+        ><ng-icon name="matSegment" class="text-2xl" />
+        <h1 class="text-2xl text-primary-color">
+          App<span class="text-secondary-color">Logo</span>
+        </h1></label
+      >
+      <button
+        class="bg-primary-color w-12 h-12 rounded-full text-whiteSmoke font-semibold"
+      >
+        M
+      </button>
+    </header>
+    <main>
+      <router-outlet />
+    </main>
+  </div>
+  <div class="drawer-side">
+    <label
+      for="my-drawer-2"
+      aria-label="close sidebar"
+      class="drawer-overlay"
+    ></label>
+    <ul
+      class="menu flex flex-col gap-3 p-4 w-64 min-h-full bg-base-200 text-base-content bg-gradient-to-b from-primary-color to-secondary-color"
+    >
+      <!-- Sidebar content here -->
+      <h1 class="text-2xl text-whiteSmoke px-4 pt-3 pb-8">
+        App<span class="text-secondary-color">Logo</span>
+      </h1>
+      <li class="text-base text-whiteSmoke hover:bg-sidebar-item hover:text-whiteSmoke rounded-xl">
+        <a class="text-whiteSmoke" routerLink="admin-products" routerLinkActive="active-item"
+          ><ng-icon name="matAdminPanelSettings" class="text-2xl" />My
+          Products</a
+        >
+      </li>
+      <li class="text-base text-whiteSmoke hover:bg-sidebar-item rounded-xl">
+        <a routerLink="all-products" routerLinkActive="active-item"
+          ><ng-icon name="matShoppingBag" class="text-2xl" />Preview</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>
