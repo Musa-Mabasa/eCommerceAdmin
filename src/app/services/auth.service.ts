@@ -29,7 +29,7 @@ export class AuthService {
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
       .then((result) => {
-        if (!result) {
+        if (!result || !result.user) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user?.uid);
@@ -43,7 +43,7 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (!result) {
+        if (!result || !result.user) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user?.uid);
@@ -59,7 +59,7 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (!result) {
+        if (!result || !result.user) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user?.uid);
