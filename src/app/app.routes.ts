@@ -29,18 +29,16 @@ export const routes: Routes = [
       {
         path: "admin-products",
         component: AdminProductsComponent,
-        canActivate: [authGuard],
       },
       {
         path: "all-products",
         component: AllProductsComponent,
-        canActivate: [authGuard],
       },
     ],
   },
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "home/admin-products",
     pathMatch: "full",
   },
   {

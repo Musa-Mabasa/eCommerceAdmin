@@ -11,6 +11,8 @@ export default {
       white: "white",
       red: "red",
       "sidebar-item": "rgb(255,255,255, 0.3)",
+      "search-color": "#f5f7fa",
+      black: "black"
     },
     extend: {
       fontFamily: {
