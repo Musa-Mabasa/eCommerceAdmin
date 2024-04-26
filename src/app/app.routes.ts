@@ -7,6 +7,7 @@ import { authGuard } from "./auth.guard";
 import { ResetPasswordComponent } from "./components/reset-password/reset-password.component";
 import { AdminProductsComponent } from "./components/admin-products/admin-products.component";
 import { AllProductsComponent } from "./components/all-products/all-products.component";
+import { EditProductComponent } from "./components/edit-product/edit-product.component";
 
 export const routes: Routes = [
   {
@@ -29,6 +30,10 @@ export const routes: Routes = [
       {
         path: "admin-products",
         component: AdminProductsComponent,
+      },
+      {
+        path: "edit-product/:productId",
+        component: EditProductComponent,
       },
       {
         path: "all-products",
