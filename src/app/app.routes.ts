@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from "./components/reset-password/reset-passwo
 import { AdminProductsComponent } from "./components/admin-products/admin-products.component";
 import { AllProductsComponent } from "./components/all-products/all-products.component";
 import { EditProductComponent } from "./components/edit-product/edit-product.component";
+import { AddProductComponent } from "./components/add-product/add-product.component";
 
 export const routes: Routes = [
   {
@@ -34,6 +35,10 @@ export const routes: Routes = [
       {
         path: "edit-product/:productId",
         component: EditProductComponent,
+      },
+      {
+        path: "add-product",
+        component: AddProductComponent,
       },
       {
         path: "all-products",

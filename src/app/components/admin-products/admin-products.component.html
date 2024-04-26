@@ -20,7 +20,8 @@
     </label>
     <div class="divider divider-horizontal"></div>
     <button
-      class="w-28 sm:w-52 lg:w-52 btn btn-outline rounded-3xl border-2 shadow-lg"
+        (click)="router.navigate(['home/add-product'])"
+      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl border-2 shadow-lg"
     >
       Add <span class="hidden sm:block">Product</span>
       <ng-icon name="matPlus" class="text-2xl" />

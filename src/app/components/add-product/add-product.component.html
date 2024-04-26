@@ -1,0 +1,159 @@
+<section class="flex justify-between gap-4 items-center w-full px-6 py-10">
+    <h1 class="text-2xl font-semibold font-rubik text-nowrap">Add Product</h1>
+    <div class="flex gap-4">
+      <button
+        (click)="router.navigate(['home/admin-products'])"
+        class="w-28 sm:w-32 btn btn-outline rounded-3xl border-2 shadow-lg"
+      >
+        Cancel
+      </button>
+      <button
+        class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl border-2 shadow-lg text-whiteSmoke"
+      >
+        Confirm
+        <ng-icon name="matCheck" class="text-2xl" />
+      </button>
+    </div>
+  </section>
+  <section class="px-6 pb-4 grid grid-cols-1 md:grid-cols-edit gap-5">
+    <div
+      class="p-5 bg-sidebar-item h-96 rounded-2xl flex flex-col justify-start gap-5 shadow-md"
+    >
+      <h2 class="text-base font-semibold">General Information</h2>
+      <div class="flex flex-col gap-2">
+        <p>Product Name</p>
+        <input
+          type="text"
+          placeholder="Enter name..."
+          class="input bg-edit-input-color w-full"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Product Description</p>
+        <textarea
+          row="5"
+          placeholder="Enter Description..."
+          class="input py-2 px-4 bg-edit-input-color w-full h-40"
+        ></textarea>
+      </div>
+    </div>
+    <div
+      class="py-5 px-7 bg-sidebar-item h-96 rounded-2xl flex flex-col gap-5 shadow-md"
+    >
+      <h2 class="text-base font-semibold">Upload Image</h2>
+      <div class="indicator w-full">
+        <span
+          class="indicator-item badge bg-secondary-color flex justify-center items-center rounded-full w-9 h-9 p-1"
+          ><ng-icon name="matEdit" class="text-lg text-whiteSmoke"
+        /></span>
+        <img
+          class="rounded-xl grid w-full h-56 object-cover place-items-center"
+          src="https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg"
+          alt="Camera"
+        />
+      </div>
+    </div>
+    <div
+      class="p-5 bg-sidebar-item h-auto rounded-2xl flex flex-col justify-start gap-5 shadow-md"
+    >
+      <h2 class="text-base font-semibold">Pricing & Stock</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <p>Price</p>
+          <input
+            type="number"
+            name="price"
+            value="0"
+            step="0.01"
+            class="input bg-edit-input-color w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <p>Quantity</p>
+          <input
+            type="number"
+            name="price"
+            value="0"
+            class="input bg-edit-input-color w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <p>Currency</p>
+          <div class="dropdown">
+            <label
+              class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2"
+            >
+              <input
+                type="button"
+                name="price"
+                [value]="currency"
+                class="input text-start w-full px-0"
+              />
+              <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
+            </label>
+            <ul
+              tabindex="0"
+              class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
+            >
+              <li *ngIf="currency !== 'ZAR'" (click)="currency = 'ZAR'">
+                <a>ZAR</a>
+              </li>
+              <li *ngIf="currency !== 'USD'" (click)="currency = 'USD'">
+                <a>USD</a>
+              </li>
+              <li *ngIf="currency !== 'EUR'" (click)="currency = 'EUR'">
+                <a>EUR</a>
+              </li>
+              <li *ngIf="currency !== 'GBP'" (click)="currency = 'GBP'">
+                <a>GBP</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="p-5 flex flex-col gap-5 bg-sidebar-item h-auto rounded-2xl shadow-md"
+    >
+      <h2 class="text-base font-semibold">Category</h2>
+      <div class="flex flex-col gap-2">
+        <p>Currency</p>
+        <div class="dropdown w-full">
+          <label
+            class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2"
+          >
+            <input
+              type="button"
+              name="price"
+              [value]="category"
+              class="input text-start w-full px-0"
+            />
+            <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
+          </label>
+          <ul
+            tabindex="0"
+            class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
+          >
+            <li *ngIf="category !== 'Tech'" (click)="category = 'Tech'">
+              <a>Tech</a>
+            </li>
+            <li *ngIf="category !== 'Clothes'" (click)="category = 'Clothes'">
+              <a>Clothes</a>
+            </li>
+            <li *ngIf="category !== 'Kitchen'" (click)="category = 'Kitchen'">
+              <a>Kitchen</a>
+            </li>
+            <li *ngIf="category !== 'Shoes'" (click)="category = 'Shoes'">
+              <a>Shoes</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        class="w-40 sm:w-44 btn bg-secondary-color rounded-3xl border-2 shadow-lg text-whiteSmoke"
+      >
+        Add category <ng-icon name="matPlus" class="text-2xl" />
+      </button>
+    </div>
+  </section>
+  
