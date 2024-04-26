@@ -31,7 +31,7 @@ export class AuthService {
           throw new Error("Credential Error");
         }
         setPersistence(this._auth, browserLocalPersistence);
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => console.error(err));
   }
@@ -39,7 +39,7 @@ export class AuthService {
   signup(email: string, password: string) {
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
         this.notification.create("error", "Sign In failed", err.message);
@@ -49,7 +49,7 @@ export class AuthService {
   login(email: string, password: string) {
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
         this.notification.create(
