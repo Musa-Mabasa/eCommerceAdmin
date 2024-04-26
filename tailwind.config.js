@@ -13,6 +13,7 @@ export default {
       "sidebar-item": "rgb(255,255,255, 0.3)",
       "search-color": "#f5f7fa",
       black: "black",
+      "edit-input-color": "#eeeeee",
     },
     extend: {
       fontFamily: {
@@ -24,9 +25,7 @@ export default {
         xl: "repeat(4, minmax(0, 18rem))",
         "2xl": "repeat(5, minmax(0, 18rem))",
         "3xl": "repeat(5, minmax(0, 18rem))",
-      },
-      gridTemplateRows: {
-        main: "72px 1fr"
+        edit: "2fr 1fr",
       },
     },
   },
