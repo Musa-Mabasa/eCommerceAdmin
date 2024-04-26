@@ -1,4 +1,4 @@
-<header class="flex justify-between gap-4 items-center w-full px-8 py-10">
+<section class="flex justify-between gap-4 items-center w-full px-6 py-10">
   <h1 class="text-2xl font-semibold font-rubik text-nowrap">My Products</h1>
   <div class="flex">
     <label
@@ -26,10 +26,12 @@
       <ng-icon name="matPlus" class="text-2xl" />
     </button>
   </div>
-</header>
-<main class="px-8 py-4">
+</section>
+<section class="px-6 py-4 h-auto">
   <div class="flex">
-    <div class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto">
+    <div
+      class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
+    >
       @for (tag of tags; track tag) { @if(currentTag === tag){
       <div class="badge bg-primary-color text-black px-3 py-4 text">
         {{ tag }}
@@ -39,8 +41,44 @@
       } }
     </div>
     <div class="divider divider-horizontal"></div>
-    <button class="btn btn-outline rounded-3xl">
-      Sort by <ng-icon name="matSort" class="text-2xl" />
-    </button>
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-outline rounded-xl">
+        Sort by <ng-icon name="matSort" class="text-2xl" />
+      </div>
+      <ul
+        tabindex="0"
+        class="dropdown-content z-[1] menu p-2 shadow bg-whiteSmoke rounded-box w-52"
+      >
+        <li (click)="sortBy = 'price'">
+          <a class="flex justify-between"
+            >Price
+            <span *ngIf="sortBy === 'price'"
+              ><ng-icon name="matCheck" class="text-2xl" /></span
+          ></a>
+        </li>
+        <li (click)="sortBy = 'quantity'">
+          <a class="flex justify-between"
+            >Quantity
+            <span *ngIf="sortBy === 'quantity'"
+              ><ng-icon name="matCheck" class="text-2xl" /></span
+          ></a>
+        </li>
+        <li (click)="sortBy = 'name'">
+          <a class="flex justify-between"
+            >Name
+            <span *ngIf="sortBy === 'name'"
+              ><ng-icon name="matCheck" class="text-2xl" /></span
+          ></a>
+        </li>
+      </ul>
+    </div>
   </div>
-</main>
+  <div
+    class="pt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-items-center h-full overflow-hidden"
+  >
+    <app-product-card class="w-72" />
+    <app-product-card class="w-72" />
+    <app-product-card class="w-72" />
+    <app-product-card class="w-72" />
+  </div>
+</section>
