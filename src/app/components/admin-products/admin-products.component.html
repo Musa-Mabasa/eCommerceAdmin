@@ -21,7 +21,7 @@
     <div class="divider divider-horizontal"></div>
     <button
         (click)="router.navigate(['home/add-product'])"
-      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl border-2 shadow-lg"
+      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
     >
       Add <span class="hidden sm:block">Product</span>
       <ng-icon name="matPlus" class="text-2xl" />
@@ -75,9 +75,10 @@
     </div>
   </div>
   <div
-    class="py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-items-center h-full overflow-hidden"
+    class="py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
   >
     <app-product-card class="w-72" (onClick)="routeToEdit($event)" />
+    <app-product-card class="w-72" />
     <app-product-card class="w-72" />
     <app-product-card class="w-72" />
     <app-product-card class="w-72" />

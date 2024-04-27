@@ -20,11 +20,6 @@ export default {
         rubik: ['"Rubik"', ...defaultTheme.fontFamily.sans],
       },
       gridTemplateColumns: {
-        sm: "repeat(2, minmax(0, 18rem))",
-        lg: "repeat(3, minmax(0, 18rem))",
-        xl: "repeat(4, minmax(0, 18rem))",
-        "2xl": "repeat(5, minmax(0, 18rem))",
-        "3xl": "repeat(5, minmax(0, 18rem))",
         edit: "2fr 1fr",
       },
     },
