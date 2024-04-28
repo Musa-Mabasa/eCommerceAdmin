@@ -34,7 +34,7 @@ export class AuthService {
         }
         setCookie("userId", result.user?.uid);
 
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => console.error(err));
   }
@@ -47,7 +47,7 @@ export class AuthService {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user?.uid);
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
         this.notification.create("error", "Sign In failed", err.message);
@@ -63,7 +63,7 @@ export class AuthService {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user?.uid);
-        this._router.navigate(["/home"]);
+        this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
         this.notification.create(

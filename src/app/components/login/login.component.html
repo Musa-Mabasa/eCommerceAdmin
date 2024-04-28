@@ -58,28 +58,6 @@
               formControlName="password"
             />
 
-        <ng-icon
-          [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
-          class="text-xl"
-          (click)="hidePassword = !hidePassword"
-        />
-      </label>
-    </div>
-    <button
-      type="submit"
-      name="Signup"
-      class="btn rounded-xl w-full text-whiteSmoke bg-gradient-to-tr from-primary-color to-secondary-color"
-    >
-      <span
-        *ngIf="(isLoading$ | async) ?? false"
-        class="loading loading-spinner loading-sm"
-      ></span>
-      Login
-    </button>
-    <p>
-      Forgot Password? <span class="text-blue" routerLink="/reset">Reset</span>
-    </p>
-  </form>
             <ng-icon
               [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
               class="text-xl"
@@ -92,6 +70,10 @@
           name="Signup"
           class="btn rounded-xl w-full text-whiteSmoke bg-gradient-to-tr from-primary-color to-secondary-color"
         >
+          <span
+            *ngIf="(isLoading$ | async) ?? false"
+            class="loading loading-spinner loading-sm"
+          ></span>
           Login
         </button>
         <p>
@@ -99,7 +81,6 @@
           <span class="text-blue" routerLink="/reset">Reset</span>
         </p>
       </form>
-
       <div class="divider">OR</div>
       <button
         class="h-12 w-4/5 flex items-center justify-center gap-3 shadow-lg bg-whiteSmoke py-2"
@@ -134,7 +115,10 @@
         <span class="font-bold font-rubik"> Log in with Google </span>
       </button>
       <p class="font-semibold">
-        Don't have an account?<span class="text-blue cursor-pointer" routerLink="/sign-up">
+        Don't have an account?<span
+          class="text-blue cursor-pointer"
+          routerLink="/sign-up"
+        >
           Sign in</span
         >
       </p>
