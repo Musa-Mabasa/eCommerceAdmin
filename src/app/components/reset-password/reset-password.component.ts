@@ -8,13 +8,16 @@ import {
 import { AuthService } from "../../services/auth.service";
 import { matEmailOutline } from "@ng-icons/material-icons/outline";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
-import { NgIf } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { AdminState } from "../../adminStore/reducer";
+import { selectIsAuthLoading } from "../../adminStore/selectors";
 
 @Component({
   selector: "app-reset-password",
   standalone: true,
-  imports: [NgIconComponent, NgIf, ReactiveFormsModule, RouterLink],
+  imports: [NgIconComponent, NgIf, ReactiveFormsModule, RouterLink, AsyncPipe],
   templateUrl: "./reset-password.component.html",
   styleUrl: "./reset-password.component.scss",
   viewProviders: [provideIcons({ matEmailOutline })],
@@ -22,6 +25,8 @@ import { RouterLink } from "@angular/router";
 export class ResetPasswordComponent {
   private _service = inject(AuthService);
   resetForm: FormGroup | undefined;
+  store = inject(Store<AdminState>);
+  isLoading$ = this.store.select(selectIsAuthLoading);
 
   ngOnInit(): void {
     this.resetForm = new FormGroup({
