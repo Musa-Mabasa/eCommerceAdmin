@@ -33,15 +33,9 @@ export class EditProductComponent {
   category = "Tech";
   router = inject(Router);
   onImageEdit = false;
-  selectedFile?: {
-    name: string;
-    size: number;
-    type: string;
-    lastModified: number;
-    lastModifiedDate: Date;
-  };
+  selectedFile?: File;
 
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+    this.selectedFile = (event?.target as HTMLInputElement)?.files?.[0];
   }
 }

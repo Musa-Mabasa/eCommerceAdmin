@@ -1,8 +1,7 @@
 import { NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { doc } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { NgIcon, NgIconComponent, provideIcons } from "@ng-icons/core";
+import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
   matPlus,
   matCheck,
@@ -33,15 +32,10 @@ export class AddProductComponent {
   router = inject(Router);
   currency = "ZAR";
   category = "Tech";
-  selectedFile?: {
-    name: string;
-    size: number;
-    type: string;
-    lastModified: number;
-    lastModifiedDate: Date;
-  };
+  selectedFile?: File;
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+  //I need confimation for
+  onFileSelected(event: Event) {
+    this.selectedFile = (event?.target as HTMLInputElement)?.files?.[0];
   }
 }
