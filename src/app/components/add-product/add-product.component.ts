@@ -34,7 +34,6 @@ export class AddProductComponent {
   category = "Tech";
   selectedFile?: File;
 
-  //I need confimation for
   onFileSelected(event: Event) {
     this.selectedFile = (event?.target as HTMLInputElement)?.files?.[0];
   }
