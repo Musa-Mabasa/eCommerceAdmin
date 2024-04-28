@@ -13,12 +13,15 @@ import {
   matLockOutline,
 } from "@ng-icons/material-icons/outline";
 import { faEye, faEyeSlash } from "@ng-icons/font-awesome/regular";
-import { NgIf } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { AdminState } from "../../adminStore/reducer";
+import { selectIsAuthLoading } from "../../adminStore/selectors";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [NgIconComponent, ReactiveFormsModule, RouterLink, NgIf],
+  imports: [NgIconComponent, ReactiveFormsModule, RouterLink, NgIf, AsyncPipe],
   templateUrl: "./login.component.html",
   styleUrl: "./login.component.scss",
   viewProviders: [
@@ -27,8 +30,10 @@ import { NgIf } from "@angular/common";
 })
 export class LoginComponent implements OnInit {
   private _service = inject(AuthService);
+  store = inject(Store<AdminState>);
   signInForm: FormGroup | undefined;
   hidePassword = true;
+  isLoading$ = this.store.select(selectIsAuthLoading);
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({

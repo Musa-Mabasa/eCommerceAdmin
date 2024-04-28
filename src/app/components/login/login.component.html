@@ -58,6 +58,28 @@
               formControlName="password"
             />
 
+        <ng-icon
+          [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
+          class="text-xl"
+          (click)="hidePassword = !hidePassword"
+        />
+      </label>
+    </div>
+    <button
+      type="submit"
+      name="Signup"
+      class="btn rounded-xl w-full text-whiteSmoke bg-gradient-to-tr from-primary-color to-secondary-color"
+    >
+      <span
+        *ngIf="(isLoading$ | async) ?? false"
+        class="loading loading-spinner loading-sm"
+      ></span>
+      Login
+    </button>
+    <p>
+      Forgot Password? <span class="text-blue" routerLink="/reset">Reset</span>
+    </p>
+  </form>
             <ng-icon
               [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
               class="text-xl"

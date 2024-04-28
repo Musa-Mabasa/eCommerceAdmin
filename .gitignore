@@ -12,6 +12,14 @@ app/**/*.js.map
 .env
 environment
 
+# Confidential
+.env
+environment
+
+#formatting
+.prettierrc
+
+
 # dependencies
 node_modules/
 bower_components/
