@@ -22,11 +22,25 @@
           </h1>
         </div></label
       >
-      <button
-        class="bg-secondary-color w-12 h-12 rounded-full text-whiteSmoke font-semibold"
-      >
-        M
-      </button>
+      <div class="flex items-center gap-8">
+        <div class="indicator w-fit">
+          <span
+            class="indicator-item badge bg-primary-color"
+          ></span>
+          <ng-icon name="matNotificationsNoneOutline" class="text-2xl" />
+        </div>
+        <div class="indicator w-fit">
+          <span
+            class="indicator-item badge rounded-full bg-primary-color"
+          ></span>
+          <ng-icon name="matShoppingCartOutline" class="text-2xl" />
+        </div>
+        <button
+          class="bg-secondary-color w-11 h-11 rounded-full text-whiteSmoke font-semibold"
+        >
+          M
+        </button>
+      </div>
     </header>
     <main class="w-full grow-0">
       <router-outlet />

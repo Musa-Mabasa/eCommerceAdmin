@@ -1,1 +1,65 @@
-<p>all-products works!</p>
+<section
+  class="flex flex-col justify-center items-center w-full h-fit px-6 pt-20 pb-10"
+>
+  <p class="text-6xl font-medium font-rubik">Your Number One</p>
+  <p class="text-6xl font-medium font-rubik">
+    Go-To <span class="text-secondary-color">Store</span>.
+  </p>
+  <p class="font-rubik">We offer a wide range of products for your liking.</p>
+</section>
+<section class="px-6 flex flex-col items-center">
+  <div class="flex">
+    <label
+      class="input input-bordered pr-6 mr-0 w-96 rounded-none bg-search-color flex items-center justify-between"
+    >
+      <input type="text" class="w-4/5" placeholder="Search..." />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        class="w-4 h-4 opacity-70"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </label>
+    <div class="dropdown dropdown-end">
+      <div
+        tabindex="0"
+        role="button"
+        class="bg-search-color input input-bordered flex justify-center items-center h-12 w-20 rounded-none"
+      >
+        <ng-icon name="matFilterListOutline" class="text-2xl" />
+      </div>
+      <div
+        tabindex="0"
+        class="dropdown-content menu py-3 px-5 shadow rounded-b-3xl w-[464px] bg-search-color flex flex-col gap-5"
+      >
+        <p class="text-lg font-semibold font-rubik">Advanced Search Filter</p>
+        <div class="flex flex-col">
+          <div class="flex flex-col gap-2">
+            <p>Category</p>
+            <select class="select w-full bg-edit-input-color">
+              <option disabled selected>Select a Category</option>
+              <option>Tech</option>
+              <option>Shoes</option>
+              <option>Clothes</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="py-8 w-full grid gap-6 grid-cols-1 sm:grid-cols-2 min-[900px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
+  >
+    <app-preview-card class="w-72" />
+    <app-preview-card class="w-72" />
+    <app-preview-card class="w-72" />
+    <app-preview-card class="w-72" />
+    <app-preview-card class="w-72" />
+  </div>
+</section>

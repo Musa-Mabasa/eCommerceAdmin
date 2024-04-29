@@ -6,6 +6,7 @@ import {
   matAdminPanelSettings,
   matShoppingBag,
 } from "@ng-icons/material-icons/baseline";
+import { matNotificationsNoneOutline, matShoppingCartOutline } from "@ng-icons/material-icons/outline";
 
 @Component({
   selector: "app-home",
@@ -14,7 +15,9 @@ import {
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
   viewProviders: [
-    provideIcons({ matSegment, matAdminPanelSettings, matShoppingBag }),
+    provideIcons({ matSegment, matAdminPanelSettings, matShoppingBag, matNotificationsNoneOutline, matShoppingCartOutline }),
   ],
 })
-export class HomeComponent {}
+export class HomeComponent {
+  onPreview = false;
+}
