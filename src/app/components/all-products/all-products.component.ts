@@ -29,7 +29,7 @@ export class AllProductsComponent {
   priceRangeTypes = ["Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";
 
-  routeToEdit(event: string) {
-    this.router.navigate([`home/edit-product/${event}`]);
+  routeToProduct(event: string) {
+    this.router.navigate([`home/preview-product/${event}`]);
   }
 }

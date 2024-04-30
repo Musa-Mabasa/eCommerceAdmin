@@ -1,8 +1,8 @@
 <section
   class="flex flex-col justify-center items-center w-full h-fit px-6 pt-20 pb-10"
 >
-  <p class="text-6xl font-medium font-rubik">Your Number One</p>
-  <p class="text-6xl font-medium font-rubik">
+  <p class="text-6xl font-medium font-rubik text-center">Your Number One</p>
+  <p class="text-6xl font-medium font-rubik text-center">
     Go-To <span class="text-secondary-color">Store</span>.
   </p>
   <p class="font-rubik">We offer a wide range of products from end to end.</p>
@@ -126,7 +126,7 @@
   <div
     class="py-8 w-full grid gap-6 grid-cols-1 sm:grid-cols-2 min-[900px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
   >
-    <app-preview-card class="w-72" />
+    <app-preview-card class="w-72" (onClick)="routeToProduct($event)" />
     <app-preview-card class="w-72" />
     <app-preview-card class="w-72" />
     <app-preview-card class="w-72" />
