@@ -1,1 +1,73 @@
-<p>home works!</p>
+<div class="drawer lg:drawer-open h-full">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div
+    class="drawer-content flex flex-col items-center justify-start max-h-screen"
+  >
+    <!-- Page content here -->
+    <header
+      class="w-full py-3 px-8 flex justify-between lg:justify-end items-center shadow-md"
+    >
+      <label
+        for="my-drawer-2"
+        class="drawer-button lg:hidden flex gap-2 items-center"
+        ><ng-icon name="matSegment" class="text-2xl" />
+        <div class="flex items-center">
+          <img class="w-8" src="../../../assets/images/logo.png" alt="" />
+          <h1 class="text-2xl font-bold text-secondary-color">
+            <img
+              src="https://www.flaticon.com/free-icons/mobile-shopping"
+              alt=""
+            />
+            App<span class="text-primary-color">Logo</span>
+          </h1>
+        </div></label
+      >
+      <button
+        class="bg-secondary-color w-12 h-12 rounded-full text-whiteSmoke font-semibold"
+      >
+        M
+      </button>
+    </header>
+    <main class="w-full grow-0">
+      <router-outlet />
+    </main>
+  </div>
+  <div class="drawer-side h-full">
+    <label
+      for="my-drawer-2"
+      aria-label="close sidebar"
+      class="drawer-overlay"
+    ></label>
+    <ul
+      class="menu flex flex-col gap-3 p-4 w-64 min-h-full bg-base-200 text-base-content bg-gradient-to-b from-secondary-color from-60% to-primary-color"
+    >
+      <!-- Sidebar content here -->
+      <div class="flex items-center pt-2 pb-12">
+        <img class="w-8" src="../../../assets/images/logo.png" alt="" />
+        <h1 class="text-2xl font-bold text-whiteSmoke">
+          <img
+            src="https://www.flaticon.com/free-icons/mobile-shopping"
+            alt=""
+          />
+          App<span class="text-primary-color">Logo</span>
+        </h1>
+      </div>
+      <li
+        class="text-base text-whiteSmoke hover:bg-sidebar-item hover:text-whiteSmoke rounded-xl"
+      >
+        <a
+          class="text-whiteSmoke"
+          routerLink="admin-products"
+          routerLinkActive="active-item"
+          ><ng-icon name="matAdminPanelSettings" class="text-2xl" />My
+          Products</a
+        >
+      </li>
+      <li class="text-base text-whiteSmoke hover:bg-sidebar-item rounded-xl">
+        <a routerLink="all-products" routerLinkActive="active-item"
+          ><ng-icon name="matShoppingBag" class="text-2xl" />Preview</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>
