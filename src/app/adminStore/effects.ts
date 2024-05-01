@@ -25,12 +25,9 @@ export class AdminEffects {
   getAdminProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAdminProducts.type),
-      switchMap(({adminId}: {adminId: string}) =>
-        this.adminService.getAdminProducts(adminId ).pipe(
-          map((adminProducts) => {
-            console.log("prod ", adminProducts);
-            return getAdminProductsComplete({ adminProducts });
-          }),
+      switchMap(({ adminId }: { adminId: string }) =>
+        this.adminService.getAdminProducts(adminId).pipe(
+          map((adminProducts) => getAdminProductsComplete({ adminProducts })),
           catchError((err) => {
             this.notification.create("error", "Sign In failed", err.message);
             return EMPTY;
@@ -59,13 +56,11 @@ export class AdminEffects {
     this.actions$.pipe(
       ofType(addProduct.type),
       switchMap(
-        (productWithFile: {
-          productWithFile: { product: Product; file?: File };
-        }) => {
-          console.log(productWithFile.productWithFile);
+        ({productWithFile}: {productWithFile: {product: Product, file?: File}}) => {
+          console.log(productWithFile);
 
           return this.adminService
-            .addProduct(productWithFile.productWithFile)
+            .addProduct(productWithFile)
             .pipe(
               map(() => {
                 this.notification.create(
