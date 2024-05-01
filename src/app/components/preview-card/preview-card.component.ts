@@ -12,9 +12,13 @@ import { matShoppingCartOutline } from "@ng-icons/material-icons/outline";
     provideIcons({
       matShoppingCartOutline,
     }),
-  ]
+  ],
 })
 export class PreviewCardComponent {
   @Output() onClick: EventEmitter<string> = new EventEmitter();
   productId = "dsgtyfdsvgvsd";
+
+  addToCartClick(event: Event) {
+    event.stopPropagation();
+  }
 }

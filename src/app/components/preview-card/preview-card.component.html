@@ -15,7 +15,8 @@
       <p>Quantity <span class="font-bold">3</span></p>
     </div>
     <button
-      class="w- btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke mt-4"
+      class="btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke mt-4"
+      (click)="addToCartClick($event)"
     >
       Add to cart
       <ng-icon name="matShoppingCartOutline" class="text-2xl" />
