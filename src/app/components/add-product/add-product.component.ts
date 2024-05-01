@@ -1,4 +1,4 @@
-import { NgIf } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -16,11 +16,12 @@ import { getCookie } from "../../utils/utils";
 import { AdminState } from "../../adminStore/reducer";
 import { Store } from "@ngrx/store";
 import { addProduct } from "../../adminStore/actions";
+import { selectIsLoadingState } from "../../adminStore/selectors";
 
 @Component({
   selector: "app-add-product",
   standalone: true,
-  imports: [NgIconComponent, NgIf, ReactiveFormsModule],
+  imports: [NgIconComponent, NgIf, ReactiveFormsModule, AsyncPipe],
   templateUrl: "./add-product.component.html",
   styleUrl: "./add-product.component.scss",
   viewProviders: [
@@ -39,6 +40,7 @@ export class AddProductComponent {
   store = inject(Store<AdminState>);
   selectedFile?: File;
   addProductForm: FormGroup | undefined;
+  isAdding$ = this.store.select(selectIsLoadingState);
 
   ngOnInit(): void {
     this.addProductForm = new FormGroup({
@@ -103,6 +105,8 @@ export class AddProductComponent {
       quantity,
       currency,
       category,
+      imageUrl:
+        "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     };
 
     this.store.dispatch(addProduct({ product }));

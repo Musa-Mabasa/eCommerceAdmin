@@ -57,9 +57,20 @@ export class AdminEffects {
       ofType(addProduct.type),
       switchMap((product: Product) =>
         this.adminService.addProduct(product).pipe(
-          map(() => addProductComplete()),
+          map(() => {
+            this.notification.create(
+              "success",
+              "Success",
+              "product added Successfully"
+            );
+            return addProductComplete();
+          }),
           catchError((err) => {
-            this.notification.create("error", "Sign In failed", err.message);
+            this.notification.create(
+              "error",
+              "Failed to add product",
+              err.message
+            );
             addProductError();
             return EMPTY;
           })
