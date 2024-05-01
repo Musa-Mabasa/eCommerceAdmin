@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { Cart, Product, Tag } from "../models/admin";
 
+// get actions
 export const getAdminProducts = createAction(
   "[ADMIN] GetAdminProducts",
   props<{ adminId: string }>()
@@ -11,13 +12,6 @@ export const getAdminProductsComplete = createAction(
   props<{ adminProducts: Product[] }>()
 );
 
-export const getAllStoreProducts = createAction("[ADMIN] GetAllStoreProducts");
-
-export const getAllStoreProductsComplete = createAction(
-  "[ADMIN] GetAllStoreProductsComplete",
-  props<{ allProducts: Product[] }>()
-);
-
 export const getAllTags = createAction("[ADMIN] GetAllTags");
 
 export const getAllTagsComplete = createAction(
@@ -25,28 +19,25 @@ export const getAllTagsComplete = createAction(
   props<{ allTags: Tag[] }>()
 );
 
-export const getAdminCart = createAction(
-  "[ADMIN] GetAdminCart",
-  props<{ adminId: string }>()
-);
-
-export const getAdminCartComplete = createAction(
-  "[ADMIN] GetAdminCartComplete",
-  props<{ cart: Cart }>()
-);
-
+// user select actions
 export const setSelectEditProduct = createAction(
   "[ADMIN] SetSelectEditProduct",
   props<{ selectedEditProduct: Product }>()
 );
 
-export const setSelectPreviewProduct = createAction(
-  "[ADMIN] SetSelectPreviewProduct",
-  props<{ selectedPreviewProduct: Product }>()
-);
-
+//fetching state actions
 export const setIsAuthLoading = createAction("[ADMIN] SetAuthLoading");
 
 export const setIsAuthLoadingComplete = createAction(
   "[ADMIN] SetAuthLoadingComplete"
 );
+
+// add/delete actions
+export const addProduct = createAction(
+  "[ADMIN] AddProduct",
+  props<{ product: Product }>()
+);
+
+export const addProductComplete = createAction("[ADMIN] AddProductComplete");
+
+export const addProductError = createAction("[ADMIN] AddProductError");

@@ -2,14 +2,13 @@ import { isDevMode } from "@angular/core";
 import { createReducer, MetaReducer, on } from "@ngrx/store";
 import { Cart, Product, Tag } from "../models/admin";
 import {
-  getAdminCartComplete,
+  addProduct,
+  addProductComplete,
   getAdminProductsComplete,
-  getAllStoreProductsComplete,
   getAllTagsComplete,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
   setSelectEditProduct,
-  setSelectPreviewProduct,
 } from "./actions";
 
 export const adminFeatureKey = "admin";
@@ -20,6 +19,7 @@ export interface AdminState {
   selectedProductId: string;
   allTags: Tag[];
   cart?: Cart;
+  isLoadingState: boolean;
   isAuthLoading: boolean;
 }
 
@@ -28,6 +28,7 @@ const initialState: AdminState = {
   allProducts: [],
   selectedProductId: "",
   allTags: [],
+  isLoadingState: false,
   isAuthLoading: false,
 };
 
@@ -37,25 +38,21 @@ export const adminReducer = createReducer(
     ...state,
     adminProducts,
   })),
-  on(getAllStoreProductsComplete, (state, { allProducts }) => ({
-    ...state,
-    allProducts,
-  })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
-  })),
-  on(getAdminCartComplete, (state, { cart }) => ({
-    ...state,
-    cart,
   })),
   on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
     ...state,
     selectedEditProduct,
   })),
-  on(setSelectPreviewProduct, (state, { selectedPreviewProduct }) => ({
+  on(addProduct, (state) => ({
     ...state,
-    selectedPreviewProduct,
+    isLoadingState: true,
+  })),
+  on(addProductComplete, (state) => ({
+    ...state,
+    isLoadingState: false,
   })),
   on(setIsAuthLoading, (state) => ({
     ...state,
