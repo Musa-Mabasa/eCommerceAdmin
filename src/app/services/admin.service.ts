@@ -1,13 +1,23 @@
 import { Injectable, inject } from "@angular/core";
 import { EMPTY, Observable, from, throwError } from "rxjs";
 import { Cart, Product, Tag } from "../models/admin";
-import { Firestore, collection, doc, setDoc } from "@angular/fire/firestore";
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  getDoc,
+  query,
+  setDoc,
+  where,
+} from "@angular/fire/firestore";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytes,
 } from "@angular/fire/storage";
+import { getCookie } from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -16,7 +26,15 @@ export class AdminService {
   firestore = inject(Firestore);
   //These are placeholder functions and will be implemented later.
   getAdminProducts(adminId: string): Observable<Product[]> {
-    return from(EMPTY);
+    console.log("phakathi inside");
+    console.log(adminId);
+
+    const fetchQuery = query(
+      collection(this.firestore, "Product"),
+      where("adminId", "==", adminId)
+    );
+
+    return collectionData(fetchQuery) as Observable<Product[]>;
   }
 
   getAllStoreProducts(): Observable<Product[]> {
@@ -50,7 +68,14 @@ export class AdminService {
               imageUrl: downloadURL,
             };
             return setDoc(doc(collection(this.firestore, "Product")), {
-              finalProduct,
+              adminId: finalProduct.adminId,
+              name: finalProduct.name,
+              description: finalProduct.description,
+              price: finalProduct.price,
+              currency: finalProduct.currency,
+              category: finalProduct.category,
+              quantity: finalProduct.quantity,
+              imageUrl: finalProduct.imageUrl,
             }).catch((err) => Error(err.message));
           })
         )
@@ -59,7 +84,13 @@ export class AdminService {
       const finalProduct = productWithFile.product;
       return from(
         setDoc(doc(collection(this.firestore, "Product")), {
-          finalProduct,
+          adminId: finalProduct.adminId,
+          name: finalProduct.name,
+          description: finalProduct.description,
+          price: finalProduct.price,
+          currency: finalProduct.currency,
+          category: finalProduct.category,
+          quantity: finalProduct.quantity,
         }).catch((err) => Error(err.message))
       );
     }

@@ -20,7 +20,7 @@
     </label>
     <div class="divider divider-horizontal"></div>
     <button
-        (click)="router.navigate(['home/add-product'])"
+      (click)="router.navigate(['home/add-product'])"
       class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
     >
       Add <span class="hidden sm:block">Product</span>
@@ -43,7 +43,11 @@
     </div>
     <div class="divider divider-horizontal"></div>
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-outline w-32 border-secondary-color rounded-xl">
+      <div
+        tabindex="0"
+        role="button"
+        class="btn btn-outline w-32 border-secondary-color rounded-xl"
+      >
         Sort by <ng-icon name="matSort" class="text-2xl" />
       </div>
       <ul
@@ -77,10 +81,10 @@
   <div
     class="py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
   >
+    @if (!(myProducts$ | async)?.length) {
+    <div>NO products</div>
+    } @else { @for(product of (myProducts$ | async); track product){
     <app-product-card class="w-72" (onClick)="routeToEdit($event)" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
+    } }
   </div>
 </section>

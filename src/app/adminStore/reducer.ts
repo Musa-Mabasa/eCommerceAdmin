@@ -5,6 +5,7 @@ import {
   addProduct,
   addProductComplete,
   addProductError,
+  getAdminProducts,
   getAdminProductsComplete,
   getAllTagsComplete,
   setIsAuthLoading,
@@ -35,10 +36,14 @@ const initialState: AdminState = {
 
 export const adminReducer = createReducer(
   initialState,
+  on(getAdminProducts, (state) => ({
+    ...state,
+    isLoadingState: true,
+  })),
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
-    isLoadingState: true,
+    isLoadingState: false,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,

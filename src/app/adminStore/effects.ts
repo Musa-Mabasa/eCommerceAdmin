@@ -25,9 +25,12 @@ export class AdminEffects {
   getAdminProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAdminProducts.type),
-      switchMap((adminId: string) =>
-        this.adminService.getAdminProducts(adminId).pipe(
-          map((adminProducts) => getAdminProductsComplete({ adminProducts })),
+      switchMap(({adminId}: {adminId: string}) =>
+        this.adminService.getAdminProducts(adminId ).pipe(
+          map((adminProducts) => {
+            console.log("prod ", adminProducts);
+            return getAdminProductsComplete({ adminProducts });
+          }),
           catchError((err) => {
             this.notification.create("error", "Sign In failed", err.message);
             return EMPTY;
@@ -61,25 +64,27 @@ export class AdminEffects {
         }) => {
           console.log(productWithFile.productWithFile);
 
-          return this.adminService.addProduct(productWithFile.productWithFile).pipe(
-            map(() => {
-              this.notification.create(
-                "success",
-                "Success",
-                "product added Successfully"
-              );
-              return addProductComplete();
-            }),
-            catchError((err) => {
-              this.notification.create(
-                "error",
-                "Failed to add product",
-                err.message
-              );
-              addProductError();
-              return EMPTY;
-            })
-          );
+          return this.adminService
+            .addProduct(productWithFile.productWithFile)
+            .pipe(
+              map(() => {
+                this.notification.create(
+                  "success",
+                  "Success",
+                  "product added Successfully"
+                );
+                return addProductComplete();
+              }),
+              catchError((err) => {
+                this.notification.create(
+                  "error",
+                  "Failed to add product",
+                  err.message
+                );
+                addProductError();
+                return EMPTY;
+              })
+            );
         }
       )
     )
