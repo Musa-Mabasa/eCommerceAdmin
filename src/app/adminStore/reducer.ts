@@ -4,6 +4,7 @@ import { Cart, Product, Tag } from "../models/admin";
 import {
   addProduct,
   addProductComplete,
+  addProductError,
   getAdminProductsComplete,
   getAllTagsComplete,
   setIsAuthLoading,
@@ -37,6 +38,7 @@ export const adminReducer = createReducer(
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
+    isLoadingState: true,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
@@ -51,6 +53,10 @@ export const adminReducer = createReducer(
     isLoadingState: true,
   })),
   on(addProductComplete, (state) => ({
+    ...state,
+    isLoadingState: false,
+  })),
+  on(addProductError, (state) => ({
     ...state,
     isLoadingState: false,
   })),

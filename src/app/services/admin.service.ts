@@ -22,4 +22,8 @@ export class AdminService {
   getAdminCart(adminId: string): Observable<Cart> {
     return from(EMPTY);
   }
+
+  addProduct(product: Product): Observable<void> {
+    return from(EMPTY);
+  }
 }

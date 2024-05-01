@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Cart, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag } from "../models/admin";
 
 // get actions
 export const getAdminProducts = createAction(
@@ -17,6 +17,13 @@ export const getAllTags = createAction("[ADMIN] GetAllTags");
 export const getAllTagsComplete = createAction(
   "[ADMIN] GetAllTagsComplete",
   props<{ allTags: Tag[] }>()
+);
+
+export const getCategories = createAction("[ADMIN] GetCategories");
+
+export const getCategoriesComplete = createAction(
+  "[ADMIN] GetCategoriesComplete",
+  props<{ categories: Category[] }>()
 );
 
 // user select actions

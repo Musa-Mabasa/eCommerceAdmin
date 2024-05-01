@@ -2,40 +2,36 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AdminService } from "../services/admin.service";
 import {
-  getAdminCart,
-  getAdminCartComplete,
+  addProduct,
+  addProductComplete,
+  addProductError,
   getAdminProducts,
   getAdminProductsComplete,
-  getAllStoreProducts,
-  getAllStoreProductsComplete,
   getAllTags,
   getAllTagsComplete,
 } from "./actions";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
+import { Product } from "../models/admin";
+import { NzNotificationService } from "ng-zorro-antd/notification";
 
 @Injectable()
 export class AdminEffects {
-  constructor(private actions$: Actions, private adminService: AdminService) {}
+  constructor(
+    private actions$: Actions,
+    private adminService: AdminService,
+    private notification: NzNotificationService
+  ) {}
 
   getAdminProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAdminProducts.type),
-      switchMap((adminId) =>
+      switchMap((adminId: string) =>
         this.adminService.getAdminProducts(adminId).pipe(
           map((adminProducts) => getAdminProductsComplete({ adminProducts })),
-          catchError((err) => EMPTY)
-        )
-      )
-    )
-  );
-
-  getAllStoreProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(getAllStoreProducts.type),
-      switchMap(() =>
-        this.adminService.getAllStoreProducts().pipe(
-          map((allProducts) => getAllStoreProductsComplete({ allProducts })),
-          catchError((err) => EMPTY)
+          catchError((err) => {
+            this.notification.create("error", "Sign In failed", err.message);
+            return EMPTY;
+          })
         )
       )
     )
@@ -47,19 +43,26 @@ export class AdminEffects {
       switchMap(() =>
         this.adminService.getAllTags().pipe(
           map((allTags) => getAllTagsComplete({ allTags })),
-          catchError((err) => EMPTY)
+          catchError((err) => {
+            this.notification.create("error", "Sign In failed", err.message);
+            return EMPTY;
+          })
         )
       )
     )
   );
 
-  getAdminCart$ = createEffect(() =>
+  addProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getAdminCart.type),
-      switchMap((adminId) =>
-        this.adminService.getAdminCart(adminId).pipe(
-          map((cart) => getAdminCartComplete({ cart })),
-          catchError((err) => EMPTY)
+      ofType(addProduct.type),
+      switchMap((product: Product) =>
+        this.adminService.addProduct(product).pipe(
+          map(() => addProductComplete()),
+          catchError((err) => {
+            this.notification.create("error", "Sign In failed", err.message);
+            addProductError();
+            return EMPTY;
+          })
         )
       )
     )

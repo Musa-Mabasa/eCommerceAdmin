@@ -1,14 +1,14 @@
 export interface Product {
-  id: string;
+  id?: string;
   adminId: string;
   cartId?: string;
   name: string;
-  desc: string;
+  description: string;
   price: number;
   currency: string;
   category: string;
   quantity: number;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface Cart {
@@ -20,6 +20,11 @@ export interface Tag {
   id: string;
   name: string;
   productId: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
 }
 
 export interface CorrelatedProduct {
