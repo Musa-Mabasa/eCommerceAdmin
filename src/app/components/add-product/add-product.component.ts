@@ -105,10 +105,10 @@ export class AddProductComponent {
       quantity,
       currency,
       category,
-      imageUrl:
-        "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     };
+    const file = this.selectedFile;
+    const productWithFile = { product, file };
 
-    this.store.dispatch(addProduct({ product }));
+    this.store.dispatch(addProduct({ productWithFile }));
   }
 }

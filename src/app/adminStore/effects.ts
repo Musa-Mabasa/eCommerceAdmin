@@ -55,26 +55,32 @@ export class AdminEffects {
   addProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProduct.type),
-      switchMap((product: Product) =>
-        this.adminService.addProduct(product).pipe(
-          map(() => {
-            this.notification.create(
-              "success",
-              "Success",
-              "product added Successfully"
-            );
-            return addProductComplete();
-          }),
-          catchError((err) => {
-            this.notification.create(
-              "error",
-              "Failed to add product",
-              err.message
-            );
-            addProductError();
-            return EMPTY;
-          })
-        )
+      switchMap(
+        (productWithFile: {
+          productWithFile: { product: Product; file?: File };
+        }) => {
+          console.log(productWithFile.productWithFile);
+
+          return this.adminService.addProduct(productWithFile.productWithFile).pipe(
+            map(() => {
+              this.notification.create(
+                "success",
+                "Success",
+                "product added Successfully"
+              );
+              return addProductComplete();
+            }),
+            catchError((err) => {
+              this.notification.create(
+                "error",
+                "Failed to add product",
+                err.message
+              );
+              addProductError();
+              return EMPTY;
+            })
+          );
+        }
       )
     )
   );

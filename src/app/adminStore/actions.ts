@@ -42,7 +42,7 @@ export const setIsAuthLoadingComplete = createAction(
 // add/delete actions
 export const addProduct = createAction(
   "[ADMIN] AddProduct",
-  props<{ product: Product }>()
+  props<{ productWithFile: { product: Product; file?: File } }>()
 );
 
 export const addProductComplete = createAction("[ADMIN] AddProductComplete");
