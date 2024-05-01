@@ -1,18 +1,22 @@
 <div
-  (click)="onClick.emit(productId)"
+  (click)="onClick.emit(product?.product?.id)"
   class="p-5 w-full flex flex-col gap-5 bg-search-color rounded-2xl cursor-pointer hover:scale-105 shadow-lg"
 >
   <img
     class="rounded-xl w-full h-44 object-cover"
-    src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    [src]="product?.product?.imageUrl"
     alt="Camera"
   />
   <div class="flex flex-col gap-2">
-    <h1 class="font-bold">Canon DO5 4000D</h1>
-    <p>R12,000</p>
+    <h1 class="font-bold">{{ product?.product?.name }}</h1>
+    <p>{{ product?.product?.price }}</p>
     <div class="flex justify-between pt-4">
-      <p>Category <span class="font-bold">Tech</span></p>
-      <p>Quantity <span class="font-bold">3</span></p>
+      <p>
+        Category <span class="font-bold">{{ product?.product?.category }}</span>
+      </p>
+      <p>
+        Quantity <span class="font-bold">{{ product?.product?.quantity }}</span>
+      </p>
     </div>
   </div>
 </div>

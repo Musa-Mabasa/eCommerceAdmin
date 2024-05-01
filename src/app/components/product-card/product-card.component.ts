@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { CorrelatedProduct } from "../../models/admin";
 
 @Component({
   selector: "app-product-card",
@@ -9,5 +10,5 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 })
 export class ProductCardComponent {
   @Output() onClick: EventEmitter<string> = new EventEmitter();
-  productId = "dsgtyfdsvgvsd"
+  @Input() product: CorrelatedProduct | undefined;
 }

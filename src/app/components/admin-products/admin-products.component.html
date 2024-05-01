@@ -84,7 +84,11 @@
     @if (!(myProducts$ | async)?.length) {
     <div>NO products</div>
     } @else { @for(product of (myProducts$ | async); track product){
-    <app-product-card class="w-72" (onClick)="routeToEdit($event)" />
+    <app-product-card
+      [product]="product"
+      class="w-72"
+      (onClick)="routeToEdit($event)"
+    />
     } }
   </div>
 </section>
