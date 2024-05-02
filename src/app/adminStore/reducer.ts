@@ -1,6 +1,6 @@
 import { isDevMode } from "@angular/core";
 import { createReducer, MetaReducer, on } from "@ngrx/store";
-import { Cart, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag } from "../models/admin";
 import {
   addProduct,
   addProductComplete,
@@ -8,6 +8,8 @@ import {
   getAdminProducts,
   getAdminProductsComplete,
   getAllTagsComplete,
+  getCategories,
+  getCategoriesComplete,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
   setSelectEditProduct,
@@ -19,9 +21,10 @@ export interface AdminState {
   adminProducts: Product[];
   allProducts: Product[];
   selectedProductId: string;
+  categories: Category[];
   allTags: Tag[];
   cart?: Cart;
-  isLoadingState: boolean;
+  isLoadingState: number;
   isAuthLoading: boolean;
 }
 
@@ -29,8 +32,9 @@ const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
   selectedProductId: "",
+  categories: [],
   allTags: [],
-  isLoadingState: false,
+  isLoadingState: 0,
   isAuthLoading: false,
 };
 
@@ -38,16 +42,25 @@ export const adminReducer = createReducer(
   initialState,
   on(getAdminProducts, (state) => ({
     ...state,
-    isLoadingState: true,
+    isLoadingState: state.isLoadingState + 1,
   })),
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
-    isLoadingState: false,
+    isLoadingState: state.isLoadingState - 1,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
+  })),
+  on(getCategories, (state) => ({
+    ...state,
+    isLoadingState: state.isLoadingState + 1,
+  })),
+  on(getCategoriesComplete, (state, { categories }) => ({
+    ...state,
+    categories,
+    isLoadingState: state.isLoadingState - 1,
   })),
   on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
     ...state,
@@ -55,15 +68,15 @@ export const adminReducer = createReducer(
   })),
   on(addProduct, (state) => ({
     ...state,
-    isLoadingState: true,
+    isLoadingState: state.isLoadingState + 1,
   })),
   on(addProductComplete, (state) => ({
     ...state,
-    isLoadingState: false,
+    isLoadingState: state.isLoadingState - 1,
   })),
   on(addProductError, (state) => ({
     ...state,
-    isLoadingState: false,
+    isLoadingState: state.isLoadingState - 1,
   })),
   on(setIsAuthLoading, (state) => ({
     ...state,

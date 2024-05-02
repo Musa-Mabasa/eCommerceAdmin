@@ -48,9 +48,8 @@ export const selectSelectedPreviewProduct = createSelector(
 
 export const selectCart = createSelector(selectFeature, (state) => state.cart);
 
-export const selectIsLoadingState = createSelector(
-  selectFeature,
-  (state) => state.isLoadingState
+export const selectIsLoadingState = createSelector(selectFeature, (state) =>
+  state.isLoadingState === 0 ? false : true
 );
 
 export const selectIsAuthLoading = createSelector(
