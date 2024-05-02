@@ -32,6 +32,16 @@ export const setSelectEditProduct = createAction(
   props<{ selectedEditProduct: Product }>()
 );
 
+export const setFilterBy = createAction(
+  "[ADMIN] setFilterBy",
+  props<{ filterBy: string }>()
+);
+
+export const setSortBy = createAction(
+  "[ADMIN] setSortBy",
+  props<{ sortBy: string }>()
+);
+
 //fetching state actions
 export const setIsAuthLoading = createAction("[ADMIN] SetAuthLoading");
 

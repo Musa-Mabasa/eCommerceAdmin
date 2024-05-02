@@ -10,11 +10,24 @@ export const selectAdminProductsWithTags = createSelector(
     if (!(state.adminProducts && state.allTags)) {
       return [];
     }
+    console.log(state.filterBy);
 
-    return state.adminProducts.map((product) => {
-      const tags = state.allTags.filter((tag) => tag.productId == product.id);
-      return { product, tags };
-    });
+    const products = state.adminProducts
+      .map((product) => {
+        const tags = state.allTags.filter((tag) => tag.productId == product.id);
+        return { product, tags };
+      })
+      .filter((product) => {
+        if (state.filterBy === "All Products") {
+          return true;
+        } else if (state.filterBy === product.product.category) {
+          return true;
+        }
+
+        return false;
+      });
+
+    return products;
   }
 );
 
@@ -46,6 +59,16 @@ export const selectSelectedEditProduct = createSelector(
     state.adminProducts.find(
       (product) => state.selectedProductId === product.id
     )
+);
+
+export const selectFilterBy = createSelector(
+  selectFeature,
+  (state) => state.filterBy
+);
+
+export const selectSortBy = createSelector(
+  selectFeature,
+  (state) => state.sortBy
 );
 
 export const selectSelectedPreviewProduct = createSelector(

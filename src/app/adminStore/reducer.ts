@@ -10,9 +10,11 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
+  setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
   setSelectEditProduct,
+  setSortBy,
 } from "./actions";
 
 export const adminFeatureKey = "admin";
@@ -22,6 +24,8 @@ export interface AdminState {
   allProducts: Product[];
   selectedProductId: string;
   categories: Category[];
+  filterBy: string;
+  sortBy: string;
   allTags: Tag[];
   cart?: Cart;
   isLoadingState: number;
@@ -33,6 +37,8 @@ const initialState: AdminState = {
   allProducts: [],
   selectedProductId: "",
   categories: [],
+  filterBy: "All Products",
+  sortBy: "",
   allTags: [],
   isLoadingState: 0,
   isAuthLoading: false,
@@ -65,6 +71,14 @@ export const adminReducer = createReducer(
   on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
     ...state,
     selectedEditProduct,
+  })),
+  on(setFilterBy, (state, { filterBy }) => ({
+    ...state,
+    filterBy,
+  })),
+  on(setSortBy, (state, { sortBy }) => ({
+    ...state,
+    sortBy,
   })),
   on(addProduct, (state) => ({
     ...state,

@@ -33,13 +33,13 @@
     <div
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
     >
-      @for (category of (categories$ | async); track category) {
-      @if(currentCategory === category.name){
+      @for (category of (categories$ | async); track category) { @if((filterBy$
+      | async) === category.name){
       <div class="badge bg-primary-color text-black px-3 py-4 text">
         {{ category.name }}
       </div>
       }@else {
-      <div (click)="currentCategory = category.name" class="cursor-pointer">
+      <div (click)="setFilterBy(category.name)" class="cursor-pointer">
         {{ category.name }}
       </div>
       } }
@@ -57,41 +57,46 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-whiteSmoke rounded-box w-52"
       >
-        <li (click)="sortBy = 'price'">
+        <li (click)="setSortBy('price')">
           <a class="flex justify-between"
             >Price
-            <span *ngIf="sortBy === 'price'"
+            <span *ngIf="(sortBy$ | async) === 'price'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
-        <li (click)="sortBy = 'quantity'">
+        <li (click)="setSortBy('quantity')">
           <a class="flex justify-between"
             >Quantity
-            <span *ngIf="sortBy === 'quantity'"
+            <span *ngIf="(sortBy$ | async) === 'quantity'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
-        <li (click)="sortBy = 'name'">
+        <li (click)="setSortBy('name')">
           <a class="flex justify-between"
             >Name
-            <span *ngIf="sortBy === 'name'"
+            <span *ngIf="(sortBy$ | async) === 'name'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
       </ul>
     </div>
   </div>
+  @if (!(myProducts$ | async)?.length){
+  <div class="grow flex flex-col justify-center items-center h-56">
+    <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
+    <p>No products</p>
+  </div>
+  } @else {
   <div
     class="py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
   >
-    @if (!(myProducts$ | async)?.length) {
-    <div>NO products</div>
-    } @else { @for(product of (myProducts$ | async); track product){
+    @for(product of (myProducts$ | async); track product){
     <app-product-card
       [product]="product"
       class="w-72"
       (editOnClick)="routeToEdit($event)"
     />
-    } }
+    }
   </div>
+  }
 </section>

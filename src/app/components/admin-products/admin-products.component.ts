@@ -9,8 +9,15 @@ import { AdminState } from "../../adminStore/reducer";
 import {
   selectAdminProductsWithTags,
   selectCategories,
+  selectFilterBy,
+  selectSortBy,
 } from "../../adminStore/selectors";
-import { getAdminProducts, getCategories } from "../../adminStore/actions";
+import {
+  getAdminProducts,
+  getCategories,
+  setFilterBy,
+  setSortBy,
+} from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
 import { Subscription } from "rxjs";
 
@@ -22,28 +29,29 @@ import { Subscription } from "rxjs";
   viewProviders: [provideIcons({ matPlus, matSort, matCheck })],
   imports: [NgIconComponent, ProductCardComponent, NgIf, AsyncPipe],
 })
-export class AdminProductsComponent implements OnDestroy {
-  sortBy = "price";
+export class AdminProductsComponent {
   router = inject(Router);
   store = inject(Store<AdminState>);
   categories$ = this.store.select(selectCategories);
   myProducts$ = this.store.select(selectAdminProductsWithTags);
-  currentCategory = "";
+  filterBy$ = this.store.select(selectFilterBy);
+  sortBy$ = this.store.select(selectSortBy);
   subscription: undefined | Subscription;
 
   constructor() {
     this.store.dispatch(getAdminProducts({ adminId: getCookie("userId") }));
     this.store.dispatch(getCategories());
-    this.subscription = this.categories$.subscribe((cat) => {
-      if (cat?.[0]?.name) this.currentCategory = cat[0].name;
-    });
   }
 
   routeToEdit(event: string) {
     this.router.navigate([`home/edit-product/${event}`]);
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) this.subscription.unsubscribe();
+  setFilterBy(category: string) {
+    this.store.dispatch(setFilterBy({ filterBy: category }));
+  }
+
+  setSortBy(sortField: string) {
+    this.store.dispatch(setSortBy({ sortBy: sortField }));
   }
 }
