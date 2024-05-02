@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from "@angular/common";
 import { Component, Input, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
   matCheck,
@@ -19,6 +19,7 @@ import {
 } from "../../adminStore/selectors";
 import { getCategories, getProductById } from "../../adminStore/actions";
 import { FormControl, FormGroup } from "@angular/forms";
+import { map } from "rxjs";
 
 @Component({
   selector: "app-edit-product",
@@ -41,6 +42,7 @@ export class EditProductComponent {
   @Input() correlatedProduct: CorrelatedProduct | undefined;
   @Input() productId?: string;
   router = inject(Router);
+  route = inject(ActivatedRoute);
   onImageEdit = false;
   selectedFile?: File;
   store = inject(Store<AdminState>);
@@ -50,8 +52,10 @@ export class EditProductComponent {
 
   constructor() {
     this.store.dispatch(getCategories());
-    if (!this.product$ && this.productId) {
-      this.store.dispatch(getProductById({ productId: this.productId }));
+    const productId = this.route.snapshot.paramMap.get("productId");
+    
+    if (productId) {
+      this.store.dispatch(getProductById({ productId }));
     }
   }
 

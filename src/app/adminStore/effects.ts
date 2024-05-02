@@ -65,7 +65,10 @@ export class AdminEffects {
       ofType(getProductById.type),
       switchMap(({ productId }: { productId: string }) =>
         this.adminService.getProductById(productId).pipe(
-          map((product) => getProductByIdComplete({ product: product[0] })),
+          map((product) => {
+            console.log(product);
+            return getProductByIdComplete({ product: product });
+          }),
           catchError((err) => {
             this.notification.create(
               "error",

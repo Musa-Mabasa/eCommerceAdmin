@@ -37,12 +37,9 @@ export class AdminService {
   }
 
   getProductById(productId: string) {
-    const fetchQuery = query(
-      collection(this.firestore, "Product"),
-      where("id", "==", productId)
-    );
+    const docRef = doc(this.firestore, "Product", productId);
 
-    return collectionData(fetchQuery) as Observable<Product[]>;
+    return from(getDoc(docRef).then((res) => res.data() as Product));
   }
 
   getCategories() {

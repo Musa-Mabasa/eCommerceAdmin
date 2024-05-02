@@ -49,7 +49,7 @@ export class AdminProductsComponent {
 
   routeToEdit(event: Product) {
     this.store.dispatch(setSelectEditProduct({ productToEdit: event }));
-    this.router.navigate([`home/edit-product/${event}`]);
+    this.router.navigate([`home/edit-product/${event.id}`]);
   }
 
   setFilterBy(category: string) {
