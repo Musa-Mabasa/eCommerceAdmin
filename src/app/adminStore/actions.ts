@@ -22,9 +22,7 @@ export const getProductByIdComplete = createAction(
   props<{ product: Product }>()
 );
 
-export const getProductByIdError = createAction(
-  "[ADMIN] GetProductByIdError",
-);
+export const getProductByIdError = createAction("[ADMIN] GetProductByIdError");
 
 export const getAllTags = createAction("[ADMIN] GetAllTags");
 
@@ -77,3 +75,12 @@ export const addProduct = createAction(
 export const addProductComplete = createAction("[ADMIN] AddProductComplete");
 
 export const addProductError = createAction("[ADMIN] AddProductError");
+
+export const editProduct = createAction(
+  "[ADMIN] EditProduct",
+  props<{ productWithFile: { product: Product; file?: File } }>()
+);
+
+export const editProductComplete = createAction("[ADMIN] EditProductComplete");
+
+export const editProductError = createAction("[ADMIN] EditProductError");

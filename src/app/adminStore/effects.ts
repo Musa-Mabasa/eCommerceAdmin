@@ -5,6 +5,9 @@ import {
   addProduct,
   addProductComplete,
   addProductError,
+  editProduct,
+  editProductComplete,
+  editProductError,
   getAdminProducts,
   getAdminProductsComplete,
   getAllTags,
@@ -66,7 +69,6 @@ export class AdminEffects {
       switchMap(({ productId }: { productId: string }) =>
         this.adminService.getProductById(productId).pipe(
           map((product) => {
-            console.log(product);
             return getProductByIdComplete({ product: product });
           }),
           catchError((err) => {
@@ -122,6 +124,40 @@ export class AdminEffects {
                 err.message
               );
               addProductError();
+              return EMPTY;
+            })
+          )
+      )
+    )
+  );
+
+  editProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editProduct.type),
+      switchMap(
+        ({
+          productWithFile,
+        }: {
+          productWithFile: { product: Product; file?: File };
+        }) =>
+          this.adminService.editProduct(productWithFile).pipe(
+            map(() => {
+              this.notification.create(
+                "success",
+                "Success",
+                "product added Successfully"
+              );
+              console.log('doneee');
+              
+              return editProductComplete();
+            }),
+            catchError((err) => {
+              this.notification.create(
+                "error",
+                "Failed to add product",
+                err.message
+              );
+              editProductError();
               return EMPTY;
             })
           )

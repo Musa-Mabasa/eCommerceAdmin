@@ -17,8 +17,8 @@ import { AdminState } from "../../adminStore/reducer";
 import { Store } from "@ngrx/store";
 import { addProduct, getCategories } from "../../adminStore/actions";
 import {
+  selectAddLoadingState,
   selectCategories,
-  selectIsLoadingState,
 } from "../../adminStore/selectors";
 
 @Component({
@@ -43,7 +43,7 @@ export class AddProductComponent {
   store = inject(Store<AdminState>);
   selectedFile?: File;
   addProductForm: FormGroup | undefined;
-  isAdding$ = this.store.select(selectIsLoadingState);
+  isAdding$ = this.store.select(selectAddLoadingState);
   categories$ = this.store.select(selectCategories);
 
   constructor() {

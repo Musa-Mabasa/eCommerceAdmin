@@ -18,7 +18,9 @@ export const selectAdminProductsWithTags = createSelector(
       .filter((product) => {
         if (
           state.filterBy === "All Products" &&
-          product.product.name.includes(state.searchTerm)
+          product.product.name
+            .toLowerCase()
+            .includes(state.searchTerm.toLowerCase())
         ) {
           return true;
         } else if (
@@ -82,8 +84,24 @@ export const selectProductToEdit = createSelector(
 
 export const selectCart = createSelector(selectFeature, (state) => state.cart);
 
-export const selectIsLoadingState = createSelector(selectFeature, (state) =>
-  state.isLoadingState === 0 ? false : true
+export const selectProductLoadingState = createSelector(
+  selectFeature,
+  (state) => state.productLoadingState
+);
+
+export const selectAddLoadingState = createSelector(
+  selectFeature,
+  (state) => state.addingLoadingState
+);
+
+export const selectEditLoadingState = createSelector(
+  selectFeature,
+  (state) => state.editLoadingState
+);
+
+export const selectCategoriesLoadingState = createSelector(
+  selectFeature,
+  (state) => state.categoryLoadingState
 );
 
 export const selectIsAuthLoading = createSelector(

@@ -96,4 +96,62 @@ export class AdminService {
       );
     }
   }
+
+  editProduct(productWithFile: {
+    product: Product;
+    file?: File;
+  }): Observable<void | Error> {
+    if (productWithFile.file) {
+      const storage = getStorage();
+      const imageRef = ref(storage, productWithFile.file.name);
+      const blob = productWithFile.file as Blob;
+
+      return from(
+        uploadBytes(imageRef, blob).then((snapshot) =>
+          getDownloadURL(snapshot.ref).then((downloadURL) => {
+            const finalProduct = {
+              ...productWithFile.product,
+              imageUrl: downloadURL,
+            };
+            return setDoc(
+              doc(
+                collection(this.firestore, "Product"),
+                productWithFile.product.id
+              ),
+              {
+                adminId: finalProduct.adminId,
+                name: finalProduct.name,
+                description: finalProduct.description,
+                price: finalProduct.price,
+                currency: finalProduct.currency,
+                category: finalProduct.category,
+                quantity: finalProduct.quantity,
+                imageUrl: finalProduct.imageUrl,
+              }
+            ).catch((err) => Error(err.message));
+          })
+        )
+      );
+    } else {
+      const finalProduct = productWithFile.product;
+      return from(
+        setDoc(
+          doc(
+            collection(this.firestore, "Product"),
+            productWithFile.product.id
+          ),
+          {
+            adminId: finalProduct.adminId,
+            name: finalProduct.name,
+            description: finalProduct.description,
+            price: finalProduct.price,
+            currency: finalProduct.currency,
+            category: finalProduct.category,
+            quantity: finalProduct.quantity,
+            imageUrl: finalProduct.imageUrl,
+          }
+        ).catch((err) => Error(err.message))
+      );
+    }
+  }
 }

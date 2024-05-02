@@ -5,6 +5,9 @@ import {
   addProduct,
   addProductComplete,
   addProductError,
+  editProduct,
+  editProductComplete,
+  editProductError,
   getAdminProducts,
   getAdminProductsComplete,
   getAllTagsComplete,
@@ -33,7 +36,10 @@ export interface AdminState {
   searchTerm: string;
   allTags: Tag[];
   cart?: Cart;
-  isLoadingState: number;
+  productLoadingState: boolean;
+  addingLoadingState: boolean;
+  editLoadingState: boolean;
+  categoryLoadingState: boolean;
   isAuthLoading: boolean;
 }
 
@@ -45,7 +51,10 @@ const initialState: AdminState = {
   sortBy: "",
   searchTerm: "",
   allTags: [],
-  isLoadingState: 0,
+  productLoadingState: false,
+  addingLoadingState: false,
+  editLoadingState: false,
+  categoryLoadingState: false,
   isAuthLoading: false,
 };
 
@@ -53,25 +62,25 @@ export const adminReducer = createReducer(
   initialState,
   on(getAdminProducts, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState + 1,
+    productLoadingState: true,
   })),
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
-    isLoadingState: state.isLoadingState - 1,
+    productLoadingState: false,
   })),
   on(getProductById, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState + 1,
+    productLoadingState: true,
   })),
   on(getProductByIdComplete, (state, { product }) => ({
     ...state,
     productToEdit: product,
-    isLoadingState: state.isLoadingState - 1,
+    productLoadingState: false,
   })),
   on(getProductByIdError, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState - 1,
+    productLoadingState: false,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
@@ -79,12 +88,12 @@ export const adminReducer = createReducer(
   })),
   on(getCategories, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState + 1,
+    categoryLoadingState: true,
   })),
   on(getCategoriesComplete, (state, { categories }) => ({
     ...state,
     categories,
-    isLoadingState: state.isLoadingState - 1,
+    categoryLoadingState: false,
   })),
   on(setSelectEditProduct, (state, { productToEdit }) => ({
     ...state,
@@ -104,15 +113,19 @@ export const adminReducer = createReducer(
   })),
   on(addProduct, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState + 1,
+    addingLoadingState: true,
   })),
   on(addProductComplete, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState - 1,
+    addingLoadingState: false,
   })),
-  on(addProductError, (state) => ({
+  on(editProduct, (state) => ({
     ...state,
-    isLoadingState: state.isLoadingState - 1,
+    editLoadingState: true,
+  })),
+  on(editProductComplete, (state) => ({
+    ...state,
+    editLoadingState: false,
   })),
   on(setIsAuthLoading, (state) => ({
     ...state,
