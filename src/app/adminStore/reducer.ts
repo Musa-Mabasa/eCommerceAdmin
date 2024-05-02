@@ -10,6 +10,9 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
+  getProductById,
+  getProductByIdComplete,
+  getProductByIdError,
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
@@ -23,7 +26,7 @@ export const adminFeatureKey = "admin";
 export interface AdminState {
   adminProducts: Product[];
   allProducts: Product[];
-  selectedProductId: string;
+  productToEdit?: Product;
   categories: Category[];
   filterBy: string;
   sortBy: string;
@@ -37,7 +40,6 @@ export interface AdminState {
 const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
-  selectedProductId: "",
   categories: [],
   filterBy: "All Products",
   sortBy: "",
@@ -58,6 +60,19 @@ export const adminReducer = createReducer(
     adminProducts,
     isLoadingState: state.isLoadingState - 1,
   })),
+  on(getProductById, (state) => ({
+    ...state,
+    isLoadingState: state.isLoadingState + 1,
+  })),
+  on(getProductByIdComplete, (state, { product }) => ({
+    ...state,
+    productToEdit: product,
+    isLoadingState: state.isLoadingState - 1,
+  })),
+  on(getProductByIdError, (state) => ({
+    ...state,
+    isLoadingState: state.isLoadingState - 1,
+  })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
@@ -71,9 +86,9 @@ export const adminReducer = createReducer(
     categories,
     isLoadingState: state.isLoadingState - 1,
   })),
-  on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
+  on(setSelectEditProduct, (state, { productToEdit }) => ({
     ...state,
-    selectedEditProduct,
+    productToEdit,
   })),
   on(setFilterBy, (state, { filterBy }) => ({
     ...state,

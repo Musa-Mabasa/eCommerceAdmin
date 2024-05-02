@@ -10,6 +10,7 @@ import {
   selectAdminProductsWithTags,
   selectCategories,
   selectFilterBy,
+  selectProductToEdit,
   selectSortBy,
 } from "../../adminStore/selectors";
 import {
@@ -17,10 +18,12 @@ import {
   getCategories,
   setFilterBy,
   setSearchTerm,
+  setSelectEditProduct,
   setSortBy,
 } from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
 import { Subscription } from "rxjs";
+import { Product } from "../../models/admin";
 
 @Component({
   selector: "app-admin-products",
@@ -44,7 +47,8 @@ export class AdminProductsComponent {
     this.store.dispatch(getCategories());
   }
 
-  routeToEdit(event: string) {
+  routeToEdit(event: Product) {
+    this.store.dispatch(setSelectEditProduct({ productToEdit: event }));
     this.router.navigate([`home/edit-product/${event}`]);
   }
 

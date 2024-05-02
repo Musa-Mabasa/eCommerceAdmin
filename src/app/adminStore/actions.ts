@@ -12,6 +12,20 @@ export const getAdminProductsComplete = createAction(
   props<{ adminProducts: Product[] }>()
 );
 
+export const getProductById = createAction(
+  "[ADMIN] GetProductById",
+  props<{ productId: string }>()
+);
+
+export const getProductByIdComplete = createAction(
+  "[ADMIN] GetProductByIdComplete",
+  props<{ product: Product }>()
+);
+
+export const getProductByIdError = createAction(
+  "[ADMIN] GetProductByIdError",
+);
+
 export const getAllTags = createAction("[ADMIN] GetAllTags");
 
 export const getAllTagsComplete = createAction(
@@ -29,7 +43,7 @@ export const getCategoriesComplete = createAction(
 // user select actions
 export const setSelectEditProduct = createAction(
   "[ADMIN] SetSelectEditProduct",
-  props<{ selectedEditProduct: Product }>()
+  props<{ productToEdit: Product }>()
 );
 
 export const setFilterBy = createAction(
@@ -42,7 +56,7 @@ export const setSortBy = createAction(
   props<{ sortBy: string }>()
 );
 
-export const setSearchTerm= createAction(
+export const setSearchTerm = createAction(
   "[ADMIN] setSearchTerm",
   props<{ searchTerm: string }>()
 );

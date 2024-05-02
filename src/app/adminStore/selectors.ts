@@ -65,14 +65,6 @@ export const selectAllProductsWithTags = createSelector(
   }
 );
 
-export const selectSelectedEditProduct = createSelector(
-  selectFeature,
-  (state) =>
-    state.adminProducts.find(
-      (product) => state.selectedProductId === product.id
-    )
-);
-
 export const selectFilterBy = createSelector(
   selectFeature,
   (state) => state.filterBy
@@ -83,10 +75,9 @@ export const selectSortBy = createSelector(
   (state) => state.sortBy
 );
 
-export const selectSelectedPreviewProduct = createSelector(
+export const selectProductToEdit = createSelector(
   selectFeature,
-  (state) =>
-    state.allProducts.find((product) => state.selectedProductId === product.id)
+  (state) => state.productToEdit
 );
 
 export const selectCart = createSelector(selectFeature, (state) => state.cart);

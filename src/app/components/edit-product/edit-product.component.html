@@ -24,7 +24,7 @@
       <p>Product Name</p>
       <input
         type="text"
-        [value]="correlatedProduct?.product?.name"
+        [value]="(product$ | async)?.name"
         class="input bg-edit-input-color w-full border border-primary-color"
       />
     </div>
@@ -32,7 +32,7 @@
       <p>Product Description</p>
       <textarea
         row="5"
-        [defaultValue]="correlatedProduct?.product?.description"
+        [defaultValue]="(product$ | async)?.description"
         class="input py-2 px-4 bg-edit-input-color w-full h-40 border border-primary-color"
       ></textarea>
     </div>
@@ -49,8 +49,8 @@
       /></span>
       <img
         class="rounded-xl grid w-full h-56 object-cover place-items-center"
-        [src]="correlatedProduct?.product?.imageUrl"
-        [alt]="correlatedProduct?.product?.name"
+        [src]="(product$ | async)?.imageUrl"
+        [alt]="(product$ | async)?.name"
       />
     </div>
     <div
@@ -136,7 +136,7 @@
         <input
           type="number"
           name="price"
-          [value]="correlatedProduct?.product?.price"
+          [value]="(product$ | async)?.price"
           step="0.01"
           class="input bg-edit-input-color w-full border border-primary-color"
         />
@@ -146,42 +146,21 @@
         <input
           type="number"
           name="price"
-          [value]="correlatedProduct?.product?.price"
+          [value]="(product$ | async)?.quantity"
           class="input bg-edit-input-color w-full border border-primary-color"
         />
       </div>
       <div class="flex flex-col gap-2">
         <p>Currency</p>
-        <div class="dropdown">
-          <label
-            class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2 border border-primary-color"
-          >
-            <input
-              type="button"
-              name="price"
-              [value]="currency"
-              class="input text-start w-full px-0"
-            />
-            <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
-          </label>
-          <ul
-            tabindex="0"
-            class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
-          >
-            <li *ngIf="currency !== 'ZAR'" (click)="currency = 'ZAR'">
-              <a>ZAR</a>
-            </li>
-            <li *ngIf="currency !== 'USD'" (click)="currency = 'USD'">
-              <a>USD</a>
-            </li>
-            <li *ngIf="currency !== 'EUR'" (click)="currency = 'EUR'">
-              <a>EUR</a>
-            </li>
-            <li *ngIf="currency !== 'GBP'" (click)="currency = 'GBP'">
-              <a>GBP</a>
-            </li>
-          </ul>
-        </div>
+        <select
+          class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+          formControlName="currency"
+        >
+          <option selected value="ZAR">ZAR</option>
+          <option value="GBP">GBP</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
       </div>
     </div>
   </div>
@@ -190,42 +169,12 @@
   >
     <h2 class="text-base font-semibold">Category</h2>
     <div class="flex flex-col gap-2">
-      <p>Currency</p>
-      <div class="dropdown w-full">
-        <label
-          class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2 border border-primary-color"
-        >
-          <input
-            type="button"
-            name="price"
-            [value]="category"
-            class="input text-start w-full px-0"
-          />
-          <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
-        </label>
-        <ul
-          tabindex="0"
-          class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
-        >
-          <li *ngIf="category !== 'Tech'" (click)="category = 'Tech'">
-            <a>Tech</a>
-          </li>
-          <li *ngIf="category !== 'Clothes'" (click)="category = 'Clothes'">
-            <a>Clothes</a>
-          </li>
-          <li *ngIf="category !== 'Kitchen'" (click)="category = 'Kitchen'">
-            <a>Kitchen</a>
-          </li>
-          <li *ngIf="category !== 'Shoes'" (click)="category = 'Shoes'">
-            <a>Shoes</a>
-          </li>
-        </ul>
+      <p>Category</p>
+      <div
+        class="h-12 rounded-lg py-2 px-3 text-base bg-edit-input-color w-full border border-primary-color"
+      >
+        {{ (product$ | async)?.category }}
       </div>
     </div>
-    <button
-      class="w-40 sm:w-44 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
-    >
-      Add category <ng-icon name="matPlus" class="text-2xl" />
-    </button>
   </div>
 </section>
