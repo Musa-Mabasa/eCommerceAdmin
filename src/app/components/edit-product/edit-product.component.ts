@@ -1,5 +1,5 @@
 import { NgIf } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
@@ -10,6 +10,7 @@ import {
   matKeyboardArrowDown,
   matPlus,
 } from "@ng-icons/material-icons/baseline";
+import { CorrelatedProduct } from "../../models/admin";
 
 @Component({
   selector: "app-edit-product",
@@ -29,6 +30,7 @@ import {
   ],
 })
 export class EditProductComponent {
+  @Input() correlatedProduct: CorrelatedProduct | undefined;
   currency = "ZAR";
   category = "Tech";
   router = inject(Router);

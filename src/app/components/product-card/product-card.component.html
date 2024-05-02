@@ -1,5 +1,4 @@
 <div
-  (click)="onClick.emit(product?.product?.id)"
   class="p-5 w-full flex flex-col gap-5 bg-search-color rounded-2xl cursor-pointer hover:scale-105 shadow-lg"
 >
   <img
@@ -8,8 +7,8 @@
     alt="Camera"
   />
   <div class="flex flex-col gap-2">
-    <h1 class="font-bold">{{ product?.product?.name }}</h1>
-    <p>{{ product?.product?.price }}</p>
+    <h1 class="font-bold text-lg">{{ product?.product?.name }}</h1>
+    <p class="font-semibold">R{{ product?.product?.price }}</p>
     <div class="flex justify-between pt-4">
       <p>
         Category <span class="font-bold">{{ product?.product?.category }}</span>
@@ -18,5 +17,21 @@
         Quantity <span class="font-bold">{{ product?.product?.quantity }}</span>
       </p>
     </div>
+  </div>
+  <div class="flex gap-3 w-full">
+    <button
+      class="grow btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+      (click)="editOnClick.emit(product?.product?.id)"
+    >
+      Edit
+      <ng-icon name="matEdit" class="text-2xl" />
+    </button>
+    <button
+      class="grow btn bg-red text-whiteSmoke rounded-3xl shadow-xl hover:bg-sidebar-item"
+      (click)="deleteOnClick.emit()"
+    >
+      Delete
+      <ng-icon name="matDelete" class="text-2xl" />
+    </button>
   </div>
 </div>

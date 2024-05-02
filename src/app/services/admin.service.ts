@@ -26,9 +26,6 @@ export class AdminService {
   firestore = inject(Firestore);
   //These are placeholder functions and will be implemented later.
   getAdminProducts(adminId: string): Observable<Product[]> {
-    console.log("phakathi inside");
-    console.log(adminId);
-
     const fetchQuery = query(
       collection(this.firestore, "Product"),
       where("adminId", "==", adminId)

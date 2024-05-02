@@ -24,7 +24,7 @@
       <p>Product Name</p>
       <input
         type="text"
-        value="Canon DO5 4000D"
+        [value]="correlatedProduct?.product?.name"
         class="input bg-edit-input-color w-full border border-primary-color"
       />
     </div>
@@ -32,9 +32,7 @@
       <p>Product Description</p>
       <textarea
         row="5"
-        [defaultValue]="
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
-        "
+        [defaultValue]="correlatedProduct?.product?.description"
         class="input py-2 px-4 bg-edit-input-color w-full h-40 border border-primary-color"
       ></textarea>
     </div>
@@ -51,8 +49,8 @@
       /></span>
       <img
         class="rounded-xl grid w-full h-56 object-cover place-items-center"
-        src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        alt="Camera"
+        [src]="correlatedProduct?.product?.imageUrl"
+        [alt]="correlatedProduct?.product?.name"
       />
     </div>
     <div
@@ -138,7 +136,7 @@
         <input
           type="number"
           name="price"
-          value="0"
+          [value]="correlatedProduct?.product?.price"
           step="0.01"
           class="input bg-edit-input-color w-full border border-primary-color"
         />
@@ -148,7 +146,7 @@
         <input
           type="number"
           name="price"
-          value="0"
+          [value]="correlatedProduct?.product?.price"
           class="input bg-edit-input-color w-full border border-primary-color"
         />
       </div>

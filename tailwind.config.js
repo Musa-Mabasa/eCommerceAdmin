@@ -9,7 +9,7 @@ export default {
       whiteSmoke: "whiteSmoke",
       blue: "blue",
       white: "white",
-      red: "red",
+      red: "#D22B2B",
       "sidebar-item": "rgb(255,255,255, 0.3)",
       "search-color": "#f5f7fa",
       black: "black",
