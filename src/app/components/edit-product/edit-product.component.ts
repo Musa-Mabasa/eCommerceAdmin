@@ -121,7 +121,6 @@ export class EditProductComponent implements OnInit, OnDestroy {
   confirmEdit() {
     if (this.editProductForm?.invalid) {
     }
-    console.log(this.editProductForm?.value);
 
     const { name, description, price, quantity, currency, category } =
       this.editProductForm?.value;
@@ -141,8 +140,6 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
       const file = this.selectedFile;
       const productWithFile = { product, file };
-
-      console.log(productWithFile);
 
       this.store.dispatch(editProduct({ productWithFile }));
     }
