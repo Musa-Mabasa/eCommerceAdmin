@@ -27,6 +27,14 @@ export const selectAdminProductsWithTags = createSelector(
         return false;
       });
 
+    if (state.sortBy === "price") {
+      products.sort((a, b) => a.product.price - b.product.price);
+    } else if (state.sortBy === "name") {
+      products.sort((a, b) => a.product.name.localeCompare(b.product.name));
+    } else if (state.sortBy === "quantity") {
+      products.sort((a, b) => b.product.quantity - a.product.quantity);
+    }
+
     return products;
   }
 );
