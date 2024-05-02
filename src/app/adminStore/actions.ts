@@ -42,6 +42,11 @@ export const setSortBy = createAction(
   props<{ sortBy: string }>()
 );
 
+export const setSearchTerm= createAction(
+  "[ADMIN] setSearchTerm",
+  props<{ searchTerm: string }>()
+);
+
 //fetching state actions
 export const setIsAuthLoading = createAction("[ADMIN] SetAuthLoading");
 

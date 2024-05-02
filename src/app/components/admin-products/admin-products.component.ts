@@ -16,6 +16,7 @@ import {
   getAdminProducts,
   getCategories,
   setFilterBy,
+  setSearchTerm,
   setSortBy,
 } from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
@@ -53,5 +54,13 @@ export class AdminProductsComponent {
 
   setSortBy(sortField: string) {
     this.store.dispatch(setSortBy({ sortBy: sortField }));
+  }
+
+  onSearch(event: Event) {
+    if (event?.target) {
+      this.store.dispatch(
+        setSearchTerm({ searchTerm: (event.target as HTMLInputElement).value })
+      );
+    }
   }
 }

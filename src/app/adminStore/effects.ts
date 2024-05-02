@@ -44,11 +44,7 @@ export class AdminEffects {
       ofType(getCategories.type),
       switchMap(() =>
         this.adminService.getCategories().pipe(
-          map((categories) => {
-            console.log(categories);
-
-            return getCategoriesComplete({ categories });
-          }),
+          map((categories) => getCategoriesComplete({ categories })),
           catchError((err) => {
             this.notification.create(
               "error",
@@ -85,10 +81,8 @@ export class AdminEffects {
           productWithFile,
         }: {
           productWithFile: { product: Product; file?: File };
-        }) => {
-          console.log(productWithFile);
-
-          return this.adminService.addProduct(productWithFile).pipe(
+        }) =>
+          this.adminService.addProduct(productWithFile).pipe(
             map(() => {
               this.notification.create(
                 "success",
@@ -106,8 +100,7 @@ export class AdminEffects {
               addProductError();
               return EMPTY;
             })
-          );
-        }
+          )
       )
     )
   );

@@ -4,7 +4,12 @@
     <label
       class="input input-bordered mr-0 w-32 sm:w-64 lg:w-80 xl:w-96 rounded-3xl bg-search-color flex items-center justify-between"
     >
-      <input type="text" class="w-4/5" placeholder="Search..." />
+      <input
+        type="text"
+        class="w-4/5"
+        placeholder="Search..."
+        (input)="onSearch($event)"
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"

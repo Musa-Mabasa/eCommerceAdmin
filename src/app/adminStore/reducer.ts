@@ -13,6 +13,7 @@ import {
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
+  setSearchTerm,
   setSelectEditProduct,
   setSortBy,
 } from "./actions";
@@ -26,6 +27,7 @@ export interface AdminState {
   categories: Category[];
   filterBy: string;
   sortBy: string;
+  searchTerm: string;
   allTags: Tag[];
   cart?: Cart;
   isLoadingState: number;
@@ -39,6 +41,7 @@ const initialState: AdminState = {
   categories: [],
   filterBy: "All Products",
   sortBy: "",
+  searchTerm: "",
   allTags: [],
   isLoadingState: 0,
   isAuthLoading: false,
@@ -79,6 +82,10 @@ export const adminReducer = createReducer(
   on(setSortBy, (state, { sortBy }) => ({
     ...state,
     sortBy,
+  })),
+  on(setSearchTerm, (state, { searchTerm }) => ({
+    ...state,
+    searchTerm,
   })),
   on(addProduct, (state) => ({
     ...state,

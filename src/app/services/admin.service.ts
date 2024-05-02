@@ -31,7 +31,9 @@ export class AdminService {
       where("adminId", "==", adminId)
     );
 
-    return collectionData(fetchQuery) as Observable<Product[]>;
+    return collectionData(fetchQuery, { idField: "id" }) as Observable<
+      Product[]
+    >;
   }
 
   getCategories() {
@@ -56,8 +58,6 @@ export class AdminService {
       return from(
         uploadBytes(imageRef, blob).then((snapshot) =>
           getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log(downloadURL);
-
             const finalProduct = {
               ...productWithFile.product,
               imageUrl: downloadURL,

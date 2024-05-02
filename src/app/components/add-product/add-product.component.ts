@@ -105,8 +105,6 @@ export class AddProductComponent {
 
     const adminId = getCookie("userId");
 
-    console.log("cat", category);
-
     const product: Product = {
       adminId,
       name,

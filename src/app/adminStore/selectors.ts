@@ -10,17 +10,21 @@ export const selectAdminProductsWithTags = createSelector(
     if (!(state.adminProducts && state.allTags)) {
       return [];
     }
-    console.log(state.filterBy);
-
     const products = state.adminProducts
       .map((product) => {
         const tags = state.allTags.filter((tag) => tag.productId == product.id);
         return { product, tags };
       })
       .filter((product) => {
-        if (state.filterBy === "All Products") {
+        if (
+          state.filterBy === "All Products" &&
+          product.product.name.includes(state.searchTerm)
+        ) {
           return true;
-        } else if (state.filterBy === product.product.category) {
+        } else if (
+          state.filterBy === product.product.category &&
+          product.product.name.includes(state.searchTerm)
+        ) {
           return true;
         }
 
