@@ -84,3 +84,14 @@ export const editProduct = createAction(
 export const editProductComplete = createAction("[ADMIN] EditProductComplete");
 
 export const editProductError = createAction("[ADMIN] EditProductError");
+
+export const deleteProduct = createAction(
+  "[ADMIN] DeleteProduct",
+  props<{ productId: string }>()
+);
+
+export const deleteProductComplete = createAction(
+  "[ADMIN] DeleteProductComplete"
+);
+
+export const deleteProductError = createAction("[ADMIN] DeleteProductError");

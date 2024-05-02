@@ -39,7 +39,7 @@ import { map, takeUntil } from "rxjs";
       matKeyboardArrowDown,
       matEdit,
       matImage,
-      matClose,
+      matClose
     }),
   ],
 })

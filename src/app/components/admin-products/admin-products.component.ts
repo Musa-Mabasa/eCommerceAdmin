@@ -1,6 +1,11 @@
 import { Component, OnDestroy, inject } from "@angular/core";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
-import { matCheck, matPlus, matSort } from "@ng-icons/material-icons/baseline";
+import {
+  matCheck,
+  matDelete,
+  matPlus,
+  matSort,
+} from "@ng-icons/material-icons/baseline";
 import { ProductCardComponent } from "../product-card/product-card.component";
 import { AsyncPipe, NgIf } from "@angular/common";
 import { Router } from "@angular/router";
@@ -14,6 +19,7 @@ import {
   selectSortBy,
 } from "../../adminStore/selectors";
 import {
+  deleteProduct,
   getAdminProducts,
   getCategories,
   setFilterBy,
@@ -30,7 +36,7 @@ import { Product } from "../../models/admin";
   standalone: true,
   templateUrl: "./admin-products.component.html",
   styleUrl: "./admin-products.component.scss",
-  viewProviders: [provideIcons({ matPlus, matSort, matCheck })],
+  viewProviders: [provideIcons({ matPlus, matSort, matCheck, matDelete })],
   imports: [NgIconComponent, ProductCardComponent, NgIf, AsyncPipe],
 })
 export class AdminProductsComponent {
@@ -41,6 +47,7 @@ export class AdminProductsComponent {
   filterBy$ = this.store.select(selectFilterBy);
   sortBy$ = this.store.select(selectSortBy);
   subscription: undefined | Subscription;
+  productToDeleteId: string | undefined;
 
   constructor() {
     this.store.dispatch(getAdminProducts({ adminId: getCookie("userId") }));
@@ -58,6 +65,15 @@ export class AdminProductsComponent {
 
   setSortBy(sortField: string) {
     this.store.dispatch(setSortBy({ sortBy: sortField }));
+  }
+
+  setProductToDelete(productId: string) {
+    this.productToDeleteId = productId;
+  }
+
+  deleteProduct() {
+    if (this.productToDeleteId)
+      this.store.dispatch(deleteProduct({ productId: this.productToDeleteId }));
   }
 
   onSearch(event: Event) {

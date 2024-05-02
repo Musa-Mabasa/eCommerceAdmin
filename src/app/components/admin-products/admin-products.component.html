@@ -100,8 +100,32 @@
       [product]="product"
       class="w-72"
       (editOnClick)="routeToEdit($event)"
+      (deleteOnClick)="setProductToDelete($event)"
     />
     }
   </div>
   }
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box bg-search-color">
+      <h3 class="font-bold text-lg">Permantly Delete Product?</h3>
+      <p class="py-4">
+        Are you sure you want to permanently delete the product?
+      </p>
+      <div class="modal-action">
+        <form method="dialog">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
+            Close
+          </button>
+          <button
+            class="btn bg-red text-whiteSmoke rounded-3xl shadow-xl"
+            (click)="deleteProduct()"
+          >
+            Delete
+            <ng-icon name="matDelete" class="text-2xl" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </section>

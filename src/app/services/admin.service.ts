@@ -5,6 +5,7 @@ import {
   Firestore,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   getDoc,
   query,
@@ -153,5 +154,13 @@ export class AdminService {
         ).catch((err) => Error(err.message))
       );
     }
+  }
+
+  deleteProduct(productId: string) {
+    return from(
+      deleteDoc(doc(this.firestore, "Product", productId)).catch((err) =>
+        Error(err.message)
+      )
+    );
   }
 }

@@ -5,6 +5,8 @@ import {
   addProduct,
   addProductComplete,
   addProductError,
+  deleteProduct,
+  deleteProductComplete,
   editProduct,
   editProductComplete,
   editProductError,
@@ -147,8 +149,7 @@ export class AdminEffects {
                 "Success",
                 "product added Successfully"
               );
-              console.log('doneee');
-              
+
               return editProductComplete();
             }),
             catchError((err) => {
@@ -161,6 +162,25 @@ export class AdminEffects {
               return EMPTY;
             })
           )
+      )
+    )
+  );
+
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProduct.type),
+      switchMap(({ productId }: { productId: string }) =>
+        this.adminService.deleteProduct(productId).pipe(
+          map(() => deleteProductComplete()),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to add product",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
       )
     )
   );
