@@ -15,14 +15,18 @@
       <button
         class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
         type="submit"
-        [disabled]="(isAdding$ | async)"
+        [disabled]="isAdding$ | async"
       >
         Confirm
         <span
           *ngIf="(isAdding$ | async) ?? false"
           class="loading loading-spinner loading-sm"
         ></span>
-        <ng-icon *ngIf="(isAdding$ | async) === false" name="matCheck" class="text-2xl" />
+        <ng-icon
+          *ngIf="(isAdding$ | async) === false"
+          name="matCheck"
+          class="text-2xl"
+        />
       </button>
     </div>
   </section>
@@ -182,11 +186,12 @@
           <select
             class="select select-bordered bg-edit-input-color w-full border border-primary-color"
             formControlName="category"
+            [value]="(categories$ | async)?.[1]?.name"
           >
-            <option selected value="Tech">Tech</option>
-            <option value="Clothes">Clothes</option>
-            <option value="Shoes">Shoes</option>
-            <option value="Appliences">Appliences</option>
+            @for(category of (categories$ | async); track category){
+            @if(category.name !== "All Products"){
+            <option [value]="category.name">{{ category.name }}</option>
+            } }
           </select>
         </div>
       </div>

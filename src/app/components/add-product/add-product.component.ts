@@ -15,8 +15,11 @@ import { Product } from "../../models/admin";
 import { getCookie } from "../../utils/utils";
 import { AdminState } from "../../adminStore/reducer";
 import { Store } from "@ngrx/store";
-import { addProduct } from "../../adminStore/actions";
-import { selectIsLoadingState } from "../../adminStore/selectors";
+import { addProduct, getCategories } from "../../adminStore/actions";
+import {
+  selectCategories,
+  selectIsLoadingState,
+} from "../../adminStore/selectors";
 
 @Component({
   selector: "app-add-product",
@@ -41,6 +44,11 @@ export class AddProductComponent {
   selectedFile?: File;
   addProductForm: FormGroup | undefined;
   isAdding$ = this.store.select(selectIsLoadingState);
+  categories$ = this.store.select(selectCategories);
+
+  constructor() {
+    this.store.dispatch(getCategories());
+  }
 
   ngOnInit(): void {
     this.addProductForm = new FormGroup({
@@ -59,8 +67,8 @@ export class AddProductComponent {
       currency: new FormControl("ZAR", {
         updateOn: "blur",
       }),
-      category: new FormControl("Tech", {
-        updateOn: "blur",
+      category: new FormControl("", {
+        updateOn: "change",
       }),
     });
   }
@@ -96,6 +104,8 @@ export class AddProductComponent {
       this.addProductForm?.value;
 
     const adminId = getCookie("userId");
+
+    console.log("cat", category);
 
     const product: Product = {
       adminId,
