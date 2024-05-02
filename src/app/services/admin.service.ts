@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { EMPTY, Observable, from, throwError } from "rxjs";
-import { Cart, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag } from "../models/admin";
 import {
   Firestore,
   collection,
@@ -34,15 +34,13 @@ export class AdminService {
     return collectionData(fetchQuery) as Observable<Product[]>;
   }
 
-  getAllStoreProducts(): Observable<Product[]> {
-    return from(EMPTY);
+  getCategories() {
+    const fetchQuery = query(collection(this.firestore, "Category"));
+
+    return collectionData(fetchQuery) as Observable<Category[]>;
   }
 
   getAllTags(): Observable<Tag[]> {
-    return from(EMPTY);
-  }
-
-  getAdminCart(adminId: string): Observable<Cart> {
     return from(EMPTY);
   }
 

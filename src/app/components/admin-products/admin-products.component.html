@@ -33,12 +33,15 @@
     <div
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
     >
-      @for (tag of tags; track tag) { @if(currentTag === tag){
+      @for (category of (categories$ | async); track category) {
+      @if(currentCategory === category.name){
       <div class="badge bg-primary-color text-black px-3 py-4 text">
-        {{ tag }}
+        {{ category.name }}
       </div>
       }@else {
-      <div (click)="currentTag = tag" class="cursor-pointer">{{ tag }}</div>
+      <div (click)="currentCategory = category.name" class="cursor-pointer">
+        {{ category.name }}
+      </div>
       } }
     </div>
     <div class="divider divider-horizontal"></div>

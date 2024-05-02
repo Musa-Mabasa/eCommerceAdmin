@@ -9,6 +9,8 @@ import {
   getAdminProductsComplete,
   getAllTags,
   getAllTagsComplete,
+  getCategories,
+  getCategoriesComplete,
 } from "./actions";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
 import { Product } from "../models/admin";
@@ -37,6 +39,29 @@ export class AdminEffects {
     )
   );
 
+  getCategories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCategories.type),
+      switchMap(() =>
+        this.adminService.getCategories().pipe(
+          map((categories) => {
+            console.log(categories);
+
+            return getCategoriesComplete({ categories });
+          }),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to fetch categories",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
   getAllTags$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAllTags.type),
@@ -56,30 +81,32 @@ export class AdminEffects {
     this.actions$.pipe(
       ofType(addProduct.type),
       switchMap(
-        ({productWithFile}: {productWithFile: {product: Product, file?: File}}) => {
+        ({
+          productWithFile,
+        }: {
+          productWithFile: { product: Product; file?: File };
+        }) => {
           console.log(productWithFile);
 
-          return this.adminService
-            .addProduct(productWithFile)
-            .pipe(
-              map(() => {
-                this.notification.create(
-                  "success",
-                  "Success",
-                  "product added Successfully"
-                );
-                return addProductComplete();
-              }),
-              catchError((err) => {
-                this.notification.create(
-                  "error",
-                  "Failed to add product",
-                  err.message
-                );
-                addProductError();
-                return EMPTY;
-              })
-            );
+          return this.adminService.addProduct(productWithFile).pipe(
+            map(() => {
+              this.notification.create(
+                "success",
+                "Success",
+                "product added Successfully"
+              );
+              return addProductComplete();
+            }),
+            catchError((err) => {
+              this.notification.create(
+                "error",
+                "Failed to add product",
+                err.message
+              );
+              addProductError();
+              return EMPTY;
+            })
+          );
         }
       )
     )
