@@ -93,5 +93,3 @@ export const deleteProduct = createAction(
 export const deleteProductComplete = createAction(
   "[ADMIN] DeleteProductComplete"
 );
-
-export const deleteProductError = createAction("[ADMIN] DeleteProductError");
