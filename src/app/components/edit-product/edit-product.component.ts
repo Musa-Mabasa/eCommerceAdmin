@@ -18,13 +18,9 @@ import {
   selectEditLoadingState,
   selectProductToEdit,
 } from "../../adminStore/selectors";
-import {
-  editProduct,
-  getCategories,
-  getProductById,
-} from "../../adminStore/actions";
+import { editProduct } from "../../adminStore/actions";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { map, takeUntil } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-edit-product",
@@ -39,11 +35,11 @@ import { map, takeUntil } from "rxjs";
       matKeyboardArrowDown,
       matEdit,
       matImage,
-      matClose
+      matClose,
     }),
   ],
 })
-export class EditProductComponent implements OnInit, OnDestroy {
+export class EditProductComponent implements OnInit {
   @Input() correlatedProduct: CorrelatedProduct | undefined;
   @Input() productId?: string;
   router = inject(Router);
@@ -58,7 +54,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
   product: Product | undefined;
 
   constructor() {
-    const prodSubscription = this.product$.subscribe((prod) => {
+    this.product$.pipe(takeUntilDestroyed()).subscribe((prod) => {
       if (!prod) {
         this.router.navigate(["/home/admin-products"]);
       } else {
@@ -144,6 +140,4 @@ export class EditProductComponent implements OnInit, OnDestroy {
       this.store.dispatch(editProduct({ productWithFile }));
     }
   }
-
-  ngOnDestroy(): void {}
 }

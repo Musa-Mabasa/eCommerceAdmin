@@ -76,7 +76,7 @@ export class AdminEffects {
           catchError((err) => {
             this.notification.create(
               "error",
-              "Failed to fetch categories",
+              "Failed to fetch product",
               err.message
             );
             return EMPTY;
