@@ -115,7 +115,7 @@ export class AdminEffects {
               this.notification.create(
                 "success",
                 "Success",
-                "product added Successfully"
+                "Product Added Successfully"
               );
               return addProductComplete();
             }),
@@ -147,7 +147,7 @@ export class AdminEffects {
               this.notification.create(
                 "success",
                 "Success",
-                "product added Successfully"
+                "Product Edited Successfully"
               );
 
               return editProductComplete();
