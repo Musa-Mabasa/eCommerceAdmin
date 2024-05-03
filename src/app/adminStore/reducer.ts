@@ -5,6 +5,8 @@ import {
   addProduct,
   addProductComplete,
   addProductError,
+  addTag,
+  addTagComplete,
   editProduct,
   editProductComplete,
   editProductError,
@@ -40,6 +42,7 @@ export interface AdminState {
   addingLoadingState: boolean;
   editLoadingState: boolean;
   categoryLoadingState: boolean;
+  addTagLoadingState: boolean;
   isAuthLoading: boolean;
 }
 
@@ -55,6 +58,7 @@ const initialState: AdminState = {
   addingLoadingState: false,
   editLoadingState: false,
   categoryLoadingState: false,
+  addTagLoadingState: false,
   isAuthLoading: false,
 };
 
@@ -113,11 +117,11 @@ export const adminReducer = createReducer(
   })),
   on(addProduct, (state) => ({
     ...state,
-    addingLoadingState: true,
+    addTagLoadingState: true,
   })),
   on(addProductComplete, (state) => ({
     ...state,
-    addingLoadingState: false,
+    addTagLoadingState: false,
   })),
   on(editProduct, (state) => ({
     ...state,
@@ -126,6 +130,14 @@ export const adminReducer = createReducer(
   on(editProductComplete, (state) => ({
     ...state,
     editLoadingState: false,
+  })),
+  on(addTag, (state) => ({
+    ...state,
+    addTagLoadingState: true,
+  })),
+  on(addTagComplete, (state) => ({
+    ...state,
+    addTagLoadingState: false,
   })),
   on(setIsAuthLoading, (state) => ({
     ...state,

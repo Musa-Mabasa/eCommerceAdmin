@@ -104,6 +104,11 @@ export const selectCategoriesLoadingState = createSelector(
   (state) => state.categoryLoadingState
 );
 
+export const selectTagsLoadingState = createSelector(
+  selectFeature,
+  (state) => state.addTagLoadingState
+);
+
 export const selectIsAuthLoading = createSelector(
   selectFeature,
   (state) => state.isAuthLoading

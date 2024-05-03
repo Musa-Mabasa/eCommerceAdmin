@@ -17,8 +17,9 @@ import {
   selectCategories,
   selectEditLoadingState,
   selectProductToEdit,
+  selectTagsLoadingState,
 } from "../../adminStore/selectors";
-import { editProduct } from "../../adminStore/actions";
+import { addTag, editProduct } from "../../adminStore/actions";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
@@ -50,6 +51,7 @@ export class EditProductComponent implements OnInit {
   categories$ = this.store.select(selectCategories);
   product$ = this.store.select(selectProductToEdit);
   isEditing$ = this.store.select(selectEditLoadingState);
+  isAddingTag$ = this.store.select(selectTagsLoadingState);
   editProductForm: FormGroup | undefined;
   product: Product | undefined;
 
@@ -83,6 +85,9 @@ export class EditProductComponent implements OnInit {
       category: new FormControl(this.product?.category, {
         updateOn: "change",
       }),
+      tag: new FormControl("", {
+        updateOn: "change",
+      }),
     });
   }
 
@@ -104,6 +109,9 @@ export class EditProductComponent implements OnInit {
   get category() {
     return this.editProductForm?.get("category");
   }
+  get tag() {
+    return this.editProductForm?.get("tag");
+  }
 
   onFileSelected(event: any) {
     this.selectedFile = (event?.target as HTMLInputElement)?.files?.[0];
@@ -112,6 +120,16 @@ export class EditProductComponent implements OnInit {
   onImageEditRemoved() {
     this.onImageEdit = false;
     this.selectedFile = undefined;
+  }
+
+  addTag() {
+    if (this.tag?.value && this.product?.id) {
+      const tag = { name: this.tag.value, productId: this.product.id };
+      console.log(tag);
+
+      this.store.dispatch(addTag({ tag: tag }));
+      this.tag.setValue("");
+    }
   }
 
   confirmEdit() {

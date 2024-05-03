@@ -188,6 +188,34 @@
           {{ (product$ | async)?.category }}
         </div>
       </div>
+      <div class="flex flex-col gap-2">
+        <p>Tags</p>
+        <div class="indicator w-full">
+          <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+          <input
+            type="text"
+            placeholder="Enter tag..."
+            class="input bg-edit-input-color w-full border border-primary-color"
+            formControlName="tag"
+          />
+        </div>
+      </div>
+      <button
+        class="w-40 sm:w-44 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
+        type="button"
+        (click)="addTag()"
+      >
+        Add Tag
+        <span
+          *ngIf="isAddingTag$ | async"
+          class="loading loading-spinner loading-sm"
+        ></span>
+        <ng-icon
+          name="matPlus"
+          class="text-2xl"
+          *ngIf="!(isAddingTag$ | async)"
+        />
+      </button>
     </div>
   </section>
 </form>

@@ -85,6 +85,13 @@ export const editProductComplete = createAction("[ADMIN] EditProductComplete");
 
 export const editProductError = createAction("[ADMIN] EditProductError");
 
+export const addTag = createAction(
+  "[ADMIN] AddTag",
+  props<{ tag: { name: string; productId: string } }>()
+);
+
+export const addTagComplete = createAction("[ADMIN] AddTagComplete");
+
 export const deleteProduct = createAction(
   "[ADMIN] DeleteProduct",
   props<{ productId: string }>()
