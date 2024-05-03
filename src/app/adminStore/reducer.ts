@@ -117,11 +117,11 @@ export const adminReducer = createReducer(
   })),
   on(addProduct, (state) => ({
     ...state,
-    addTagLoadingState: true,
+    addingLoadingState: true,
   })),
   on(addProductComplete, (state) => ({
     ...state,
-    addTagLoadingState: false,
+    addingLoadingState: false,
   })),
   on(editProduct, (state) => ({
     ...state,
