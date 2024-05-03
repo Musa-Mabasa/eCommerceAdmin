@@ -29,10 +29,16 @@ export class AuthService {
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
       .then((result) => {
-        if (!result || !result.user) {
+        if (
+          !result?.user?.uid ||
+          !result.user.displayName ||
+          !result.user.photoURL
+        ) {
           throw new Error("No result came back");
         }
-        setCookie("userId", result.user?.uid);
+        setCookie("userId", result.user.uid);
+        setCookie("displayName", result.user.displayName);
+        setCookie("avatar", result.user.photoURL);
 
         this._router.navigate(["/home/admin-products"]);
       })
@@ -43,10 +49,16 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (!result || !result.user) {
+        if (
+          !result?.user?.uid ||
+          !result.user.displayName ||
+          !result.user.photoURL
+        ) {
           throw new Error("No result came back");
         }
-        setCookie("userId", result.user?.uid);
+        setCookie("userId", result.user.uid);
+        setCookie("displayName", result.user.displayName);
+        setCookie("avatar", result.user.photoURL);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
@@ -59,10 +71,16 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (!result || !result.user) {
+        if (
+          !result?.user?.uid ||
+          !result.user.displayName ||
+          !result.user.photoURL
+        ) {
           throw new Error("No result came back");
         }
-        setCookie("userId", result.user?.uid);
+        setCookie("userId", result.user.uid);
+        setCookie("displayName", result.user.displayName);
+        setCookie("avatar", result.user.photoURL);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
