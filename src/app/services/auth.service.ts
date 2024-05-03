@@ -15,7 +15,7 @@ import {
   setIsAuthLoading,
   setIsAuthLoadingComplete,
 } from "../adminStore/actions";
-import { setCookie } from "../utils/utils";
+import { clearUserCookies, setCookie } from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -32,14 +32,15 @@ export class AuthService {
         if (
           !result?.user?.uid ||
           !result.user.displayName ||
-          !result.user.photoURL
+          !result.user.photoURL ||
+          !result.user.email
         ) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user.uid);
         setCookie("displayName", result.user.displayName);
         setCookie("avatar", result.user.photoURL);
-
+        setCookie("email", result.user.email);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => console.error(err));
@@ -52,13 +53,15 @@ export class AuthService {
         if (
           !result?.user?.uid ||
           !result.user.displayName ||
-          !result.user.photoURL
+          !result.user.photoURL ||
+          !result.user.email
         ) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user.uid);
         setCookie("displayName", result.user.displayName);
         setCookie("avatar", result.user.photoURL);
+        setCookie("email", result.user.email);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
@@ -74,13 +77,15 @@ export class AuthService {
         if (
           !result?.user?.uid ||
           !result.user.displayName ||
-          !result.user.photoURL
+          !result.user.photoURL ||
+          !result.user.email
         ) {
           throw new Error("No result came back");
         }
         setCookie("userId", result.user.uid);
         setCookie("displayName", result.user.displayName);
         setCookie("avatar", result.user.photoURL);
+        setCookie("email", result.user.email);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
@@ -108,5 +113,13 @@ export class AuthService {
         this.notification.create("error", "Email failed to send", err.message)
       )
       .finally(() => this.store.dispatch(setIsAuthLoadingComplete()));
+  }
+
+  signOut() {
+    clearUserCookies("userId");
+    clearUserCookies("displayName");
+    clearUserCookies("avatar");
+    clearUserCookies("email");
+    this._router.navigate(["/login"]);
   }
 }
