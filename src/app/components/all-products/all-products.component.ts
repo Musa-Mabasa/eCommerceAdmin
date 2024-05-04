@@ -9,8 +9,11 @@ import {
 import { AsyncPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
-import { getAllProducts } from "../../previewStore/actions";
-import { selectAllProductsWithTags } from "../../previewStore/selectors";
+import { getAllProducts, getCategories } from "../../previewStore/actions";
+import {
+  selectAllProductsWithTags,
+  selectCategories,
+} from "../../previewStore/selectors";
 
 @Component({
   selector: "app-all-products",
@@ -25,7 +28,8 @@ import { selectAllProductsWithTags } from "../../previewStore/selectors";
 export class AllProductsComponent {
   router = inject(Router);
   store = inject(Store<AdminState>);
-  allProducts$ = this.store.select(selectAllProductsWithTags)
+  allProducts$ = this.store.select(selectAllProductsWithTags);
+  categories$ = this.store.select(selectCategories);
   category = "";
   tags = ["Shoes", "Sport", "Kitchen", "Technology", "Gaming", "Clothes"];
   selectedTags: string[] = [];
@@ -35,6 +39,7 @@ export class AllProductsComponent {
 
   constructor() {
     this.store.dispatch(getAllProducts());
+    this.store.dispatch(getCategories());
   }
 
   routeToProduct(event: string) {

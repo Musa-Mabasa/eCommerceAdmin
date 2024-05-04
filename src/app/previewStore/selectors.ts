@@ -17,3 +17,7 @@ export const selectAllProductsWithTags = createSelector(
     });
   }
 );
+
+export const selectCategories = createSelector(previewSelectFeature, (state) =>
+  state.categories.filter((category) => category.name !== "All Products")
+);

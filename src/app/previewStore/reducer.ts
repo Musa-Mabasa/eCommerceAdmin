@@ -1,20 +1,29 @@
 import { isDevMode } from "@angular/core";
-import { Product, Tag } from "../models/admin";
+import { Category, Product, Tag } from "../models/admin";
 import { MetaReducer, createReducer, on } from "@ngrx/store";
-import { getAllProducts, getAllProductsComplete } from "./actions";
+import {
+  getAllProducts,
+  getAllProductsComplete,
+  getCategories,
+  getCategoriesComplete,
+} from "./actions";
 
 export const previewFeatureKey = "preview";
 
 export interface PreviewState {
   allProducts: Product[];
   allTags: Tag[];
+  categories: Category[];
   productsLoadingState: boolean;
+  categoriesLoadingState: boolean;
 }
 
 const initialState: PreviewState = {
   allProducts: [],
   allTags: [],
+  categories: [],
   productsLoadingState: false,
+  categoriesLoadingState: false,
 };
 
 export const previewReducer = createReducer(
@@ -27,6 +36,15 @@ export const previewReducer = createReducer(
     ...state,
     productsLoadingState: false,
     allProducts,
+  })),
+  on(getCategories, (state) => ({
+    ...state,
+    categoriesLoadingState: true,
+  })),
+  on(getCategoriesComplete, (state, { categories }) => ({
+    ...state,
+    productsLoadingState: false,
+    categories,
   }))
 );
 

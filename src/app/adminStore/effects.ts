@@ -40,7 +40,11 @@ export class AdminEffects {
         this.adminService.getAdminProducts(adminId).pipe(
           map((adminProducts) => getAdminProductsComplete({ adminProducts })),
           catchError((err) => {
-            this.notification.create("error", "Sign In failed", err.message);
+            this.notification.create(
+              "error",
+              "Failed to get Products",
+              err.message
+            );
             return EMPTY;
           })
         )
@@ -201,7 +205,6 @@ export class AdminEffects {
             return addTagComplete();
           }),
           catchError((err) => {
-
             this.notification.create("error", "Failed to add Tag", err.message);
             addTagComplete();
             return EMPTY;
