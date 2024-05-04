@@ -36,43 +36,46 @@
           <ng-icon name="matShoppingCartOutline" class="text-2xl" />
         </div>
         <div class="dropdown dropdown-hover dropdown-end">
-        <div
-          tabindex="0"
-          role="button"
-          class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-semibold"
-        >
-          <div class="w-20 rounded-full bg-secondary-color">
-            @if(avatar){
-            <img [src]="avatar" referrerpolicy="no-referrer" />
-            }@else{
-            {{ email.charAt(0) }}
-            }
-          </div>
-        </div>
-        <ul
-          tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-72"
-        >
-          <li class="h-44 p-5 flex flex-col gap-1 justify-center items-center">
-            <div class="avatar">
-              <div class="w-20 rounded-full bg-secondary-color">
-                @if(avatar){
-                <img [src]="avatar" referrerpolicy="no-referrer" />
-                }@else{
-                {{ email.charAt(0) }}
-                }
-              </div>
+          <div
+            tabindex="0"
+            role="button"
+            class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-semibold"
+          >
+            <div class="w-20 rounded-full bg-secondary-color">
+              @if(avatar){
+              <img [src]="avatar" referrerpolicy="no-referrer" />
+              }@else{
+              {{ email.charAt(0) }}
+              }
             </div>
-            <p class="font-medium">{{ displayName ?? email }}</p>
-          </li>
-          <li>
-            <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
-          </li>
-          <div class="divider h-fit m-1"></div>
-          <li (click)="signOut()">
-            <a><ng-icon name="matExitToApp" class="text-2xl" />Sign out</a>
-          </li>
-        </ul>
+          </div>
+          <ul
+            tabindex="0"
+            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-72"
+          >
+            <li
+              class="h-44 p-5 flex flex-col gap-1 justify-center items-center"
+            >
+              <div class="avatar">
+                <div class="w-20 rounded-full bg-secondary-color">
+                  @if(avatar){
+                  <img [src]="avatar" referrerpolicy="no-referrer" />
+                  }@else{
+                  {{ email.charAt(0) }}
+                  }
+                </div>
+              </div>
+              <p class="font-medium">{{ displayName ?? email }}</p>
+            </li>
+            <li>
+              <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
+            </li>
+            <div class="divider h-fit m-1"></div>
+            <li (click)="signOut()">
+              <a><ng-icon name="matExitToApp" class="text-2xl" />Sign out</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
     <main class="w-full grow-0 overflow-scroll">
