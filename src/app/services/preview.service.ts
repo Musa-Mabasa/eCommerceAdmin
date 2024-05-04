@@ -6,7 +6,7 @@ import {
   query,
 } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-import { Category, Product } from "../models/admin";
+import { Category, Product, Tag } from "../models/admin";
 
 @Injectable({
   providedIn: "root",
@@ -26,5 +26,11 @@ export class PreviewService {
     const fetchQuery = query(collection(this.firestore, "Category"));
 
     return collectionData(fetchQuery) as Observable<Category[]>;
+  }
+
+  getTags() {
+    const fetchQuery = query(collection(this.firestore, "Tag"));
+
+    return collectionData(fetchQuery) as Observable<Tag[]>;
   }
 }

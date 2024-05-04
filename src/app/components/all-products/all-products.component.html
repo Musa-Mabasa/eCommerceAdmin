@@ -54,19 +54,20 @@
             <div
               class="flex items-center gap-4 w-full pb-5 font-rubik font-light text-nowrap overflow-auto"
             >
-              @for(tag of tags; track tag){ @if(selectedTags.includes(tag)){
+              @for(tag of (tags$ | async); track tag){
+              @if(selectedTags.includes(tag.name)){
               <div
-                (click)="selectedTags.splice(selectedTags.indexOf(tag), 1)"
+                (click)="selectedTags.splice(selectedTags.indexOf(tag.name), 1)"
                 class="badge bg-primary-color text-black cursor-pointer px-3 py-4 font-rubik"
               >
-                {{ tag }}
+                {{ tag.name }}
               </div>
               } @else{
               <div
-                (click)="selectedTags.push(tag)"
+                (click)="selectedTags.push(tag.name)"
                 class="badge badge-outline cursor-pointer px-3 py-4 font-rubik"
               >
-                {{ tag }}
+                {{ tag.name }}
               </div>
               } }
             </div>

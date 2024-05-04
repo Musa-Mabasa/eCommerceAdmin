@@ -6,24 +6,28 @@ import {
   getAllProductsComplete,
   getCategories,
   getCategoriesComplete,
+  getTags,
+  getTagsComplete,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
 
 export interface PreviewState {
   allProducts: Product[];
-  allTags: Tag[];
+  tags: Tag[];
   categories: Category[];
   productsLoadingState: boolean;
   categoriesLoadingState: boolean;
+  tagsLoadingState: boolean;
 }
 
 const initialState: PreviewState = {
   allProducts: [],
-  allTags: [],
+  tags: [],
   categories: [],
   productsLoadingState: false,
   categoriesLoadingState: false,
+  tagsLoadingState: false,
 };
 
 export const previewReducer = createReducer(
@@ -45,6 +49,15 @@ export const previewReducer = createReducer(
     ...state,
     productsLoadingState: false,
     categories,
+  })),
+  on(getTags, (state) => ({
+    ...state,
+    tagsLoadingState: true,
+  })),
+  on(getTagsComplete, (state, { tags }) => ({
+    ...state,
+    tagsLoadingState: false,
+    tags,
   }))
 );
 

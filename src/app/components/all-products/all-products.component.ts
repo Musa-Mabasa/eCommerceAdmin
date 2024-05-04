@@ -9,10 +9,15 @@ import {
 import { AsyncPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
-import { getAllProducts, getCategories } from "../../previewStore/actions";
+import {
+  getAllProducts,
+  getCategories,
+  getTags,
+} from "../../previewStore/actions";
 import {
   selectAllProductsWithTags,
   selectCategories,
+  selectTags,
 } from "../../previewStore/selectors";
 
 @Component({
@@ -30,6 +35,7 @@ export class AllProductsComponent {
   store = inject(Store<AdminState>);
   allProducts$ = this.store.select(selectAllProductsWithTags);
   categories$ = this.store.select(selectCategories);
+  tags$ = this.store.select(selectTags);
   category = "";
   tags = ["Shoes", "Sport", "Kitchen", "Technology", "Gaming", "Clothes"];
   selectedTags: string[] = [];
@@ -40,6 +46,7 @@ export class AllProductsComponent {
   constructor() {
     this.store.dispatch(getAllProducts());
     this.store.dispatch(getCategories());
+    this.store.dispatch(getTags());
   }
 
   routeToProduct(event: string) {

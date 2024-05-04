@@ -9,6 +9,8 @@ import {
   getAllProductsComplete,
   getCategories,
   getCategoriesComplete,
+  getTags,
+  getTagsComplete,
 } from "./actions";
 
 @Injectable()
@@ -48,6 +50,25 @@ export class PreviewEffects {
             this.notification.create(
               "error",
               "Failed to get categories",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  getTag$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getTags.type),
+      switchMap(() =>
+        this.previewService.getTags().pipe(
+          map((tags) => getTagsComplete({ tags })),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to get tags",
               err.message
             );
             return EMPTY;
