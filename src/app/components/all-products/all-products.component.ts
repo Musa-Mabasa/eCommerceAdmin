@@ -55,7 +55,7 @@ export class AllProductsComponent {
   upperBoundPrice = new FormControl("");
   selectedTags$ = this.store.select(selectSelectedTags);
   selectedPriceRangeType = "Equals";
-  priceRangeTypes = ["Equals", "Less Than", "More Than", "Between"];
+  priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";
 
   constructor() {
@@ -83,6 +83,10 @@ export class AllProductsComponent {
   }
 
   confirmFilters() {
+    if (this.selectedPriceRangeType === "None") {
+      this.store.dispatch(selectPriceRangeType({ priceRangeType: "" }));
+      return;
+    }
     this.store.dispatch(
       selectPriceRangeType({ priceRangeType: this.selectedPriceRangeType })
     );

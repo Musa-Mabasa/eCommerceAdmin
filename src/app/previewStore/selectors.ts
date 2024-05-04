@@ -31,6 +31,40 @@ export const selectAllProductsWithTags = createSelector(
         return product.tags.some((tag) =>
           state.selectedTags.includes(tag.name)
         );
+      })
+      .filter((product) => {
+        if (state.priceRangeType === "") {
+          return true;
+        }
+        else if (
+          state.priceRangeType === "Equals" &&
+          state.lowerPriceBound &&
+          product.product.price === state.lowerPriceBound
+        ) {
+          return true;
+        } else if (
+          state.priceRangeType === "Less Than" &&
+          state.lowerPriceBound &&
+          product.product.price < state.lowerPriceBound
+        ) {
+          return true;
+        } else if (
+          state.priceRangeType === "More Than" &&
+          state.lowerPriceBound &&
+          product.product.price > state.lowerPriceBound
+        ) {
+          return true;
+        } else if (
+          state.priceRangeType === "Between" &&
+          state.lowerPriceBound &&
+          state.upperPriceBound &&
+          product.product.price > state.lowerPriceBound &&
+          product.product.price < state.upperPriceBound
+        ) {
+          return true;
+        }
+
+        return false;
       });
 
     return products;

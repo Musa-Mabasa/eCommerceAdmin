@@ -95,7 +95,7 @@
               } }
             </div>
             <input
-              *ngIf="selectedPriceRangeType !== 'Between'"
+              *ngIf="selectedPriceRangeType !== 'Between' && selectedPriceRangeType !== 'None' "
               type="number"
               [placeholder]="userCurrency"
               class="input input-bordered bg-edit-input-color w-24 h-9"
