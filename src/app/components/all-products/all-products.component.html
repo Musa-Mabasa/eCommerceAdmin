@@ -42,10 +42,13 @@
         <div class="flex flex-col gap-3 w-full">
           <div class="flex flex-col gap-2">
             <p>Category</p>
-            <select class="select w-full bg-edit-input-color">
+            <select
+              class="select w-full bg-edit-input-color"
+              [formControl]="selectedCategory"
+            >
               <option disabled selected>Select a Category</option>
               @for (category of (categories$ | async); track category) {
-              <option>{{ category.name }}</option>
+              <option [value]="category.name">{{ category.name }}</option>
               }
             </select>
           </div>
@@ -96,6 +99,7 @@
               type="number"
               [placeholder]="userCurrency"
               class="input input-bordered bg-edit-input-color w-24 h-9"
+              [formControl]="lowerBoundPrice"
             />
             <div
               *ngIf="selectedPriceRangeType === 'Between'"
@@ -105,18 +109,20 @@
                 type="number"
                 [placeholder]="userCurrency"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
+                [formControl]="lowerBoundPrice"
               />
               <ng-icon name="matArrowForwardOutline" class="text-2xl" />
               <input
                 type="number"
                 [placeholder]="userCurrency"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
+                [formControl]="upperBoundPrice"
               />
             </div>
           </div>
         </div>
         <button
-          (click)="(userCurrency === 'GBP')"
+          (click)="confirmFilters()"
           class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
         >
           Done

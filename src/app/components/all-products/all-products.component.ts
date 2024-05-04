@@ -13,17 +13,29 @@ import {
   getAllProducts,
   getCategories,
   getTags,
+  selectCategory,
+  selectFilterTags,
+  selectLowerPriceBound,
+  selectPriceRangeType,
+  selectUpperPriceBound,
 } from "../../previewStore/actions";
 import {
   selectAllProductsWithTags,
   selectCategories,
   selectTags,
 } from "../../previewStore/selectors";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-all-products",
   standalone: true,
-  imports: [PreviewCardComponent, NgIconComponent, NgIf, AsyncPipe],
+  imports: [
+    PreviewCardComponent,
+    NgIconComponent,
+    NgIf,
+    AsyncPipe,
+    ReactiveFormsModule,
+  ],
   templateUrl: "./all-products.component.html",
   styleUrl: "./all-products.component.scss",
   viewProviders: [
@@ -36,8 +48,9 @@ export class AllProductsComponent {
   allProducts$ = this.store.select(selectAllProductsWithTags);
   categories$ = this.store.select(selectCategories);
   tags$ = this.store.select(selectTags);
-  category = "";
-  tags = ["Shoes", "Sport", "Kitchen", "Technology", "Gaming", "Clothes"];
+  selectedCategory = new FormControl("");
+  lowerBoundPrice = new FormControl("");
+  upperBoundPrice = new FormControl("");
   selectedTags: string[] = [];
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["Equals", "Less Than", "More Than", "Between"];
@@ -51,5 +64,29 @@ export class AllProductsComponent {
 
   routeToProduct(event: string) {
     this.router.navigate([`home/preview-product/${event}`]);
+  }
+
+  confirmFilters() {
+    this.store.dispatch(
+      selectCategory({ selectedCategory: this.selectedCategory?.value ?? "" })
+    );
+
+    this.store.dispatch(selectFilterTags({ selectedTags: this.selectedTags }));
+
+    this.store.dispatch(
+      selectPriceRangeType({ priceRangeType: this.selectedPriceRangeType })
+    );
+
+    this.store.dispatch(
+      selectLowerPriceBound({
+        lowerPriceBound: Number(this.lowerBoundPrice.value) ?? undefined,
+      })
+    );
+
+    this.store.dispatch(
+      selectUpperPriceBound({
+        upperPriceBound: Number(this.upperBoundPrice.value) ?? undefined,
+      })
+    );
   }
 }

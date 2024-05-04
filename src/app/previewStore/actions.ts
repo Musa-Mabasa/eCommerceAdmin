@@ -21,3 +21,28 @@ export const getTagsComplete = createAction(
   "[PREVIEW] GetTagsComplete",
   props<{ tags: Tag[] }>()
 );
+
+export const selectCategory = createAction(
+  "[PREVIEW] SelectCategory",
+  props<{ selectedCategory: string }>()
+);
+
+export const selectFilterTags = createAction(
+  "[PREVIEW] SelectTags",
+  props<{ selectedTags: string[] }>()
+);
+
+export const selectPriceRangeType = createAction(
+  "[PREVIEW] SelectPriceRangeType",
+  props<{ priceRangeType: string }>()
+);
+
+export const selectLowerPriceBound = createAction(
+  "[PREVIEW] SelectLowerPriceBound",
+  props<{ lowerPriceBound?: number  }>()
+);
+
+export const selectUpperPriceBound = createAction(
+  "[PREVIEW] SelectUpperPriceBound",
+  props<{ upperPriceBound?: number }>()
+);

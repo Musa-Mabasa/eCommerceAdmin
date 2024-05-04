@@ -8,6 +8,11 @@ import {
   getCategoriesComplete,
   getTags,
   getTagsComplete,
+  selectCategory,
+  selectUpperPriceBound,
+  selectLowerPriceBound,
+  selectPriceRangeType,
+  selectFilterTags,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -19,6 +24,11 @@ export interface PreviewState {
   productsLoadingState: boolean;
   categoriesLoadingState: boolean;
   tagsLoadingState: boolean;
+  selectedCategory: string;
+  selectedTags: string[];
+  priceRangeType: string;
+  lowerPriceBound?: number;
+  upperPriceBound?: number;
 }
 
 const initialState: PreviewState = {
@@ -28,6 +38,9 @@ const initialState: PreviewState = {
   productsLoadingState: false,
   categoriesLoadingState: false,
   tagsLoadingState: false,
+  selectedCategory: "",
+  selectedTags: [],
+  priceRangeType: "",
 };
 
 export const previewReducer = createReducer(
@@ -58,6 +71,26 @@ export const previewReducer = createReducer(
     ...state,
     tagsLoadingState: false,
     tags,
+  })),
+  on(selectCategory, (state, { selectedCategory }) => ({
+    ...state,
+    selectedCategory,
+  })),
+  on(selectFilterTags, (state, { selectedTags }) => ({
+    ...state,
+    selectedTags,
+  })),
+  on(selectPriceRangeType, (state, { priceRangeType }) => ({
+    ...state,
+    priceRangeType,
+  })),
+  on(selectLowerPriceBound, (state, { lowerPriceBound }) => ({
+    ...state,
+    lowerPriceBound,
+  })),
+  on(selectUpperPriceBound, (state, { upperPriceBound }) => ({
+    ...state,
+    upperPriceBound,
   }))
 );
 

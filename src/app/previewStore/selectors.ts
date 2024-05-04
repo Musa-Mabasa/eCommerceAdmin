@@ -11,10 +11,21 @@ export const selectAllProductsWithTags = createSelector(
     if (!(state.allProducts && state.tags)) {
       return [];
     }
-    return state.allProducts.map((product) => {
-      const tags = state.tags.filter((tag) => tag.productId == product.id);
-      return { product, tags };
-    });
+    const products = state.allProducts
+      .map((product) => {
+        const tags = state.tags.filter((tag) => tag.productId == product.id);
+        return { product, tags };
+      })
+      .filter((product) => {
+        if (state.selectedCategory === "") {
+          return true;
+        } else if (state.selectedCategory === product.product.category) {
+          return true;
+        }
+        return false;
+      });
+
+    return products;
   }
 );
 
