@@ -16,6 +16,7 @@ import {
   setIsAuthLoadingComplete,
 } from "../adminStore/actions";
 import { clearUserCookies, setCookie, setUserProfile } from "../utils/utils";
+import { Firestore, collection, doc, setDoc } from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: "root",
@@ -23,12 +24,14 @@ import { clearUserCookies, setCookie, setUserProfile } from "../utils/utils";
 export class AuthService {
   private _auth = inject(Auth);
   private _router = inject(Router);
+  firestore = inject(Firestore);
   private notification = inject(NzNotificationService);
   store = inject(Store<AdminState>);
 
-  byGoogle() {
+  byGoogle(isSignUp?: boolean) {
     signInWithPopup(this._auth, new GoogleAuthProvider())
       .then((result) => {
+        if (isSignUp) this.addCartOnAuth(result.user.uid);
         setUserProfile(result);
         this._router.navigate(["/home/admin-products"]);
       })
@@ -39,6 +42,7 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
+        this.addCartOnAuth(result.user.uid);
         setUserProfile(result);
         this._router.navigate(["/home/admin-products"]);
       })
@@ -88,5 +92,11 @@ export class AuthService {
     clearUserCookies("avatar");
     clearUserCookies("email");
     this._router.navigate(["/login"]);
+  }
+
+  async addCartOnAuth(userId: string) {
+    await setDoc(doc(collection(this.firestore, "Cart")), {
+      userId,
+    }).catch((err) => Error(err.message));
   }
 }
