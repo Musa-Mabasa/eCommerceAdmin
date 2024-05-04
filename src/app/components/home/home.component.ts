@@ -11,6 +11,7 @@ import {
 import { getCookie } from "../../utils/utils";
 import { NgIf } from "@angular/common";
 import { AuthService } from "../../services/auth.service";
+import { matNotificationsNoneOutline, matShoppingCartOutline } from "@ng-icons/material-icons/outline";
 
 @Component({
   selector: "app-home",
@@ -24,7 +25,9 @@ import { AuthService } from "../../services/auth.service";
       matAdminPanelSettings,
       matShoppingBag,
       matSettings,
-      matExitToApp,
+      matExitToApp, 
+      matNotificationsNoneOutline, 
+      matShoppingCartOutline
     }),
   ],
 })

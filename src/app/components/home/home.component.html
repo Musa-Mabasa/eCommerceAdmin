@@ -22,7 +22,20 @@
           </h1>
         </div></label
       >
-      <div class="dropdown dropdown-hover dropdown-end">
+      <div class="flex items-center gap-8">
+        <div class="indicator w-fit">
+          <span
+            class="indicator-item size-2 p-0 badge bg-primary-color absolute top-1 right-[0.30rem]"
+          ></span>
+          <ng-icon name="matNotificationsNoneOutline" class="text-2xl" />
+        </div>
+        <div class="indicator w-fit">
+          <span
+            class="indicator-item badge size-2 p-0 bg-primary-color absolute top-1 right-[0.30rem]"
+          ></span>
+          <ng-icon name="matShoppingCartOutline" class="text-2xl" />
+        </div>
+        <div class="dropdown dropdown-hover dropdown-end">
         <div
           tabindex="0"
           role="button"
@@ -62,7 +75,7 @@
         </ul>
       </div>
     </header>
-    <main class="w-full grow-0">
+    <main class="w-full grow-0 overflow-scroll">
       <router-outlet />
     </main>
   </div>
@@ -87,7 +100,7 @@
         </h1>
       </div>
       <li
-        class="text-base text-whiteSmoke hover:bg-sidebar-item hover:text-whiteSmoke rounded-xl"
+        class="text-base text-whiteSmoke hover:bg-sidebar-item hover:text-whiteSmoke rounded-xl font-rubik"
       >
         <a
           class="text-whiteSmoke"
@@ -97,7 +110,9 @@
           Products</a
         >
       </li>
-      <li class="text-base text-whiteSmoke hover:bg-sidebar-item rounded-xl">
+      <li
+        class="text-base text-whiteSmoke hover:bg-sidebar-item rounded-xl font-rubik"
+      >
         <a routerLink="all-products" routerLinkActive="active-item"
           ><ng-icon name="matShoppingBag" class="text-2xl" />Preview</a
         >

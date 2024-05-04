@@ -9,6 +9,7 @@ import { AdminProductsComponent } from "./components/admin-products/admin-produc
 import { AllProductsComponent } from "./components/all-products/all-products.component";
 import { EditProductComponent } from "./components/edit-product/edit-product.component";
 import { AddProductComponent } from "./components/add-product/add-product.component";
+import { PreviewProductComponent } from "./components/preview-product/preview-product.component";
 
 export const routes: Routes = [
   {
@@ -33,7 +34,7 @@ export const routes: Routes = [
         component: AdminProductsComponent,
       },
       {
-        path: "edit-product/:productId",
+        path: "edit-product/:product-id",
         component: EditProductComponent,
       },
       {
@@ -43,6 +44,10 @@ export const routes: Routes = [
       {
         path: "all-products",
         component: AllProductsComponent,
+      },
+      {
+        path: "preview-product/:product-id",
+        component: PreviewProductComponent,
       },
     ],
   },

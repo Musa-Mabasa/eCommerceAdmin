@@ -21,7 +21,7 @@
     <div class="divider divider-horizontal"></div>
     <button
         (click)="router.navigate(['home/add-product'])"
-      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl font-rubik"
     >
       Add <span class="hidden sm:block">Product</span>
       <ng-icon name="matPlus" class="text-2xl" />
@@ -34,11 +34,11 @@
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
     >
       @for (tag of tags; track tag) { @if(currentTag === tag){
-      <div class="badge bg-primary-color text-black px-3 py-4 text">
+      <div class="badge bg-primary-color text-black px-3 py-4 text font-rubik">
         {{ tag }}
       </div>
       }@else {
-      <div (click)="currentTag = tag" class="cursor-pointer">{{ tag }}</div>
+      <div (click)="currentTag = tag" class="cursor-pointer font-rubik">{{ tag }}</div>
       } }
     </div>
     <div class="divider divider-horizontal"></div>
