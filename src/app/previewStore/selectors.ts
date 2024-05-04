@@ -17,9 +17,19 @@ export const selectAllProductsWithTags = createSelector(
         return { product, tags };
       })
       .filter((product) => {
-        if (state.selectedCategory === "All Products") {
+        if (
+          state.selectedCategory === "All Products" &&
+          product.product.name
+            .toLowerCase()
+            .includes(state.searchTerm.toLowerCase())
+        ) {
           return true;
-        } else if (state.selectedCategory === product.product.category) {
+        } else if (
+          state.selectedCategory === product.product.category &&
+          product.product.name
+            .toLowerCase()
+            .includes(state.searchTerm.toLowerCase())
+        ) {
           return true;
         }
         return false;
@@ -35,8 +45,7 @@ export const selectAllProductsWithTags = createSelector(
       .filter((product) => {
         if (state.priceRangeType === "") {
           return true;
-        }
-        else if (
+        } else if (
           state.priceRangeType === "Equals" &&
           state.lowerPriceBound &&
           product.product.price === state.lowerPriceBound

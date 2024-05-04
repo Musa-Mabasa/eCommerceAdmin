@@ -19,6 +19,7 @@ import {
   selectLowerPriceBound,
   selectPriceRangeType,
   selectUpperPriceBound,
+  setSearchTerm,
 } from "../../previewStore/actions";
 import {
   selectAllProductsWithTags,
@@ -102,5 +103,13 @@ export class AllProductsComponent {
         upperPriceBound: Number(this.upperBoundPrice.value) ?? undefined,
       })
     );
+  }
+
+  onSearch(event: Event) {
+    if (event?.target) {
+      this.store.dispatch(
+        setSearchTerm({ searchTerm: (event.target as HTMLInputElement).value })
+      );
+    }
   }
 }

@@ -51,3 +51,8 @@ export const selectUpperPriceBound = createAction(
   "[PREVIEW] SelectUpperPriceBound",
   props<{ upperPriceBound?: number }>()
 );
+
+export const setSearchTerm = createAction(
+  "[ADMIN] setSearchTerm",
+  props<{ searchTerm: string }>()
+);

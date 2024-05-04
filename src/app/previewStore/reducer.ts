@@ -14,6 +14,7 @@ import {
   selectPriceRangeType,
   addToSelectedTags,
   removeFromSelectedTags,
+  setSearchTerm,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -30,6 +31,7 @@ export interface PreviewState {
   priceRangeType: string;
   lowerPriceBound?: number;
   upperPriceBound?: number;
+  searchTerm: string;
 }
 
 const initialState: PreviewState = {
@@ -42,6 +44,7 @@ const initialState: PreviewState = {
   selectedCategory: "All Products",
   selectedTags: [],
   priceRangeType: "",
+  searchTerm: "",
 };
 
 export const previewReducer = createReducer(
@@ -98,6 +101,10 @@ export const previewReducer = createReducer(
   on(selectUpperPriceBound, (state, { upperPriceBound }) => ({
     ...state,
     upperPriceBound,
+  })),
+  on(setSearchTerm, (state, { searchTerm }) => ({
+    ...state,
+    searchTerm,
   }))
 );
 
