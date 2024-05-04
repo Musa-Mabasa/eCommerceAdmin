@@ -25,7 +25,7 @@ import { getCookie } from "../utils/utils";
 })
 export class AdminService {
   firestore = inject(Firestore);
-  //These are placeholder functions and will be implemented later.
+  
   getAdminProducts(adminId: string): Observable<Product[]> {
     const fetchQuery = query(
       collection(this.firestore, "Product"),
