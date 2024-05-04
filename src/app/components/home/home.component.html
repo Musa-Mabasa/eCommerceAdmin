@@ -39,10 +39,14 @@
           <div
             tabindex="0"
             role="button"
-            class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-base flex justify-center items-center"
+            class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-base flex justify-center items-center p-0"
           >
             @if(avatar){
-            <img [src]="avatar" referrerpolicy="no-referrer" />
+            <img
+              [src]="avatar"
+              referrerpolicy="no-referrer"
+              class="rounded-full w-full"
+            />
             }@else{
             <p class="text-center text-lg h-fit w-fit">
               {{ email.charAt(0).toUpperCase() }}
@@ -57,17 +61,23 @@
               class="h-44 p-3 flex flex-col gap-1 justify-center items-center"
             >
               <div
-                class="avatar w-20 h-20 bg-secondary-color rounded-full text-whiteSmoke flex justify-center items-center"
+                class="avatar w-20 h-20 bg-secondary-color rounded-full text-whiteSmoke flex justify-center items-center p-0"
               >
                 @if(avatar){
-                <img [src]="avatar" referrerpolicy="no-referrer" />
+                <img
+                  [src]="avatar"
+                  referrerpolicy="no-referrer"
+                  class="rounded-full w-full"
+                />
                 }@else{
                 <p class="text-center text-lg h-fit w-fit">
                   {{ email.charAt(0).toUpperCase() }}
                 </p>
                 }
               </div>
-              <p class="font-medium text-center">{{ !displayName || displayName === "" ? email : displayName  }}</p>
+              <p class="font-medium text-center">
+                {{ !displayName || displayName === "" ? email : displayName }}
+              </p>
             </li>
             <li>
               <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
