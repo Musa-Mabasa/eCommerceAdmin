@@ -7,6 +7,8 @@ import { PreviewService } from "../services/preview.service";
 import {
   getAllProducts,
   getAllProductsComplete,
+  getCart,
+  getCartComplete,
   getCategories,
   getCategoriesComplete,
   getTags,
@@ -69,6 +71,25 @@ export class PreviewEffects {
             this.notification.create(
               "error",
               "Failed to get tags",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  getCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCart.type),
+      switchMap(({ userId }: { userId: string }) =>
+        this.previewService.getCart(userId).pipe(
+          map((cart) => getCartComplete({ cart: cart[0] })),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to get cart",
               err.message
             );
             return EMPTY;

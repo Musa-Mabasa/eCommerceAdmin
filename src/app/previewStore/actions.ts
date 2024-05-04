@@ -1,11 +1,21 @@
 import { createAction, props } from "@ngrx/store";
-import { Category, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag } from "../models/admin";
 
 export const getAllProducts = createAction("[PREVIEW] GetAllProducts");
 
 export const getAllProductsComplete = createAction(
   "[PREVIEW] GetAllProductsComplete",
   props<{ allProducts: Product[] }>()
+);
+
+export const getCart = createAction(
+  "[PREVIEW] GetCart",
+  props<{ userId: string }>()
+);
+
+export const getCartComplete = createAction(
+  "[PREVIEW] GetCartComplete",
+  props<{ cart: Cart }>()
 );
 
 export const getCategories = createAction("[PREVIEW] GetCategories");

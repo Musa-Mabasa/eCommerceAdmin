@@ -13,7 +13,12 @@ export interface Product {
 
 export interface Cart {
   id: string;
-  adminId: string;
+  userId: string;
+}
+
+export interface userCart {
+  cart?: Cart;
+  products: CorrelatedProduct[];
 }
 
 export interface Tag {

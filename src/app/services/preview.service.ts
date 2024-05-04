@@ -3,10 +3,14 @@ import {
   Firestore,
   collection,
   collectionData,
+  doc,
+  getDoc,
   query,
+  where,
 } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
-import { Category, Product, Tag } from "../models/admin";
+import { Observable, from } from "rxjs";
+import { Cart, Category, Product, Tag } from "../models/admin";
+import { user } from "@angular/fire/auth";
 
 @Injectable({
   providedIn: "root",
@@ -32,5 +36,14 @@ export class PreviewService {
     const fetchQuery = query(collection(this.firestore, "Tag"));
 
     return collectionData(fetchQuery) as Observable<Tag[]>;
+  }
+
+  getCart(userId: string) {
+    const fetchQuery = query(
+      collection(this.firestore, "Cart"),
+      where("userId", "==", userId)
+    );
+
+    return collectionData(fetchQuery, { idField: "id" }) as Observable<Cart[]>;
   }
 }
