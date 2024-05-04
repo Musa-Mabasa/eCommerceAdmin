@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { matShoppingCartOutline } from "@ng-icons/material-icons/outline";
+import { CorrelatedProduct } from "../../models/admin";
 
 @Component({
   selector: "app-preview-card",
@@ -15,6 +16,7 @@ import { matShoppingCartOutline } from "@ng-icons/material-icons/outline";
   ],
 })
 export class PreviewCardComponent {
+  @Input() product: CorrelatedProduct | undefined;
   @Output() onClick: EventEmitter<string> = new EventEmitter();
   productId = "dsgtyfdsvgvsd";
 

@@ -6,7 +6,7 @@ import {
   matArrowForwardOutline,
   matFilterListOutline,
 } from "@ng-icons/material-icons/outline";
-import { NgIf } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
 import { getAllProducts } from "../../previewStore/actions";
@@ -15,7 +15,7 @@ import { selectAllProductsWithTags } from "../../previewStore/selectors";
 @Component({
   selector: "app-all-products",
   standalone: true,
-  imports: [PreviewCardComponent, NgIconComponent, NgIf],
+  imports: [PreviewCardComponent, NgIconComponent, NgIf, AsyncPipe],
   templateUrl: "./all-products.component.html",
   styleUrl: "./all-products.component.scss",
   viewProviders: [
