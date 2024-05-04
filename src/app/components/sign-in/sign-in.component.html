@@ -89,12 +89,17 @@
             />
           </label>
         </div>
-        <input
+        <button
           type="submit"
           name="Signup"
-          value="Sign In"
           class="btn rounded-xl w-full text-whiteSmoke bg-gradient-to-tr from-primary-color to-secondary-color"
-        />
+        >
+          <span
+            *ngIf="(isLoading$ | async) ?? false"
+            class="loading loading-spinner loading-sm"
+          ></span>
+          Sign Up
+        </button>
       </form>
       <div class="divider">OR</div>
       <button

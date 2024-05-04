@@ -15,7 +15,7 @@ import {
   setIsAuthLoading,
   setIsAuthLoadingComplete,
 } from "../adminStore/actions";
-import { clearUserCookies, setCookie } from "../utils/utils";
+import { clearUserCookies, setCookie, setUserProfile } from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -29,18 +29,7 @@ export class AuthService {
   byGoogle() {
     signInWithPopup(this._auth, new GoogleAuthProvider())
       .then((result) => {
-        if (
-          !result?.user?.uid ||
-          !result.user.displayName ||
-          !result.user.photoURL ||
-          !result.user.email
-        ) {
-          throw new Error("No result came back");
-        }
-        setCookie("userId", result.user.uid);
-        setCookie("displayName", result.user.displayName);
-        setCookie("avatar", result.user.photoURL);
-        setCookie("email", result.user.email);
+        setUserProfile(result);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => console.error(err));
@@ -50,18 +39,7 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     createUserWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (
-          !result?.user?.uid ||
-          !result.user.displayName ||
-          !result.user.photoURL ||
-          !result.user.email
-        ) {
-          throw new Error("No result came back");
-        }
-        setCookie("userId", result.user.uid);
-        setCookie("displayName", result.user.displayName);
-        setCookie("avatar", result.user.photoURL);
-        setCookie("email", result.user.email);
+        setUserProfile(result);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
@@ -74,18 +52,7 @@ export class AuthService {
     this.store.dispatch(setIsAuthLoading());
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
-        if (
-          !result?.user?.uid ||
-          !result.user.displayName ||
-          !result.user.photoURL ||
-          !result.user.email
-        ) {
-          throw new Error("No result came back");
-        }
-        setCookie("userId", result.user.uid);
-        setCookie("displayName", result.user.displayName);
-        setCookie("avatar", result.user.photoURL);
-        setCookie("email", result.user.email);
+        setUserProfile(result);
         this._router.navigate(["/home/admin-products"]);
       })
       .catch((err) => {
