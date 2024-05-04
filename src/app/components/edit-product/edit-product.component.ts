@@ -125,8 +125,6 @@ export class EditProductComponent implements OnInit {
   addTag() {
     if (this.tag?.value && this.product?.id) {
       const tag = { name: this.tag.value, productId: this.product.id };
-      console.log(tag);
-
       this.store.dispatch(addTag({ tag: tag }));
       this.tag.setValue("");
     }

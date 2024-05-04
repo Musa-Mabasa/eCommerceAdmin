@@ -165,8 +165,6 @@ export class AdminService {
   }
 
   addTag(name: string, productId: string) {
-    console.log(name, productId);
-
     return from(
       setDoc(doc(collection(this.firestore, "Tag")), {
         name,

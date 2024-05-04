@@ -190,10 +190,8 @@ export class AdminEffects {
   addTag$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTag.type),
-      switchMap(({ tag }: { tag: { name: string; productId: string } }) => {
-        console.log(tag.name, tag.productId);
-
-        return this.adminService.addTag(tag.name, tag.productId).pipe(
+      switchMap(({ tag }: { tag: { name: string; productId: string } }) =>
+        this.adminService.addTag(tag.name, tag.productId).pipe(
           map(() => {
             this.notification.create(
               "success",
@@ -203,14 +201,13 @@ export class AdminEffects {
             return addTagComplete();
           }),
           catchError((err) => {
-            console.log(err);
 
             this.notification.create("error", "Failed to add Tag", err.message);
             addTagComplete();
             return EMPTY;
           })
-        );
-      })
+        )
+      )
     )
   );
 }
