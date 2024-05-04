@@ -6,10 +6,17 @@ import {
   doc,
   getDoc,
   query,
+  setDoc,
   where,
 } from "@angular/fire/firestore";
 import { Observable, from } from "rxjs";
-import { Cart, Category, Product, Tag } from "../models/admin";
+import {
+  Cart,
+  Category,
+  CorrelatedProduct,
+  Product,
+  Tag,
+} from "../models/admin";
 import { user } from "@angular/fire/auth";
 
 @Injectable({
@@ -45,5 +52,14 @@ export class PreviewService {
     );
 
     return collectionData(fetchQuery, { idField: "id" }) as Observable<Cart[]>;
+  }
+
+  addProductToCart(cartId: string, product: CorrelatedProduct) {
+    return from(
+      setDoc(doc(collection(this.firestore, "Product"), product.product.id), {
+        ...product.product,
+        cartId,
+      }).catch((err) => Error(err.message))
+    );
   }
 }

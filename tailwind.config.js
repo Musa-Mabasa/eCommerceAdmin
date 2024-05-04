@@ -15,6 +15,7 @@ export default {
       black: "black",
       "edit-input-color": "#eeeeee",
       grey: "#f0f3f4",
+      green: "green"
     },
     extend: {
       fontFamily: {

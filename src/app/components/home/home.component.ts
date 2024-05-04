@@ -12,24 +12,25 @@ import { getCookie } from "../../utils/utils";
 import { NgIf } from "@angular/common";
 import { AuthService } from "../../services/auth.service";
 import { matNotificationsNoneOutline, matShoppingCartOutline } from "@ng-icons/material-icons/outline";
+import { CartItemComponent } from "../cart-item/cart-item.component";
 
 @Component({
-  selector: "app-home",
-  standalone: true,
-  imports: [NgIconComponent, RouterLink, RouterLinkActive, RouterOutlet, NgIf],
-  templateUrl: "./home.component.html",
-  styleUrl: "./home.component.scss",
-  viewProviders: [
-    provideIcons({
-      matSegment,
-      matAdminPanelSettings,
-      matShoppingBag,
-      matSettings,
-      matExitToApp, 
-      matNotificationsNoneOutline, 
-      matShoppingCartOutline
-    }),
-  ],
+    selector: "app-home",
+    standalone: true,
+    templateUrl: "./home.component.html",
+    styleUrl: "./home.component.scss",
+    viewProviders: [
+        provideIcons({
+            matSegment,
+            matAdminPanelSettings,
+            matShoppingBag,
+            matSettings,
+            matExitToApp,
+            matNotificationsNoneOutline,
+            matShoppingCartOutline
+        }),
+    ],
+    imports: [NgIconComponent, RouterLink, RouterLinkActive, RouterOutlet, NgIf, CartItemComponent]
 })
 export class HomeComponent {
   avatar: string | undefined = getCookie("avatar");

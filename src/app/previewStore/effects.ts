@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
-import { Product } from "../models/admin";
+import { CorrelatedProduct } from "../models/admin";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { PreviewService } from "../services/preview.service";
 import {
+  addProductToCart,
+  addProductToCartComplete,
   getAllProducts,
   getAllProductsComplete,
   getCart,
@@ -95,6 +97,32 @@ export class PreviewEffects {
             return EMPTY;
           })
         )
+      )
+    )
+  );
+
+  addProductToCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToCart.type),
+      switchMap(
+        ({
+          productToAdd,
+        }: {
+          productToAdd: { cartId: string; product: CorrelatedProduct };
+        }) =>
+          this.previewService
+            .addProductToCart(productToAdd.cartId, productToAdd.product)
+            .pipe(
+              map(() => addProductToCartComplete()),
+              catchError((err) => {
+                this.notification.create(
+                  "error",
+                  "Failed to add product",
+                  err.message
+                );
+                return EMPTY;
+              })
+            )
       )
     )
   );
