@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { PreviewState, previewFeatureKey } from "./reducer";
-import { CorrelatedProduct, userCart } from "../models/admin";
+import { CorrelatedProduct, UserCart } from "../models/admin";
 
 export const previewSelectFeature =
   createFeatureSelector<PreviewState>(previewFeatureKey);
@@ -104,7 +104,7 @@ export const selectSelectedTags = createSelector(
 export const selectUserCart = createSelector(
   previewSelectFeature,
   selectAllProductsWithTags,
-  (state, correlatedProducts): userCart => {
+  (state, correlatedProducts): UserCart => {
     const products = correlatedProducts.filter(
       (product) => (product.product.cartId = state.cart?.id)
     );

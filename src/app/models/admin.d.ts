@@ -16,7 +16,7 @@ export interface Cart {
   userId: string;
 }
 
-export interface userCart {
+export interface UserCart {
   cart?: Cart;
   products: CorrelatedProduct[];
 }

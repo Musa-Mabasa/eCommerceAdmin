@@ -6,15 +6,20 @@
       class="w-20 object-cover rounded-lg"
     />
     <div class="flex flex-col gap-1">
-      <h1 class="text-lg">Macbook 14 Max</h1>
+      <h1 class="text-lg">{{ product?.product?.name }}</h1>
       <div class="flex">
-        <p>R20000</p>
+        <p>{{ product?.product?.price }}</p>
         <div class="divider divider-horizontal mx-1"></div>
-        <p class="text-green">In Stock</p>
+        <p *NgIf="product?.product?.quantity > 0" class="text-green">
+          In Stock
+        </p>
+        <p *NgIf="product?.product?.quantity <= 0" class="text-red">
+          Out of Stock
+        </p>
       </div>
     </div>
   </div>
   <button class="btn btn-ghost font-normal">
-    <ng-icon name="matDelete"/>Delete
+    <ng-icon name="matDelete" />Delete
   </button>
 </div>

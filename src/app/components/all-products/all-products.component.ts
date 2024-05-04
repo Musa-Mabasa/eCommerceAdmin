@@ -28,6 +28,7 @@ import {
   selectTags,
 } from "../../previewStore/selectors";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { PreviewState } from "../../previewStore/reducer";
 
 @Component({
   selector: "app-all-products",
@@ -47,7 +48,7 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 })
 export class AllProductsComponent {
   router = inject(Router);
-  store = inject(Store<AdminState>);
+  store = inject(Store<PreviewState>);
   allProducts$ = this.store.select(selectAllProductsWithTags);
   categories$ = this.store.select(selectCategories);
   tags$ = this.store.select(selectTags);
