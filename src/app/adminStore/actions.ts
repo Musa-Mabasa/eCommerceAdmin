@@ -55,7 +55,7 @@ export const setSortBy = createAction(
 );
 
 export const setSearchTerm = createAction(
-  "[ADMIN] setSearchTerm",
+  "[ADMIN] SetSearchTerm",
   props<{ searchTerm: string }>()
 );
 

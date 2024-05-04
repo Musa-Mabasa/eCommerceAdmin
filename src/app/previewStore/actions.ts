@@ -53,6 +53,6 @@ export const selectUpperPriceBound = createAction(
 );
 
 export const setSearchTerm = createAction(
-  "[ADMIN] setSearchTerm",
+  "[PREVIEW] SetSearchTerm",
   props<{ searchTerm: string }>()
 );
