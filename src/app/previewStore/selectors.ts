@@ -17,23 +17,43 @@ export const selectAllProductsWithTags = createSelector(
         return { product, tags };
       })
       .filter((product) => {
-        if (state.selectedCategory === "") {
+        if (state.selectedCategory === "All Products") {
           return true;
         } else if (state.selectedCategory === product.product.category) {
           return true;
         }
         return false;
+      })
+      .filter((product) => {
+        if (!state.selectedTags.length) {
+          return true;
+        }
+        return product.tags.some((tag) =>
+          state.selectedTags.includes(tag.name)
+        );
       });
 
     return products;
   }
 );
 
-export const selectCategories = createSelector(previewSelectFeature, (state) =>
-  state.categories.filter((category) => category.name !== "All Products")
+export const selectCategories = createSelector(
+  previewSelectFeature,
+  (state) => {
+    const newCategories = [
+      ...state.categories.filter(({ name }) => name === "All Products"),
+      ...state.categories.filter(({ name }) => name !== "All Products"),
+    ];
+    return newCategories;
+  }
 );
 
 export const selectTags = createSelector(
   previewSelectFeature,
   (state) => state.tags
+);
+
+export const selectSelectedTags = createSelector(
+  previewSelectFeature,
+  (state) => state.selectedTags
 );

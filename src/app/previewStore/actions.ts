@@ -27,9 +27,14 @@ export const selectCategory = createAction(
   props<{ selectedCategory: string }>()
 );
 
-export const selectFilterTags = createAction(
-  "[PREVIEW] SelectTags",
-  props<{ selectedTags: string[] }>()
+export const addToSelectedTags = createAction(
+  "[PREVIEW] AddToSelectedTags",
+  props<{ tag: string }>()
+);
+
+export const removeFromSelectedTags = createAction(
+  "[PREVIEW] RemoveFromSelectedTags",
+  props<{ tag: string }>()
 );
 
 export const selectPriceRangeType = createAction(
@@ -39,7 +44,7 @@ export const selectPriceRangeType = createAction(
 
 export const selectLowerPriceBound = createAction(
   "[PREVIEW] SelectLowerPriceBound",
-  props<{ lowerPriceBound?: number  }>()
+  props<{ lowerPriceBound?: number }>()
 );
 
 export const selectUpperPriceBound = createAction(

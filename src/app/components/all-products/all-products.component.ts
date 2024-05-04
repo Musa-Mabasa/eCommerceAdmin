@@ -10,11 +10,12 @@ import { AsyncPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
 import {
+  addToSelectedTags,
   getAllProducts,
   getCategories,
   getTags,
+  removeFromSelectedTags,
   selectCategory,
-  selectFilterTags,
   selectLowerPriceBound,
   selectPriceRangeType,
   selectUpperPriceBound,
@@ -22,6 +23,7 @@ import {
 import {
   selectAllProductsWithTags,
   selectCategories,
+  selectSelectedTags,
   selectTags,
 } from "../../previewStore/selectors";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
@@ -48,10 +50,10 @@ export class AllProductsComponent {
   allProducts$ = this.store.select(selectAllProductsWithTags);
   categories$ = this.store.select(selectCategories);
   tags$ = this.store.select(selectTags);
-  selectedCategory = new FormControl("");
+  selectedCategory = new FormControl("All Products");
   lowerBoundPrice = new FormControl("");
   upperBoundPrice = new FormControl("");
-  selectedTags: string[] = [];
+  selectedTags$ = this.store.select(selectSelectedTags);
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";
@@ -66,13 +68,21 @@ export class AllProductsComponent {
     this.router.navigate([`home/preview-product/${event}`]);
   }
 
-  confirmFilters() {
+  selectCategory() {
     this.store.dispatch(
       selectCategory({ selectedCategory: this.selectedCategory?.value ?? "" })
     );
+  }
 
-    this.store.dispatch(selectFilterTags({ selectedTags: this.selectedTags }));
+  removeFromSelectedTags(tag: string) {
+    this.store.dispatch(removeFromSelectedTags({ tag }));
+  }
 
+  addToSelectedTags(tag: string) {
+    this.store.dispatch(addToSelectedTags({ tag }));
+  }
+
+  confirmFilters() {
     this.store.dispatch(
       selectPriceRangeType({ priceRangeType: this.selectedPriceRangeType })
     );

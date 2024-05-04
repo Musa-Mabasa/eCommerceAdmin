@@ -45,8 +45,8 @@
             <select
               class="select w-full bg-edit-input-color"
               [formControl]="selectedCategory"
+              (change)="selectCategory()"
             >
-              <option disabled selected>Select a Category</option>
               @for (category of (categories$ | async); track category) {
               <option [value]="category.name">{{ category.name }}</option>
               }
@@ -57,17 +57,17 @@
             <div
               class="flex items-center gap-4 w-full pb-5 font-rubik font-light text-nowrap overflow-auto"
             >
-              @for(tag of (tags$ | async); track tag){
-              @if(selectedTags.includes(tag.name)){
+              @for(tag of (tags$ | async); track tag){ @if((selectedTags$ |
+              async)?.includes(tag.name)){
               <div
-                (click)="selectedTags.splice(selectedTags.indexOf(tag.name), 1)"
+                (click)="removeFromSelectedTags(tag.name)"
                 class="badge bg-primary-color text-black cursor-pointer px-3 py-4 font-rubik"
               >
                 {{ tag.name }}
               </div>
               } @else{
               <div
-                (click)="selectedTags.push(tag.name)"
+                (click)="addToSelectedTags(tag.name)"
                 class="badge badge-outline cursor-pointer px-3 py-4 font-rubik"
               >
                 {{ tag.name }}
