@@ -2,40 +2,87 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AdminService } from "../services/admin.service";
 import {
-  getAdminCart,
-  getAdminCartComplete,
+  addProduct,
+  addProductComplete,
+  addProductError,
+  addTag,
+  addTagComplete,
+  deleteProduct,
+  deleteProductComplete,
+  editProduct,
+  editProductComplete,
+  editProductError,
   getAdminProducts,
   getAdminProductsComplete,
-  getAllStoreProducts,
-  getAllStoreProductsComplete,
   getAllTags,
   getAllTagsComplete,
+  getCategories,
+  getCategoriesComplete,
+  getProductById,
+  getProductByIdComplete,
 } from "./actions";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
+import { Product } from "../models/admin";
+import { NzNotificationService } from "ng-zorro-antd/notification";
 
 @Injectable()
 export class AdminEffects {
-  constructor(private actions$: Actions, private adminService: AdminService) {}
+  constructor(
+    private actions$: Actions,
+    private adminService: AdminService,
+    private notification: NzNotificationService
+  ) {}
 
   getAdminProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAdminProducts.type),
-      switchMap((adminId) =>
+      switchMap(({ adminId }: { adminId: string }) =>
         this.adminService.getAdminProducts(adminId).pipe(
           map((adminProducts) => getAdminProductsComplete({ adminProducts })),
-          catchError((err) => EMPTY)
+          catchError((err) => {
+            this.notification.create("error", "Sign In failed", err.message);
+            return EMPTY;
+          })
         )
       )
     )
   );
 
-  getAllStoreProducts$ = createEffect(() =>
+  getCategories$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getAllStoreProducts.type),
+      ofType(getCategories.type),
       switchMap(() =>
-        this.adminService.getAllStoreProducts().pipe(
-          map((allProducts) => getAllStoreProductsComplete({ allProducts })),
-          catchError((err) => EMPTY)
+        this.adminService.getCategories().pipe(
+          map((categories) => getCategoriesComplete({ categories })),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to fetch categories",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  getProductById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getProductById.type),
+      switchMap(({ productId }: { productId: string }) =>
+        this.adminService.getProductById(productId).pipe(
+          map((product) => {
+            return getProductByIdComplete({ product: product });
+          }),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to fetch product",
+              err.message
+            );
+            return EMPTY;
+          })
         )
       )
     )
@@ -47,19 +94,118 @@ export class AdminEffects {
       switchMap(() =>
         this.adminService.getAllTags().pipe(
           map((allTags) => getAllTagsComplete({ allTags })),
-          catchError((err) => EMPTY)
+          catchError((err) => {
+            this.notification.create("error", "Sign In failed", err.message);
+            return EMPTY;
+          })
         )
       )
     )
   );
 
-  getAdminCart$ = createEffect(() =>
+  addProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getAdminCart.type),
-      switchMap((adminId) =>
-        this.adminService.getAdminCart(adminId).pipe(
-          map((cart) => getAdminCartComplete({ cart })),
-          catchError((err) => EMPTY)
+      ofType(addProduct.type),
+      switchMap(
+        ({
+          productWithFile,
+        }: {
+          productWithFile: { product: Product; file?: File };
+        }) =>
+          this.adminService.addProduct(productWithFile).pipe(
+            map(() => {
+              this.notification.create(
+                "success",
+                "Success",
+                "Product Added Successfully"
+              );
+              return addProductComplete();
+            }),
+            catchError((err) => {
+              this.notification.create(
+                "error",
+                "Failed to add product",
+                err.message
+              );
+              addProductError();
+              return EMPTY;
+            })
+          )
+      )
+    )
+  );
+
+  editProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editProduct.type),
+      switchMap(
+        ({
+          productWithFile,
+        }: {
+          productWithFile: { product: Product; file?: File };
+        }) =>
+          this.adminService.editProduct(productWithFile).pipe(
+            map(() => {
+              this.notification.create(
+                "success",
+                "Success",
+                "Product Edited Successfully"
+              );
+
+              return editProductComplete();
+            }),
+            catchError((err) => {
+              this.notification.create(
+                "error",
+                "Failed to add product",
+                err.message
+              );
+              editProductError();
+              return EMPTY;
+            })
+          )
+      )
+    )
+  );
+
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProduct.type),
+      switchMap(({ productId }: { productId: string }) =>
+        this.adminService.deleteProduct(productId).pipe(
+          map(() => deleteProductComplete()),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to add product",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  addTag$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addTag.type),
+      switchMap(({ tag }: { tag: { name: string; productId: string } }) =>
+        this.adminService.addTag(tag.name, tag.productId).pipe(
+          map(() => {
+            this.notification.create(
+              "success",
+              "Success",
+              "Tag Added Successfully"
+            );
+            return addTagComplete();
+          }),
+          catchError((err) => {
+
+            this.notification.create("error", "Failed to add Tag", err.message);
+            addTagComplete();
+            return EMPTY;
+          })
         )
       )
     )

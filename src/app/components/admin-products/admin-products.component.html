@@ -4,7 +4,12 @@
     <label
       class="input input-bordered mr-0 w-32 sm:w-64 lg:w-80 xl:w-96 rounded-3xl bg-search-color flex items-center justify-between"
     >
-      <input type="text" class="w-4/5" placeholder="Search..." />
+      <input
+        type="text"
+        class="w-4/5"
+        placeholder="Search..."
+        (input)="onSearch($event)"
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -20,8 +25,8 @@
     </label>
     <div class="divider divider-horizontal"></div>
     <button
-        (click)="router.navigate(['home/add-product'])"
-      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl font-rubik"
+      (click)="router.navigate(['home/add-product'])"
+      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
     >
       Add <span class="hidden sm:block">Product</span>
       <ng-icon name="matPlus" class="text-2xl" />
@@ -33,54 +38,94 @@
     <div
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
     >
-      @for (tag of tags; track tag) { @if(currentTag === tag){
-      <div class="badge bg-primary-color text-black px-3 py-4 text font-rubik">
-        {{ tag }}
+      @for (category of (categories$ | async); track category) { @if((filterBy$
+      | async) === category.name){
+      <div class="badge bg-primary-color text-black px-3 py-4 text">
+        {{ category.name }}
       </div>
       }@else {
-      <div (click)="currentTag = tag" class="cursor-pointer font-rubik">{{ tag }}</div>
+      <div (click)="setFilterBy(category.name)" class="cursor-pointer">
+        {{ category.name }}
+      </div>
       } }
     </div>
     <div class="divider divider-horizontal"></div>
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-outline w-32 border-secondary-color rounded-xl">
+      <div
+        tabindex="0"
+        role="button"
+        class="btn btn-outline w-32 border-secondary-color rounded-xl"
+      >
         Sort by <ng-icon name="matSort" class="text-2xl" />
       </div>
       <ul
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-whiteSmoke rounded-box w-52"
       >
-        <li (click)="sortBy = 'price'">
+        <li (click)="setSortBy('price')">
           <a class="flex justify-between"
             >Price
-            <span *ngIf="sortBy === 'price'"
+            <span *ngIf="(sortBy$ | async) === 'price'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
-        <li (click)="sortBy = 'quantity'">
+        <li (click)="setSortBy('quantity')">
           <a class="flex justify-between"
             >Quantity
-            <span *ngIf="sortBy === 'quantity'"
+            <span *ngIf="(sortBy$ | async) === 'quantity'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
-        <li (click)="sortBy = 'name'">
+        <li (click)="setSortBy('name')">
           <a class="flex justify-between"
             >Name
-            <span *ngIf="sortBy === 'name'"
+            <span *ngIf="(sortBy$ | async) === 'name'"
               ><ng-icon name="matCheck" class="text-2xl" /></span
           ></a>
         </li>
       </ul>
     </div>
   </div>
+  @if (!(myProducts$ | async)?.length){
+  <div class="grow flex flex-col justify-center items-center h-56">
+    <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
+    <p class="text-lg font-semibold">No products found</p>
+  </div>
+  } @else {
   <div
     class="py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
   >
-    <app-product-card class="w-72" (onClick)="routeToEdit($event)" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
-    <app-product-card class="w-72" />
+    @for(product of (myProducts$ | async); track product){
+    <app-product-card
+      [product]="product"
+      class="w-72"
+      (editOnClick)="routeToEdit($event)"
+      (deleteOnClick)="setProductToDelete($event)"
+    />
+    }
   </div>
+  }
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box bg-search-color">
+      <h3 class="font-bold text-lg">Permantly Delete Product?</h3>
+      <p class="py-4">
+        Are you sure you want to permanently delete the product?
+      </p>
+      <div class="modal-action">
+        <form method="dialog" class="flex gap-4">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
+            Close
+          </button>
+          <button
+            class="btn bg-red text-whiteSmoke rounded-3xl shadow-xl"
+            (click)="deleteProduct()"
+          >
+            Delete
+            <ng-icon name="matDelete" class="text-2xl" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </section>

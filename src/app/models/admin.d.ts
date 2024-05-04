@@ -1,25 +1,30 @@
 export interface Product {
-  id: string;
+  id?: string;
   adminId: string;
+  cartId?: string;
   name: string;
-  desc: string;
+  description: string;
   price: number;
   currency: string;
   category: string;
   quantity: number;
+  imageUrl?: string;
 }
 
 export interface Cart {
   id: string;
   adminId: string;
-  products: Product[];
-  totalCost: number;
 }
 
 export interface Tag {
   id: string;
   name: string;
-  productId;
+  productId: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
 }
 
 export interface CorrelatedProduct {

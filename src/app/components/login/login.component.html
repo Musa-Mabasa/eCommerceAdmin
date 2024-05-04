@@ -60,7 +60,7 @@
 
             <ng-icon
               [name]="hidePassword ? 'faEyeSlash' : 'faEye'"
-              class="text-xl"
+              class="text-xl cursor-pointer"
               (click)="hidePassword = !hidePassword"
             />
           </label>
@@ -78,7 +78,7 @@
         </button>
         <p>
           Forgot Password?
-          <span class="text-blue" routerLink="/reset">Reset</span>
+          <span class="text-blue cursor-pointer" routerLink="/reset">Reset</span>
         </p>
       </form>
       <div class="divider">OR</div>

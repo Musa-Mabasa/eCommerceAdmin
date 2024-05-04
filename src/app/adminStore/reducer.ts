@@ -1,15 +1,29 @@
 import { isDevMode } from "@angular/core";
 import { createReducer, MetaReducer, on } from "@ngrx/store";
-import { Cart, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag } from "../models/admin";
 import {
-  getAdminCartComplete,
+  addProduct,
+  addProductComplete,
+  addProductError,
+  addTag,
+  addTagComplete,
+  editProduct,
+  editProductComplete,
+  editProductError,
+  getAdminProducts,
   getAdminProductsComplete,
-  getAllStoreProductsComplete,
   getAllTagsComplete,
+  getCategories,
+  getCategoriesComplete,
+  getProductById,
+  getProductByIdComplete,
+  getProductByIdError,
+  setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
+  setSearchTerm,
   setSelectEditProduct,
-  setSelectPreviewProduct,
+  setSortBy,
 } from "./actions";
 
 export const adminFeatureKey = "admin";
@@ -17,45 +31,113 @@ export const adminFeatureKey = "admin";
 export interface AdminState {
   adminProducts: Product[];
   allProducts: Product[];
-  selectedProductId: string;
+  productToEdit?: Product;
+  categories: Category[];
+  filterBy: string;
+  sortBy: string;
+  searchTerm: string;
   allTags: Tag[];
   cart?: Cart;
+  productLoadingState: boolean;
+  addingLoadingState: boolean;
+  editLoadingState: boolean;
+  categoryLoadingState: boolean;
+  addTagLoadingState: boolean;
   isAuthLoading: boolean;
 }
 
 const initialState: AdminState = {
   adminProducts: [],
   allProducts: [],
-  selectedProductId: "",
+  categories: [],
+  filterBy: "All Products",
+  sortBy: "",
+  searchTerm: "",
   allTags: [],
+  productLoadingState: false,
+  addingLoadingState: false,
+  editLoadingState: false,
+  categoryLoadingState: false,
+  addTagLoadingState: false,
   isAuthLoading: false,
 };
 
 export const adminReducer = createReducer(
   initialState,
+  on(getAdminProducts, (state) => ({
+    ...state,
+    productLoadingState: true,
+  })),
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
+    productLoadingState: false,
   })),
-  on(getAllStoreProductsComplete, (state, { allProducts }) => ({
+  on(getProductById, (state) => ({
     ...state,
-    allProducts,
+    productLoadingState: true,
+  })),
+  on(getProductByIdComplete, (state, { product }) => ({
+    ...state,
+    productToEdit: product,
+    productLoadingState: false,
+  })),
+  on(getProductByIdError, (state) => ({
+    ...state,
+    productLoadingState: false,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
   })),
-  on(getAdminCartComplete, (state, { cart }) => ({
+  on(getCategories, (state) => ({
     ...state,
-    cart,
+    categoryLoadingState: true,
   })),
-  on(setSelectEditProduct, (state, { selectedEditProduct }) => ({
+  on(getCategoriesComplete, (state, { categories }) => ({
     ...state,
-    selectedEditProduct,
+    categories,
+    categoryLoadingState: false,
   })),
-  on(setSelectPreviewProduct, (state, { selectedPreviewProduct }) => ({
+  on(setSelectEditProduct, (state, { productToEdit }) => ({
     ...state,
-    selectedPreviewProduct,
+    productToEdit,
+  })),
+  on(setFilterBy, (state, { filterBy }) => ({
+    ...state,
+    filterBy,
+  })),
+  on(setSortBy, (state, { sortBy }) => ({
+    ...state,
+    sortBy,
+  })),
+  on(setSearchTerm, (state, { searchTerm }) => ({
+    ...state,
+    searchTerm,
+  })),
+  on(addProduct, (state) => ({
+    ...state,
+    addingLoadingState: true,
+  })),
+  on(addProductComplete, (state) => ({
+    ...state,
+    addingLoadingState: false,
+  })),
+  on(editProduct, (state) => ({
+    ...state,
+    editLoadingState: true,
+  })),
+  on(editProductComplete, (state) => ({
+    ...state,
+    editLoadingState: false,
+  })),
+  on(addTag, (state) => ({
+    ...state,
+    addTagLoadingState: true,
+  })),
+  on(addTagComplete, (state) => ({
+    ...state,
+    addTagLoadingState: false,
   })),
   on(setIsAuthLoading, (state) => ({
     ...state,

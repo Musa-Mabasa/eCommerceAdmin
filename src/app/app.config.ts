@@ -15,6 +15,7 @@ import { FormsModule } from "@angular/forms";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideHttpClient } from "@angular/common/http";
 import { firebase } from "../../environment/environment";
+import { AdminEffects } from "./adminStore/effects";
 
 registerLocaleData(en);
 
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(),
     provideState({ name: adminFeatureKey, reducer: adminReducer }),
-    provideEffects(),
+    provideEffects(AdminEffects),
     importProvidersFrom(provideFirebaseApp(() => initializeApp(firebase))),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),

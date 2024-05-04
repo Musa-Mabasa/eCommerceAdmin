@@ -1,208 +1,200 @@
-<section class="flex justify-between gap-4 items-center w-full px-6 py-10">
-  <h1 class="text-2xl font-semibold font-rubik text-nowrap">Add Product</h1>
-  <div class="flex gap-4">
-    <button
-      (click)="router.navigate(['home/admin-products'])"
-      class="w-28 sm:w-32 btn btn-outline rounded-3xl border-2 shadow-lg"
-    >
-      Cancel
-    </button>
-    <button
-      class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
-    >
-      Confirm
-      <ng-icon name="matCheck" class="text-2xl" />
-    </button>
-  </div>
-</section>
-<section class="px-6 pb-4 grid grid-cols-1 md:grid-cols-edit gap-5">
-  <div
-    class="p-5 bg-sidebar-item h-96 rounded-2xl flex flex-col justify-start gap-5 shadow-md"
-  >
-    <h2 class="text-base font-semibold">General Information</h2>
-    <div class="flex flex-col gap-2">
-      <p>Product Name</p>
-      <input
-        type="text"
-        placeholder="Enter name..."
-        class="input bg-edit-input-color w-full border border-primary-color"
-      />
-    </div>
-    <div class="flex flex-col gap-2">
-      <p>Product Description</p>
-      <textarea
-        row="5"
-        placeholder="Enter Description..."
-        class="input py-2 px-4 bg-edit-input-color w-full h-40 border border-primary-color"
-      ></textarea>
-    </div>
-  </div>
-  <div
-    class="py-5 px-7 bg-sidebar-item h-96 rounded-2xl flex flex-col gap-5 shadow-md"
-  >
-    <h2 class="text-base font-semibold">Upload Image</h2>
-    <div class="flex flex-col items-center justify-evenly gap-4 w-full">
-      <label
-        for="dropzone-file"
-        class="flex flex-col items-center justify-center w-full h-52 border-2 border-secondary-color border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+<form
+  *ngIf="addProductForm"
+  [formGroup]="addProductForm"
+  (ngSubmit)="onConfirm()"
+>
+  <section class="flex justify-between gap-4 items-center w-full px-6 py-10">
+    <h1 class="text-2xl font-semibold font-rubik text-nowrap">Add Product</h1>
+    <div class="flex gap-4">
+      <button
+        (click)="router.navigate(['home/admin-products'])"
+        class="w-28 sm:w-32 btn btn-outline rounded-3xl border-2 shadow-lg"
       >
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-          <svg
-            class="w-8 h-8 mb-4 text-primary-color dark:text-gray-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 16"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-            />
-          </svg>
-          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span class="font-semibold text-secondary-color"
-              >Click to upload</span
-            >
-          </p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            PNG, JPG or JEPG
-          </p>
-        </div>
-        <input
-          value=""
-          id="dropzone-file"
-          type="file"
-          class="hidden"
-          (change)="onFileSelected($event)"
-          accept=".png, .jpg, .jpeg"
+        Cancel
+      </button>
+      <button
+        class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
+        type="submit"
+        [disabled]="isAdding$ | async"
+      >
+        Confirm
+        <span
+          *ngIf="(isAdding$ | async) ?? false"
+          class="loading loading-spinner loading-sm"
+        ></span>
+        <ng-icon
+          *ngIf="(isAdding$ | async) === false"
+          name="matCheck"
+          class="text-2xl"
         />
-      </label>
-      <div
-        *ngIf="selectedFile"
-        class="w-full h-16 bg-secondary-color rounded-lg justify-between items-start opacity-45 flex py-2 px-3"
-      >
-        <div class="flex gap-2">
-          <ng-icon name="matImage" class="text-lg text-whiteSmoke" />
-          <div class="flex-col gap-1">
-            <h3 class="text-whiteSmoke line-clamp-1 font-semibold">
-              {{ selectedFile.name }}
-            </h3>
-            <p class="text-whiteSmoke text-xs font-light">
-              {{ selectedFile.size / 1000 }} kb
+      </button>
+    </div>
+  </section>
+  <section class="px-6 pb-4 grid grid-cols-1 md:grid-cols-edit gap-5">
+    <div
+      class="p-5 bg-sidebar-item h-96 rounded-2xl flex flex-col justify-start gap-5 shadow-md"
+    >
+      <h2 class="text-base font-semibold">General Information</h2>
+      <div class="flex flex-col gap-2">
+        <p>Product Name</p>
+        <div class="indicator w-full">
+          <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+          <input
+            type="text"
+            placeholder="Enter name..."
+            formControlName="name"
+            class="input bg-edit-input-color w-full border border-primary-color"
+          />
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        <p>Product Description</p>
+        <div class="indicator w-full">
+          <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+          <textarea
+            row="5"
+            placeholder="Enter Description..."
+            formControlName="description"
+            class="input py-2 px-4 bg-edit-input-color w-full h-40 border border-primary-color"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div
+      class="py-5 px-7 bg-sidebar-item h-96 rounded-2xl flex flex-col gap-5 shadow-md"
+    >
+      <h2 class="text-base font-semibold">Upload Image</h2>
+      <div class="flex flex-col items-center justify-evenly gap-4 w-full">
+        <label
+          for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-52 border-2 border-secondary-color border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg
+              class="w-8 h-8 mb-4 text-primary-color dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 16"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+              />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-semibold text-secondary-color"
+                >Click to upload</span
+              >
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              PNG, JPG or JEPG
             </p>
           </div>
-        </div>
-        <ng-icon
-          name="matClose"
-          class="text-lg text-whiteSmoke justify-self-end cursor-pointer"
-          (click)="selectedFile = undefined"
-        />
-      </div>
-    </div>
-  </div>
-  <div
-    class="p-5 bg-sidebar-item h-auto rounded-2xl flex flex-col justify-start gap-5 shadow-md"
-  >
-    <h2 class="text-base font-semibold">Pricing & Stock</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="flex flex-col gap-2">
-        <p>Price</p>
-        <input
-          type="number"
-          name="price"
-          value="0"
-          step="0.01"
-          class="input bg-edit-input-color w-full border border-primary-color"
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <p>Quantity</p>
-        <input
-          type="number"
-          name="price"
-          value="0"
-          class="input bg-edit-input-color w-full border border-primary-color"
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <p>Currency</p>
-        <div class="dropdown">
-          <label
-            class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2 border border-primary-color"
-          >
-            <input
-              type="button"
-              name="price"
-              [value]="currency"
-              class="input text-start w-full px-0"
-            />
-            <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
-          </label>
-          <ul
-            tabindex="0"
-            class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
-          >
-            <li *ngIf="currency !== 'ZAR'" (click)="currency = 'ZAR'">
-              <a>ZAR</a>
-            </li>
-            <li *ngIf="currency !== 'USD'" (click)="currency = 'USD'">
-              <a>USD</a>
-            </li>
-            <li *ngIf="currency !== 'EUR'" (click)="currency = 'EUR'">
-              <a>EUR</a>
-            </li>
-            <li *ngIf="currency !== 'GBP'" (click)="currency = 'GBP'">
-              <a>GBP</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="p-5 flex flex-col gap-5 bg-sidebar-item h-auto rounded-2xl shadow-md"
-  >
-    <h2 class="text-base font-semibold">Category</h2>
-    <div class="flex flex-col gap-2">
-      <p>Currency</p>
-      <div class="dropdown w-full">
-        <label
-          class="input input-bordered flex justify-start bg-edit-input-color w-full items-center gap-2 border border-primary-color"
-        >
           <input
-            type="button"
-            name="price"
-            [value]="category"
-            class="input text-start w-full px-0"
+            value=""
+            id="dropzone-file"
+            type="file"
+            class="hidden"
+            (change)="onFileSelected($event)"
+            accept=".png, .jpg, .jpeg"
           />
-          <ng-icon name="matKeyboardArrowDown" class="text-2xl" />
         </label>
-        <ul
-          tabindex="0"
-          class="dropdown-content bg-edit-input-color z-[1] menu p-2 shadow rounded-box w-52"
+        <div
+          *ngIf="selectedFile"
+          class="w-full h-16 bg-secondary-color rounded-lg justify-between items-start opacity-45 flex py-2 px-3"
         >
-          <li *ngIf="category !== 'Tech'" (click)="category = 'Tech'">
-            <a>Tech</a>
-          </li>
-          <li *ngIf="category !== 'Clothes'" (click)="category = 'Clothes'">
-            <a>Clothes</a>
-          </li>
-          <li *ngIf="category !== 'Kitchen'" (click)="category = 'Kitchen'">
-            <a>Kitchen</a>
-          </li>
-          <li *ngIf="category !== 'Shoes'" (click)="category = 'Shoes'">
-            <a>Shoes</a>
-          </li>
-        </ul>
+          <div class="flex gap-2">
+            <ng-icon name="matImage" class="text-lg text-whiteSmoke" />
+            <div class="flex-col gap-1">
+              <h3 class="text-whiteSmoke line-clamp-1 font-semibold">
+                {{ selectedFile.name }}
+              </h3>
+              <p class="text-whiteSmoke text-xs font-light">
+                {{ selectedFile.size / 1000 }} kb
+              </p>
+            </div>
+          </div>
+          <ng-icon
+            name="matClose"
+            class="text-lg text-whiteSmoke justify-self-end cursor-pointer"
+            (click)="selectedFile = undefined"
+          />
+        </div>
       </div>
     </div>
-    <button
-      class="w-40 sm:w-44 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
+    <div
+      class="p-5 bg-sidebar-item h-auto rounded-2xl flex flex-col justify-start gap-5 shadow-md"
     >
-      Add category <ng-icon name="matPlus" class="text-2xl" />
-    </button>
-  </div>
-</section>
+      <h2 class="text-base font-semibold">Pricing & Stock</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <p>Price</p>
+          <div class="indicator w-full">
+            <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+            <input
+              type="number"
+              name="price"
+              value="0"
+              formControlName="price"
+              step="0.01"
+              class="input bg-edit-input-color w-full border border-primary-color"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <p>Quantity</p>
+          <div class="indicator w-full">
+            <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+            <input
+              type="number"
+              name="price"
+              value="0"
+              formControlName="quantity"
+              class="input bg-edit-input-color w-full border border-primary-color"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <p>Currency</p>
+          <div class="indicator w-full">
+            <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+            <select
+              class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+              formControlName="currency"
+            >
+              <option selected value="ZAR">ZAR</option>
+              <option value="GBP">GBP</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="p-5 flex flex-col gap-5 bg-sidebar-item h-auto rounded-2xl shadow-md"
+    >
+      <h2 class="text-base font-semibold">Product</h2>
+      <div class="flex flex-col gap-2">
+        <p>Category</p>
+        <div class="indicator w-full">
+          <span class="indicator-item text-red text-lg h-fit top-1">*</span>
+          <select
+            class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+            formControlName="category"
+            [value]="(categories$ | async)?.[1]?.name"
+          >
+            @for(category of (categories$ | async); track category){
+            @if(category.name !== "All Products"){
+            <option [value]="category.name">{{ category.name }}</option>
+            } }
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
