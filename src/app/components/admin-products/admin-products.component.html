@@ -34,6 +34,9 @@
   </div>
 </section>
 <section class="px-6 py-4 h-auto">
+  @if(isLoading$ | async){
+  <app-admin-products-skeleton />
+  }@else {
   <div class="flex">
     <div
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
@@ -104,7 +107,7 @@
     />
     }
   </div>
-  }
+  } }
   <dialog id="my_modal_1" class="modal">
     <div class="modal-box bg-search-color">
       <h3 class="font-bold text-lg">Permantly Delete Product?</h3>

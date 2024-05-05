@@ -2,7 +2,8 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AdminState, adminFeatureKey } from "./reducer";
 import { Category, CorrelatedProduct } from "../models/admin";
 
-export const adminSelectFeature = createFeatureSelector<AdminState>(adminFeatureKey);
+export const adminSelectFeature =
+  createFeatureSelector<AdminState>(adminFeatureKey);
 
 export const selectAdminProductsWithTags = createSelector(
   adminSelectFeature,
@@ -68,7 +69,10 @@ export const selectProductToEdit = createSelector(
   (state) => state.productToEdit
 );
 
-export const selectCart = createSelector(adminSelectFeature, (state) => state.cart);
+export const selectCart = createSelector(
+  adminSelectFeature,
+  (state) => state.cart
+);
 
 export const selectProductLoadingState = createSelector(
   adminSelectFeature,
@@ -98,4 +102,12 @@ export const selectTagsLoadingState = createSelector(
 export const selectIsAuthLoading = createSelector(
   adminSelectFeature,
   (state) => state.isAuthLoading
+);
+
+export const selectAdminProductsLoading = createSelector(
+  adminSelectFeature,
+  (state) =>
+    state.productLoadingState ||
+    state.categoryLoadingState ||
+    state.tagsLoadingState
 );

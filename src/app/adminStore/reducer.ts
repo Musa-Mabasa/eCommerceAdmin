@@ -12,6 +12,7 @@ import {
   editProductError,
   getAdminProducts,
   getAdminProductsComplete,
+  getAllTags,
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
@@ -39,9 +40,10 @@ export interface AdminState {
   allTags: Tag[];
   cart?: Cart;
   productLoadingState: boolean;
+  categoryLoadingState: boolean;
+  tagsLoadingState: boolean;
   addingLoadingState: boolean;
   editLoadingState: boolean;
-  categoryLoadingState: boolean;
   addTagLoadingState: boolean;
   isAuthLoading: boolean;
 }
@@ -55,9 +57,10 @@ const initialState: AdminState = {
   searchTerm: "",
   allTags: [],
   productLoadingState: false,
+  categoryLoadingState: false,
+  tagsLoadingState: false,
   addingLoadingState: false,
   editLoadingState: false,
-  categoryLoadingState: false,
   addTagLoadingState: false,
   isAuthLoading: false,
 };
@@ -86,9 +89,14 @@ export const adminReducer = createReducer(
     ...state,
     productLoadingState: false,
   })),
+  on(getAllTags, (state) => ({
+    ...state,
+    tagsLoadingState: true,
+  })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
+    tagsLoadingState: false,
   })),
   on(getCategories, (state) => ({
     ...state,
