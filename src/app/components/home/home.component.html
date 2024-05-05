@@ -170,8 +170,11 @@
     <div class="modal-box bg-search-color">
       <h3 class="font-bold text-lg">Select Currency</h3>
       <p class="py-4">Select your preffered currency below:</p>
-      <select class="select w-full bg-edit-input-color">
-        <option selected value="ZAR">ZAR</option>
+      <select
+        class="select w-full bg-edit-input-color"
+        [formControl]="currency"
+      >
+        <option value="ZAR">ZAR</option>
         <option value="GBP">GBP</option>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
@@ -184,6 +187,7 @@
           </button>
           <button
             class="btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+            (click)="onSelectUserCurrency()"
           >
             Confirm
             <ng-icon name="matCheck" class="text-2xl" />

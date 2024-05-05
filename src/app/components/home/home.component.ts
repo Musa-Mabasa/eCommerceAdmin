@@ -28,8 +28,10 @@ import {
   deleteProductFromCart,
   getCart,
   getCurrencyConversion,
+  setCurrency,
 } from "../../previewStore/actions";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-home",
@@ -56,6 +58,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     NgIf,
     CartItemComponent,
     AsyncPipe,
+    ReactiveFormsModule,
   ],
 })
 export class HomeComponent {
@@ -70,6 +73,7 @@ export class HomeComponent {
   userCurrency$ = this.store.select(selectCurrency);
   cartId = "";
   cartTotal = 0;
+  currency = new FormControl("");
 
   constructor() {
     this.store.dispatch(getCart({ userId: getCookie("userId") }));
@@ -90,6 +94,10 @@ export class HomeComponent {
         this.cartTotal += product.price;
       }
     });
+
+    this.userCurrency$
+      .pipe(takeUntilDestroyed())
+      .subscribe((userCurrency) => this.currency.setValue(userCurrency));
   }
 
   deleteProductFromCart(productId: string) {
@@ -103,5 +111,14 @@ export class HomeComponent {
 
   signOut() {
     this.authService.signOut();
+  }
+
+  onSelectUserCurrency() {
+    this.store.dispatch(
+      setCurrency({ userCurrency: this.currency.value ?? "ZAR" })
+    );
+    this.store.dispatch(
+      getCurrencyConversion({ userCurrency: this.currency.value ?? "ZAR" })
+    );
   }
 }
