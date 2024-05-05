@@ -60,12 +60,22 @@ export class HomeComponent {
   cart$ = this.store.select(selectCart);
   cartProducts$ = this.store.select(selectUserCartProducts);
   cartId = "";
+  cartTotal = 0;
 
   constructor() {
     this.store.dispatch(getCart({ userId: getCookie("userId") }));
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart?.id) {
         this.cartId = cart?.id;
+      }
+    });
+
+    this.cartProducts$.pipe(takeUntilDestroyed()).subscribe((products) => {
+      this.cartTotal = 0;
+      for (const product of products) {
+        console.log(product.price);
+
+        this.cartTotal += product.price;
       }
     });
   }

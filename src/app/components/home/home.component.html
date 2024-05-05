@@ -58,11 +58,12 @@
                 [product]="product"
                 class="p-2"
               />
-              <div
-                *ngIf="$index < products.length - 1"
-                class="divider my-1"
-              ></div>
+              <div class="divider my-1"></div>
               } }
+              <div class="flex justify-between px-2 py-8">
+                <p class="font-medium">Subtotal</p>
+                <p>R{{ cartTotal }}</p>
+              </div>
             </div>
           </ul>
         </div>
