@@ -25,6 +25,7 @@ import {
   getCartComplete,
   getUserCartsComplete,
   setProductToView,
+  setCurrency,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -45,6 +46,7 @@ export interface PreviewState {
   lowerPriceBound?: number;
   upperPriceBound?: number;
   searchTerm: string;
+  userCurrency: string;
 }
 
 const initialState: PreviewState = {
@@ -58,6 +60,7 @@ const initialState: PreviewState = {
   selectedTags: [],
   priceRangeType: "",
   searchTerm: "",
+  userCurrency: "ZAR",
 };
 
 export const previewReducer = createReducer(
@@ -135,6 +138,10 @@ export const previewReducer = createReducer(
   on(setProductToView, (state, { productToView }) => ({
     ...state,
     productToView,
+  })),
+  on(setCurrency, (state, { userCurrency }) => ({
+    ...state,
+    userCurrency,
   }))
 );
 

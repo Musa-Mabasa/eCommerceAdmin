@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { matShoppingCartOutline } from "@ng-icons/material-icons/outline";
 import { CorrelatedProduct } from "../../models/admin";
@@ -9,6 +9,7 @@ import { CorrelatedProduct } from "../../models/admin";
   imports: [NgIconComponent],
   templateUrl: "./preview-card.component.html",
   styleUrl: "./preview-card.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [
     provideIcons({
       matShoppingCartOutline,

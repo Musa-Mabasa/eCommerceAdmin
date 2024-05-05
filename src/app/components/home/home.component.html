@@ -111,7 +111,7 @@
                 {{ !displayName || displayName === "" ? email : displayName }}
               </p>
             </li>
-            <li>
+            <li onclick="my_modal_2.showModal()">
               <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
             </li>
             <div class="divider h-fit m-1"></div>
@@ -166,4 +166,30 @@
       </li>
     </ul>
   </div>
+  <dialog id="my_modal_2" class="modal">
+    <div class="modal-box bg-search-color">
+      <h3 class="font-bold text-lg">Select Currency</h3>
+      <p class="py-4">Select your preffered currency below:</p>
+      <select class="select w-full bg-edit-input-color">
+        <option selected value="ZAR">ZAR</option>
+        <option value="GBP">GBP</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+      </select>
+      <div class="modal-action">
+        <form method="dialog" class="flex gap-4">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
+            Close
+          </button>
+          <button
+            class="btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+          >
+            Confirm
+            <ng-icon name="matCheck" class="text-2xl" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </div>

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
 import { CorrelatedProduct, Product } from "../../models/admin";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { matDelete, matEdit } from "@ng-icons/material-icons/baseline";
@@ -9,6 +15,7 @@ import { matDelete, matEdit } from "@ng-icons/material-icons/baseline";
   imports: [NgIconComponent],
   templateUrl: "./product-card.component.html",
   styleUrl: "./product-card.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ matDelete, matEdit })],
 })
 export class ProductCardComponent {

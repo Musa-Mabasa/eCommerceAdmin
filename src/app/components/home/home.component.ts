@@ -7,6 +7,7 @@ import {
   matShoppingBag,
   matSettings,
   matExitToApp,
+  matCheck,
 } from "@ng-icons/material-icons/baseline";
 import { getCookie } from "../../utils/utils";
 import { AsyncPipe, NgIf } from "@angular/common";
@@ -39,6 +40,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
       matExitToApp,
       matNotificationsNoneOutline,
       matShoppingCartOutline,
+      matCheck,
     }),
   ],
   imports: [
@@ -52,6 +54,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   ],
 })
 export class HomeComponent {
+[x: string]: any;
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");

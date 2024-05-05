@@ -106,3 +106,8 @@ export const setProductToView = createAction(
   "[PREVIEW] SelectProductToView",
   props<{ productToView: CorrelatedProduct }>()
 );
+
+export const setCurrency = createAction(
+  "[PREVIEW] SetCurrency",
+  props<{ userCurrency: string }>()
+);

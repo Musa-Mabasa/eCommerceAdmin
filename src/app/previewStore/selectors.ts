@@ -17,8 +17,6 @@ export const selectAllProductsWithTags = createSelector(
         return { product, tags };
       })
       .filter((product) => {
-        console.log(state.searchTerm);
-
         if (
           state.selectedCategory === "All Products" &&
           product.product.name
@@ -163,4 +161,9 @@ export const selectAllProductsLoading = createSelector(
     state.productsLoadingState ||
     state.categoriesLoadingState ||
     state.tagsLoadingState
+);
+
+export const selectCurrency = createSelector(
+  previewSelectFeature,
+  (state) => state.userCurrency
 );
