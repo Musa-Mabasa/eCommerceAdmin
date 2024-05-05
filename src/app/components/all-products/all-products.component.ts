@@ -19,6 +19,7 @@ import {
   selectCategory,
   selectLowerPriceBound,
   selectPriceRangeType,
+  selectProductToView,
   selectUpperPriceBound,
   setSearchTerm,
 } from "../../previewStore/actions";
@@ -76,8 +77,9 @@ export class AllProductsComponent {
     });
   }
 
-  routeToProduct(event: string) {
-    this.router.navigate([`home/preview-product/${event}`]);
+  routeToProduct(productToView: CorrelatedProduct) {
+    this.store.dispatch(selectProductToView({ productToView }));
+    this.router.navigate([`home/preview-product/${productToView.product.id}`]);
   }
 
   selectCategory() {

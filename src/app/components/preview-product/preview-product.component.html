@@ -1,33 +1,27 @@
 <section class="w-full px-6 py-10 grid grid-cols-1 xl:grid-cols-2 gap-10">
   <img
     class="rounded-xl w-full h-[500px] object-cover"
-    src="https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    alt="Camera"
+    [src]="(product$ | async)?.product?.imageUrl"
+    [alt]="(product$ | async)?.product?.name"
   />
   <div class="flex flex-col gap-5">
     <div>
-      <h1 class="text-2xl font-medium">Canon DO5 4000D</h1>
-      <p class="text-base">Tech</p>
+      <h1 class="text-2xl font-medium">
+        {{ (product$ | async)?.product?.name }}
+      </h1>
+      <p class="text-base">{{ (product$ | async)?.product?.category }}</p>
     </div>
     <p class="flex gap-2 items-center">
       Quantity
-      <span class="font-medium border border-primary-color py-[1px] px-4"
-        >2</span
-      >
+      <span class="font-medium border border-primary-color py-[1px] px-4">{{
+        (product$ | async)?.product?.quantity
+      }}</span>
     </p>
-    <p class="text-lg font-semibold">R12,000</p>
+    <p class="text-lg font-semibold">
+      R{{ (product$ | async)?.product?.price }}
+    </p>
     <p class="line-clamp-6">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. Lorem Ipsum is simply dummy text of the
-      printing and typesetting industry. Lorem Ipsum has been the industrys
-      standard dummy text ever since the 1500s, when an unknown printer took a
-      galley of type and scrambled it to make a type specimen book. Lorem Ipsum
-      is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-      has been the industrys standard dummy text ever since the 1500s, when an
-      unknown printer took a galley of type and scrambled it to make a type
-      specimen book.
+      {{ (product$ | async)?.product?.description }}
     </p>
     <div class="flex gap-8">
       <button
@@ -37,6 +31,7 @@
       </button>
       <button
         class="btn bg-secondary-color w-44 rounded-3xl shadow-xl text-whiteSmoke mt-4 justify-self-end"
+        (click)="addProductToCart()"
       >
         Add to cart
         <ng-icon name="matShoppingCartOutline" class="text-2xl" />

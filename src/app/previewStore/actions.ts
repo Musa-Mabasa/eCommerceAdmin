@@ -101,3 +101,8 @@ export const setSearchTerm = createAction(
   "[PREVIEW] SetSearchTerm",
   props<{ searchTerm: string }>()
 );
+
+export const selectProductToView = createAction(
+  "[PREVIEW] SelectProductToView",
+  props<{ productToView: CorrelatedProduct }>()
+);
