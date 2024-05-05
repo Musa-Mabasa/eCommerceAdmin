@@ -73,8 +73,6 @@ export class HomeComponent {
     this.cartProducts$.pipe(takeUntilDestroyed()).subscribe((products) => {
       this.cartTotal = 0;
       for (const product of products) {
-        console.log(product.price);
-
         this.cartTotal += product.price;
       }
     });
