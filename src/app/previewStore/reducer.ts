@@ -63,7 +63,7 @@ const initialState: PreviewState = {
   selectedTags: [],
   priceRangeType: "",
   searchTerm: "",
-  userCurrency: "USD",
+  userCurrency: "ZAR",
 };
 
 export const previewReducer = createReducer(

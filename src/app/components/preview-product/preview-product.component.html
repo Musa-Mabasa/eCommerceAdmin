@@ -17,9 +17,46 @@
         (product$ | async)?.product?.quantity
       }}</span>
     </p>
-    <p class="text-lg font-semibold">
-      R{{ (product$ | async)?.product?.price }}
+    @if(userCurrency$ | async ; as userCurrency ){ @if(conversionData$ | async ;
+    as conversionData){
+
+    <p
+      *ngIf="product?.product?.currency === 'EUR'"
+      class="text-lg font-semibold"
+    >
+      {{
+        getPrice(product?.product?.price, conversionData?.EUR?.value)
+          | currency : userCurrency : "symbol-narrow"
+      }}
     </p>
+    <p
+      *ngIf="product?.product?.currency === 'ZAR'"
+      class="text-lg font-semibold"
+    >
+      {{
+        getPrice(product?.product?.price, conversionData?.ZAR?.value)
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    <p
+      *ngIf="product?.product?.currency === 'GBP'"
+      class="text-lg font-semibold"
+    >
+      {{
+        getPrice(product?.product?.price, conversionData?.GBP?.value)
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    <p
+      *ngIf="product?.product?.currency === 'USD'"
+      class="text-lg font-semibold"
+    >
+      {{
+        getPrice(product?.product?.price, conversionData?.USD?.value)
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    } }
     <p class="line-clamp-6">
       {{ (product$ | async)?.product?.description }}
     </p>
@@ -69,7 +106,34 @@
           alt="Camera"
         />
         <p class="line-clamp-1">{{ product.product.name }}</p>
-        <p>R{{ product.product.price }}</p>
+        @if(userCurrency$ | async ; as userCurrency ){ @if(conversionData$ |
+        async ; as conversionData){
+
+        <p *ngIf="product?.product?.currency === 'EUR'">
+          {{
+            getPrice(product?.product?.price, conversionData?.EUR?.value)
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        <p *ngIf="product?.product?.currency === 'ZAR'">
+          {{
+            getPrice(product?.product?.price, conversionData?.ZAR?.value)
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        <p *ngIf="product?.product?.currency === 'GBP'">
+          {{
+            getPrice(product?.product?.price, conversionData?.GBP?.value)
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        <p *ngIf="product?.product?.currency === 'USD'">
+          {{
+            getPrice(product?.product?.price, conversionData?.USD?.value)
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        } }
       </div>
       }
     </div>

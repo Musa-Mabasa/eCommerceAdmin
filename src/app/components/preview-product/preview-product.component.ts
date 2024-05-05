@@ -5,10 +5,12 @@ import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
 import {
   selectCart,
+  selectCurrency,
+  selectCurrencyConversion,
   selectProductToView,
   selectRelatedProducts,
 } from "../../previewStore/selectors";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, CurrencyPipe, NgIf } from "@angular/common";
 import { CorrelatedProduct } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { addProductToCart, setProductToView } from "../../previewStore/actions";
@@ -17,7 +19,7 @@ import { Router, RouterLink } from "@angular/router";
 @Component({
   selector: "app-preview-product",
   standalone: true,
-  imports: [NgIconComponent, AsyncPipe, RouterLink],
+  imports: [NgIconComponent, AsyncPipe, RouterLink, CurrencyPipe, NgIf],
   templateUrl: "./preview-product.component.html",
   styleUrl: "./preview-product.component.scss",
   viewProviders: [
@@ -34,12 +36,8 @@ export class PreviewProductComponent {
   relatedProducts$ = this.store.select(selectRelatedProducts);
   product?: CorrelatedProduct;
   cartId = "";
-  images = [
-    "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  ];
+  conversionData$ = this.store.select(selectCurrencyConversion);
+  userCurrency$ = this.store.select(selectCurrency);
 
   constructor() {
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
@@ -50,6 +48,12 @@ export class PreviewProductComponent {
       if (product) this.product = product;
       else this.router.navigate([`home/all-products`]);
     });
+  }
+
+  getPrice(baseValue: number | undefined, conversionRate: number | undefined) {
+    if (baseValue && conversionRate)
+      return (baseValue / conversionRate).toFixed(2);
+    else return baseValue;
   }
 
   addProductToCart() {
