@@ -53,16 +53,31 @@
       </button>
     </div>
   </div>
-  <div class="flex flex-col gap-4 w-full">
+  <div class="flex flex-col gap-4 w-full col-span-2">
     <p class="text-lg">Related Products</p>
+    @if((relatedProducts$ | async)?.length){
+
     <div class="flex w-full gap-5 overflow-auto">
-      @for (image of images; track image) {
-      <img
-        class="rounded-xl w-32 h-32 object-cover"
-        [src]="image"
-        alt="Camera"
-      />
+      @for (product of (relatedProducts$ | async); track product.product.id) {
+      <div
+        class="flex flex-col cursor-pointer"
+        (click)="routeToRelatedProduct(product)"
+      >
+        <img
+          class="rounded-xl w-32 h-32 object-cover mb-2"
+          [src]="product.product.imageUrl"
+          alt="Camera"
+        />
+        <p class="line-clamp-1">{{ product.product.name }}</p>
+        <p>R{{ product.product.price }}</p>
+      </div>
       }
     </div>
+    } @else {
+    <div class="grow flex flex-col justify-center items-center h-full">
+      <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
+      <p class="text-lg font-semibold">No Related Products</p>
+    </div>
+    }
   </div>
 </section>

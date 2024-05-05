@@ -19,8 +19,8 @@ import {
   selectCategory,
   selectLowerPriceBound,
   selectPriceRangeType,
-  selectProductToView,
   selectUpperPriceBound,
+  setProductToView,
   setSearchTerm,
 } from "../../previewStore/actions";
 import {
@@ -78,7 +78,7 @@ export class AllProductsComponent {
   }
 
   routeToProduct(productToView: CorrelatedProduct) {
-    this.store.dispatch(selectProductToView({ productToView }));
+    this.store.dispatch(setProductToView({ productToView }));
     this.router.navigate([`home/preview-product/${productToView.product.id}`]);
   }
 

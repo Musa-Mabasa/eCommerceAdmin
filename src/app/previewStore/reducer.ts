@@ -24,7 +24,7 @@ import {
   setSearchTerm,
   getCartComplete,
   getUserCartsComplete,
-  selectProductToView,
+  setProductToView,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -132,7 +132,7 @@ export const previewReducer = createReducer(
     ...state,
     searchTerm,
   })),
-  on(selectProductToView, (state, { productToView }) => ({
+  on(setProductToView, (state, { productToView }) => ({
     ...state,
     productToView,
   }))

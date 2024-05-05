@@ -127,3 +127,32 @@ export const selectUserCartProducts = createSelector(
       state.userCarts?.some((userCart) => userCart.productId === product.id)
     )
 );
+
+export const selectCorrelatedProducts = createSelector(
+  previewSelectFeature,
+  (state): CorrelatedProduct[] => {
+    if (!(state.allProducts && state.tags)) {
+      return [];
+    }
+    return state.allProducts.map((product) => {
+      const tags = state.tags.filter((tag) => tag.productId == product.id);
+      return { product, tags };
+    });
+  }
+);
+
+export const selectRelatedProducts = createSelector(
+  previewSelectFeature,
+  selectCorrelatedProducts,
+  (state, correlatedProducts) => {
+    if (!state.productToView) {
+      return [];
+    }
+
+    return correlatedProducts.filter(
+      (product) =>
+        product.product.id !== state.productToView?.product.id &&
+        product.product.category === state.productToView?.product.category
+    );
+  }
+);

@@ -3,11 +3,15 @@ import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { matShoppingCartOutline } from "@ng-icons/material-icons/outline";
 import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
-import { selectCart, selectProductToView } from "../../previewStore/selectors";
+import {
+  selectCart,
+  selectProductToView,
+  selectRelatedProducts,
+} from "../../previewStore/selectors";
 import { AsyncPipe } from "@angular/common";
 import { CorrelatedProduct } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { addProductToCart } from "../../previewStore/actions";
+import { addProductToCart, setProductToView } from "../../previewStore/actions";
 import { Router, RouterLink } from "@angular/router";
 
 @Component({
@@ -27,6 +31,7 @@ export class PreviewProductComponent {
   router = inject(Router);
   product$ = this.store.select(selectProductToView);
   cart$ = this.store.select(selectCart);
+  relatedProducts$ = this.store.select(selectRelatedProducts);
   product?: CorrelatedProduct;
   cartId = "";
   images = [
@@ -57,5 +62,10 @@ export class PreviewProductComponent {
 
       this.router.navigate([`home/all-products`]);
     }
+  }
+
+  routeToRelatedProduct(productToView: CorrelatedProduct) {
+    this.store.dispatch(setProductToView({ productToView }));
+    this.router.navigate([`/home/preview-product/${productToView.product.id}`]);
   }
 }
