@@ -7,6 +7,7 @@ import {
   deleteField,
   doc,
   getDoc,
+  getDocs,
   query,
   setDoc,
   updateDoc,
@@ -19,6 +20,7 @@ import {
   CorrelatedProduct,
   Product,
   Tag,
+  UserCart,
 } from "../models/admin";
 import { user } from "@angular/fire/auth";
 
@@ -57,20 +59,39 @@ export class PreviewService {
     return collectionData(fetchQuery, { idField: "id" }) as Observable<Cart[]>;
   }
 
+  getUserCarts(cartId: string) {
+    const fetchQuery = query(
+      collection(this.firestore, "UserCart"),
+      where("cartId", "==", cartId)
+    );
+
+    return collectionData(fetchQuery, { idField: "id" }) as Observable<
+      UserCart[]
+    >;
+  }
+
   addProductToCart(cartId: string, product: CorrelatedProduct) {
+    console.log(product);
+    
     return from(
-      setDoc(doc(collection(this.firestore, "Product"), product.product.id), {
-        ...product.product,
+      setDoc(doc(collection(this.firestore, "UserCart")), {
         cartId,
+        productId: product.product.id,
       }).catch((err) => Error(err.message))
     );
   }
 
-  deleteProductFromCart(productId: string) {
+  deleteProductFromCart(cartId: string, productId: string) {
+    const fetchQuery = query(
+      collection(this.firestore, "UserCart"),
+      where("cartId", "==", cartId),
+      where("productId", "==", productId)
+    );
+
     return from(
-      updateDoc(doc(collection(this.firestore, "Product"), productId), {
-        cartId: deleteField(),
-      }).catch((err) => Error(err.message))
+      getDocs(fetchQuery).then((docs) =>
+        docs.forEach((doc) => deleteDoc(doc.ref))
+      )
     );
   }
 }

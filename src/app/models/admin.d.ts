@@ -1,7 +1,6 @@
 export interface Product {
   id?: string;
   adminId: string;
-  cartId?: string;
   name: string;
   description: string;
   price: number;
@@ -17,8 +16,9 @@ export interface Cart {
 }
 
 export interface UserCart {
+  id: string;
   cart?: Cart;
-  products: Product[];
+  productId: string;
 }
 
 export interface Tag {

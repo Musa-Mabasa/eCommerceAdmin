@@ -5,6 +5,7 @@ import {
   CorrelatedProduct,
   Product,
   Tag,
+  UserCart,
 } from "../models/admin";
 
 export const getAllProducts = createAction("[PREVIEW] GetAllProducts");
@@ -24,6 +25,16 @@ export const getCartComplete = createAction(
   props<{ cart: Cart }>()
 );
 
+export const getUserCarts = createAction(
+  "[PREVIEW] GetUserCarts",
+  props<{ cartId: string }>()
+);
+
+export const getUserCartsComplete = createAction(
+  "[PREVIEW] GetUserCartsComplete",
+  props<{ userCarts: UserCart[] }>()
+);
+
 export const addProductToCart = createAction(
   "[PREVIEW] AddProductToCart",
   props<{ productToAdd: { cartId: string; product: CorrelatedProduct } }>()
@@ -35,7 +46,7 @@ export const addProductToCartComplete = createAction(
 
 export const deleteProductFromCart = createAction(
   "[PREVIEW] DeleteProductFromCart",
-  props<{ productId: string }>()
+  props<{ productToDelete: { cartId: string; productId: string } }>()
 );
 
 export const deleteProductFromCartComplete = createAction(

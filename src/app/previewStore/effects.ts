@@ -17,6 +17,8 @@ import {
   getCategoriesComplete,
   getTags,
   getTagsComplete,
+  getUserCarts,
+  getUserCartsComplete,
 } from "./actions";
 
 @Injectable()
@@ -89,7 +91,29 @@ export class PreviewEffects {
       ofType(getCart.type),
       switchMap(({ userId }: { userId: string }) =>
         this.previewService.getCart(userId).pipe(
-          map((cart) => getCartComplete({ cart: cart[0] })),
+          switchMap((cart) => [
+            getUserCarts({ cartId: cart[0].id }),
+            getCartComplete({ cart: cart[0] }),
+          ]),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to get cart",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  getUserCarts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUserCarts.type),
+      switchMap(({ cartId }: { cartId: string }) =>
+        this.previewService.getUserCarts(cartId).pipe(
+          map((userCarts) => getUserCartsComplete({ userCarts })),
           catchError((err) => {
             this.notification.create(
               "error",
@@ -132,18 +156,28 @@ export class PreviewEffects {
   deletProductFromCart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteProductFromCart.type),
-      switchMap(({ productId }: { productId: string }) =>
-        this.previewService.deleteProductFromCart(productId).pipe(
-          map(() => deleteProductFromCartComplete()),
-          catchError((err) => {
-            this.notification.create(
-              "error",
-              "Failed to delete product",
-              err.message
-            );
-            return EMPTY;
-          })
-        )
+      switchMap(
+        ({
+          productToDelete,
+        }: {
+          productToDelete: { cartId: string; productId: string };
+        }) =>
+          this.previewService
+            .deleteProductFromCart(
+              productToDelete.cartId,
+              productToDelete.productId
+            )
+            .pipe(
+              map(() => deleteProductFromCartComplete()),
+              catchError((err) => {
+                this.notification.create(
+                  "error",
+                  "Failed to delete product",
+                  err.message
+                );
+                return EMPTY;
+              })
+            )
       )
     )
   );

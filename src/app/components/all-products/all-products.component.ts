@@ -24,10 +24,10 @@ import {
 } from "../../previewStore/actions";
 import {
   selectAllProductsWithTags,
+  selectCart,
   selectCategories,
   selectSelectedTags,
   selectTags,
-  selectUserCart,
 } from "../../previewStore/selectors";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { PreviewState } from "../../previewStore/reducer";
@@ -60,7 +60,7 @@ export class AllProductsComponent {
   lowerBoundPrice = new FormControl("");
   upperBoundPrice = new FormControl("");
   selectedTags$ = this.store.select(selectSelectedTags);
-  userCart$ = this.store.select(selectUserCart);
+  cart$ = this.store.select(selectCart);
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";
@@ -71,8 +71,10 @@ export class AllProductsComponent {
     this.store.dispatch(getCategories());
     this.store.dispatch(getTags());
 
-    this.userCart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
-      this.cartId = cart?.cart?.id;
+    this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
+      console.log(cart);
+      
+      this.cartId = cart?.id;
     });
   }
 
@@ -125,6 +127,8 @@ export class AllProductsComponent {
   }
 
   addProductToCart(product: CorrelatedProduct) {
+    console.log(this.cartId);
+    
     if (this.cartId)
       this.store.dispatch(
         addProductToCart({ productToAdd: { cartId: this.cartId, product } })

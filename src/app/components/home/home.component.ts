@@ -18,8 +18,12 @@ import {
 import { CartItemComponent } from "../cart-item/cart-item.component";
 import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
-import { selectUserCart } from "../../previewStore/selectors";
+import {
+  selectCart,
+  selectUserCartProducts,
+} from "../../previewStore/selectors";
 import { deleteProductFromCart, getCart } from "../../previewStore/actions";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-home",
@@ -53,14 +57,26 @@ export class HomeComponent {
   email = getCookie("email");
   authService = inject(AuthService);
   store = inject(Store<PreviewState>);
-  userCart$ = this.store.select(selectUserCart);
+  cart$ = this.store.select(selectCart);
+  cartProducts$ = this.store.select(selectUserCartProducts);
+  cartId = "";
 
   constructor() {
     this.store.dispatch(getCart({ userId: getCookie("userId") }));
+    this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
+      if (cart?.id) {
+        this.cartId = cart?.id;
+      }
+    });
   }
 
   deleteProductFromCart(productId: string) {
-    this.store.dispatch(deleteProductFromCart({ productId }));
+    if (this.cartId !== "")
+      this.store.dispatch(
+        deleteProductFromCart({
+          productToDelete: { cartId: this.cartId, productId },
+        })
+      );
   }
 
   signOut() {

@@ -1,5 +1,5 @@
 import { isDevMode } from "@angular/core";
-import { Cart, Category, Product, Tag } from "../models/admin";
+import { Cart, Category, Product, Tag, UserCart } from "../models/admin";
 import { MetaReducer, createReducer, on } from "@ngrx/store";
 import {
   getAllProducts,
@@ -17,6 +17,7 @@ import {
   setSearchTerm,
   getCart,
   getCartComplete,
+  getUserCartsComplete,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -24,6 +25,7 @@ export const previewFeatureKey = "preview";
 export interface PreviewState {
   allProducts: Product[];
   cart?: Cart;
+  userCarts?: UserCart[];
   tags: Tag[];
   categories: Category[];
   productsLoadingState: boolean;
@@ -64,6 +66,10 @@ export const previewReducer = createReducer(
   on(getCartComplete, (state, { cart }) => ({
     ...state,
     cart,
+  })),
+  on(getUserCartsComplete, (state, { userCarts }) => ({
+    ...state,
+    userCarts,
   })),
   on(getAllProductsComplete, (state, { allProducts }) => ({
     ...state,

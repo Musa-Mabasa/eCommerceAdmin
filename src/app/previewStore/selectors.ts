@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { PreviewState, previewFeatureKey } from "./reducer";
-import { CorrelatedProduct, UserCart } from "../models/admin";
+import { CorrelatedProduct, Product, UserCart } from "../models/admin";
 
 export const previewSelectFeature =
   createFeatureSelector<PreviewState>(previewFeatureKey);
@@ -78,7 +78,9 @@ export const selectAllProductsWithTags = createSelector(
       .filter((product) => {
         if (!state.cart) return true;
 
-        return product.product.cartId !== state.cart?.id;
+        return !state.userCarts?.some(
+          (userCart) => userCart.productId === product.product.id
+        );
       });
 
     return products;
@@ -106,15 +108,15 @@ export const selectSelectedTags = createSelector(
   (state) => state.selectedTags
 );
 
-export const selectUserCart = createSelector(
+export const selectCart = createSelector(
   previewSelectFeature,
-  (state): UserCart | undefined => {
-    if (!state.cart) return undefined;
+  (state) => state.cart
+);
 
-    const products = state.allProducts.filter(
-      (product) => product.cartId === state.cart?.id
-    );
-
-    return { cart: state.cart, products };
-  }
+export const selectUserCartProducts = createSelector(
+  previewSelectFeature,
+  (state): Product[] =>
+    state.allProducts.filter((product) =>
+      state.userCarts?.some((userCart) => userCart.productId === product.id)
+    )
 );

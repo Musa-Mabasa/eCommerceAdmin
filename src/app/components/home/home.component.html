@@ -30,12 +30,12 @@
           <ng-icon name="matNotificationsNoneOutline" class="text-2xl" />
         </div>
         <ng-icon
-          *ngIf="!(userCart$ | async)"
+          *ngIf="!(cartProducts$ | async)?.length"
           name="matShoppingCartOutline"
           class="text-2xl h-fit"
         />
         <div
-          *ngIf="(userCart$ | async)"
+          *ngIf="(cartProducts$ | async)?.length"
           class="dropdown dropdown-end h-5"
         >
           <div class="indicator w-fit" tabindex="0" role="button">
@@ -51,15 +51,15 @@
             <p class="text-xl font-normal px-2">Cart</p>
             <div class="divider mt-3 mb-1"></div>
             <div class="flex flex-col">
-              @if((userCart$ | async); as userCart){ @for(product of
-              userCart.products; track product.id){
+              @if((cartProducts$ | async); as products){ @for(product of
+              products; track product.id){
               <app-cart-item
                 (onDelete)="deleteProductFromCart($event)"
                 [product]="product"
                 class="p-2"
               />
               <div
-                *ngIf="$index < userCart.products.length - 1"
+                *ngIf="$index < products.length - 1"
                 class="divider my-1"
               ></div>
               } }

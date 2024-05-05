@@ -128,7 +128,6 @@ export class AdminService {
                 category: finalProduct.category,
                 quantity: finalProduct.quantity,
                 imageUrl: finalProduct.imageUrl,
-                cartId: finalProduct.cartId,
               }
             ).catch((err) => Error(err.message));
           })
