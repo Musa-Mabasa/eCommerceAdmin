@@ -19,7 +19,7 @@ import { CartItemComponent } from "../cart-item/cart-item.component";
 import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
 import { selectUserCart } from "../../previewStore/selectors";
-import { getCart } from "../../previewStore/actions";
+import { deleteProductFromCart, getCart } from "../../previewStore/actions";
 
 @Component({
   selector: "app-home",
@@ -44,7 +44,7 @@ import { getCart } from "../../previewStore/actions";
     RouterOutlet,
     NgIf,
     CartItemComponent,
-    AsyncPipe
+    AsyncPipe,
   ],
 })
 export class HomeComponent {
@@ -55,8 +55,14 @@ export class HomeComponent {
   store = inject(Store<PreviewState>);
   userCart$ = this.store.select(selectUserCart);
 
-  constructor(){
-    this.store.dispatch(getCart({userId: getCookie("userId")}))
+  constructor() {
+    this.store.dispatch(getCart({ userId: getCookie("userId") }));
+  }
+
+  deleteProductFromCart(productId: string) {
+    console.log(productId);
+    
+    this.store.dispatch(deleteProductFromCart({ productId }));
   }
 
   signOut() {

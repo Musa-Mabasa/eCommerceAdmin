@@ -15,7 +15,10 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-ghost font-normal">
+  <button
+    class="btn btn-ghost font-normal"
+    (click)="onDelete.emit(product?.product?.id)"
+  >
     <ng-icon name="matDelete" />Delete
   </button>
 </div>

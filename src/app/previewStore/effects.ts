@@ -7,6 +7,8 @@ import { PreviewService } from "../services/preview.service";
 import {
   addProductToCart,
   addProductToCartComplete,
+  deleteProductFromCart,
+  deleteProductFromCartComplete,
   getAllProducts,
   getAllProductsComplete,
   getCart,
@@ -109,10 +111,8 @@ export class PreviewEffects {
           productToAdd,
         }: {
           productToAdd: { cartId: string; product: CorrelatedProduct };
-        }) => {
-          console.log(productToAdd);
-
-          return this.previewService
+        }) =>
+          this.previewService
             .addProductToCart(productToAdd.cartId, productToAdd.product)
             .pipe(
               map(() => addProductToCartComplete()),
@@ -124,8 +124,26 @@ export class PreviewEffects {
                 );
                 return EMPTY;
               })
+            )
+      )
+    )
+  );
+
+  deletProductFromCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteProductFromCart.type),
+      switchMap(({ productId }: { productId: string }) =>
+        this.previewService.deleteProductFromCart(productId).pipe(
+          map(() => deleteProductFromCartComplete()),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to delete product",
+              err.message
             );
-        }
+            return EMPTY;
+          })
+        )
       )
     )
   );

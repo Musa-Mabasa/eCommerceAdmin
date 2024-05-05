@@ -33,6 +33,15 @@ export const addProductToCartComplete = createAction(
   "[PREVIEW] AddProductToCartComplete"
 );
 
+export const deleteProductFromCart = createAction(
+  "[PREVIEW] DeleteProductFromCart",
+  props<{ productId: string }>()
+);
+
+export const deleteProductFromCartComplete = createAction(
+  "[PREVIEW] DeleteProductFromCartComplete"
+);
+
 export const getCategories = createAction("[PREVIEW] GetCategories");
 
 export const getCategoriesComplete = createAction(

@@ -3,10 +3,13 @@ import {
   Firestore,
   collection,
   collectionData,
+  deleteDoc,
+  deleteField,
   doc,
   getDoc,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "@angular/fire/firestore";
 import { Observable, from } from "rxjs";
@@ -55,12 +58,20 @@ export class PreviewService {
   }
 
   addProductToCart(cartId: string, product: CorrelatedProduct) {
-    console.log(cartId, product);
-
     return from(
       setDoc(doc(collection(this.firestore, "Product"), product.product.id), {
         ...product.product,
         cartId,
+      }).catch((err) => Error(err.message))
+    );
+  }
+
+  deleteProductFromCart(productId: string) {
+    console.log(productId);
+    
+    return from(
+      updateDoc(doc(collection(this.firestore, "Product"), productId), {
+        cartId: deleteField(),
       }).catch((err) => Error(err.message))
     );
   }
