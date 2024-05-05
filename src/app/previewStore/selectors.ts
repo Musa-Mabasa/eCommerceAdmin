@@ -105,9 +105,11 @@ export const selectUserCart = createSelector(
   previewSelectFeature,
   selectAllProductsWithTags,
   (state, correlatedProducts): UserCart => {
-    const products = correlatedProducts.filter(
-      (product) => (product.product.cartId = state.cart?.id)
-    );
+    const products = correlatedProducts.filter((product) => {
+      console.log(product.product.cartId, state.cart?.id);
+
+      return product.product.cartId === state.cart?.id;
+    });
 
     return { cart: state.cart, products };
   }

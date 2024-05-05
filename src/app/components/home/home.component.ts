@@ -19,6 +19,7 @@ import { CartItemComponent } from "../cart-item/cart-item.component";
 import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
 import { selectUserCart } from "../../previewStore/selectors";
+import { getCart } from "../../previewStore/actions";
 
 @Component({
   selector: "app-home",
@@ -53,6 +54,10 @@ export class HomeComponent {
   authService = inject(AuthService);
   store = inject(Store<PreviewState>);
   userCart$ = this.store.select(selectUserCart);
+
+  constructor(){
+    this.store.dispatch(getCart({userId: getCookie("userId")}))
+  }
 
   signOut() {
     this.authService.signOut();

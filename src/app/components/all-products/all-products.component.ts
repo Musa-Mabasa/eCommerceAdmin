@@ -10,6 +10,7 @@ import { AsyncPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
 import {
+  addProductToCart,
   addToSelectedTags,
   getAllProducts,
   getCategories,
@@ -26,9 +27,12 @@ import {
   selectCategories,
   selectSelectedTags,
   selectTags,
+  selectUserCart,
 } from "../../previewStore/selectors";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { PreviewState } from "../../previewStore/reducer";
+import { CorrelatedProduct } from "../../models/admin";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-all-products",
@@ -56,14 +60,22 @@ export class AllProductsComponent {
   lowerBoundPrice = new FormControl("");
   upperBoundPrice = new FormControl("");
   selectedTags$ = this.store.select(selectSelectedTags);
+  userCart$ = this.store.select(selectUserCart);
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";
+  cartId? = "";
 
   constructor() {
     this.store.dispatch(getAllProducts());
     this.store.dispatch(getCategories());
     this.store.dispatch(getTags());
+
+    this.userCart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
+      console.log(cart.cart?.id);
+
+      this.cartId = cart.cart?.id;
+    });
   }
 
   routeToProduct(event: string) {
@@ -112,5 +124,14 @@ export class AllProductsComponent {
         setSearchTerm({ searchTerm: (event.target as HTMLInputElement).value })
       );
     }
+  }
+
+  addProductToCart(product: CorrelatedProduct) {
+    console.log(this.cartId, product);
+
+    if (this.cartId)
+      this.store.dispatch(
+        addProductToCart({ productToAdd: { cartId: this.cartId, product } })
+      );
   }
 }

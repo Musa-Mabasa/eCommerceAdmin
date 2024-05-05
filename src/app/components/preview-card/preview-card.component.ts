@@ -18,9 +18,10 @@ import { CorrelatedProduct } from "../../models/admin";
 export class PreviewCardComponent {
   @Input() product: CorrelatedProduct | undefined;
   @Output() onClick: EventEmitter<string> = new EventEmitter();
-  productId = "dsgtyfdsvgvsd";
+  @Output() onAddToCart: EventEmitter<CorrelatedProduct> = new EventEmitter();
 
   addToCartClick(event: Event) {
     event.stopPropagation();
+    this.onAddToCart.emit(this.product);
   }
 }

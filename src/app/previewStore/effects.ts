@@ -109,8 +109,10 @@ export class PreviewEffects {
           productToAdd,
         }: {
           productToAdd: { cartId: string; product: CorrelatedProduct };
-        }) =>
-          this.previewService
+        }) => {
+          console.log(productToAdd);
+
+          return this.previewService
             .addProductToCart(productToAdd.cartId, productToAdd.product)
             .pipe(
               map(() => addProductToCartComplete()),
@@ -122,7 +124,8 @@ export class PreviewEffects {
                 );
                 return EMPTY;
               })
-            )
+            );
+        }
       )
     )
   );
