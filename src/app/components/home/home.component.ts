@@ -60,8 +60,6 @@ export class HomeComponent {
   }
 
   deleteProductFromCart(productId: string) {
-    console.log(productId);
-    
     this.store.dispatch(deleteProductFromCart({ productId }));
   }
 

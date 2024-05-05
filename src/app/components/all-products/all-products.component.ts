@@ -125,8 +125,6 @@ export class AllProductsComponent {
   }
 
   addProductToCart(product: CorrelatedProduct) {
-    console.log(this.cartId, product);
-
     if (this.cartId)
       this.store.dispatch(
         addProductToCart({ productToAdd: { cartId: this.cartId, product } })

@@ -15,8 +15,4 @@ import { NgIf } from "@angular/common";
 export class CartItemComponent {
   @Input() product: Product | undefined;
   @Output() onDelete: EventEmitter<string> = new EventEmitter();
-
-  constructor() {
-    console.log(this.product?.quantity);
-  }
 }

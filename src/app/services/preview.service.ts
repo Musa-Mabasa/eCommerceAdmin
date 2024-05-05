@@ -67,8 +67,6 @@ export class PreviewService {
   }
 
   deleteProductFromCart(productId: string) {
-    console.log(productId);
-    
     return from(
       updateDoc(doc(collection(this.firestore, "Product"), productId), {
         cartId: deleteField(),
