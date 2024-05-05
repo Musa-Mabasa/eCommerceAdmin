@@ -32,6 +32,10 @@ import { getCookie } from "../../utils/utils";
 import { Subscription } from "rxjs";
 import { Product } from "../../models/admin";
 import { AdminProductsSkeletonComponent } from "../skeletons/admin-products-skeleton/admin-products-skeleton.component";
+import {
+  selectCurrency,
+  selectCurrencyConversion,
+} from "../../previewStore/selectors";
 
 @Component({
   selector: "app-admin-products",
@@ -56,6 +60,8 @@ export class AdminProductsComponent {
   sortBy$ = this.store.select(selectSortBy);
   isLoading$ = this.store.select(selectAdminProductsLoading);
   productToDeleteId: string | undefined;
+  conversionData$ = this.store.select(selectCurrencyConversion);
+  userCurrency$ = this.store.select(selectCurrency);
 
   constructor() {
     this.store.dispatch(getAdminProducts({ adminId: getCookie("userId") }));

@@ -104,6 +104,8 @@
       class="w-72"
       (editOnClick)="routeToEdit($event)"
       (deleteOnClick)="setProductToDelete($event)"
+      [conversionData]="conversionData$ | async"
+      [userCurrency]="userCurrency$ | async"
     />
     }
   </div>
