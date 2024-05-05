@@ -23,12 +23,6 @@
         </div></label
       >
       <div class="flex items-center gap-8">
-        <div class="indicator w-fit">
-          <span
-            class="indicator-item size-2 p-0 badge bg-primary-color absolute top-1 right-[0.30rem]"
-          ></span>
-          <ng-icon name="matNotificationsNoneOutline" class="text-2xl" />
-        </div>
         <ng-icon
           *ngIf="!(cartProducts$ | async)?.length"
           name="matShoppingCartOutline"
@@ -57,12 +51,16 @@
                 (onDelete)="deleteProductFromCart($event)"
                 [product]="product"
                 class="p-2"
+                [conversionData]="conversionData$ | async"
+                [userCurrency]="userCurrency$ | async"
               />
               <div class="divider my-1"></div>
               } }
               <div class="flex justify-between px-2 py-8">
                 <p class="font-medium">Subtotal</p>
-                <p>R{{ cartTotal }}</p>
+                <p *ngIf="userCurrency$ | async">
+                  {{ cartTotal | currency : userCurrency : "symbol-narrow" }}
+                </p>
               </div>
             </div>
           </ul>

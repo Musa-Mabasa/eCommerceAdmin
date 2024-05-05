@@ -1,5 +1,10 @@
 import { Component, inject } from "@angular/core";
-import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import {
+  Data,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
   matSegment,
@@ -10,7 +15,7 @@ import {
   matCheck,
 } from "@ng-icons/material-icons/baseline";
 import { getCookie } from "../../utils/utils";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe, CurrencyPipe, NgIf } from "@angular/common";
 import { AuthService } from "../../services/auth.service";
 import {
   matNotificationsNoneOutline,
@@ -22,6 +27,7 @@ import { PreviewState } from "../../previewStore/reducer";
 import {
   selectCart,
   selectCurrency,
+  selectCurrencyConversion,
   selectUserCartProducts,
 } from "../../previewStore/selectors";
 import {
@@ -59,6 +65,7 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
     CartItemComponent,
     AsyncPipe,
     ReactiveFormsModule,
+    CurrencyPipe,
   ],
 })
 export class HomeComponent {
@@ -70,34 +77,86 @@ export class HomeComponent {
   store = inject(Store<PreviewState>);
   cart$ = this.store.select(selectCart);
   cartProducts$ = this.store.select(selectUserCartProducts);
+  conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
+  userCurrency = "";
   cartId = "";
   cartTotal = 0;
+  conversionData?: Data;
   currency = new FormControl("");
 
   constructor() {
     this.store.dispatch(getCart({ userId: getCookie("userId") }));
-    this.userCurrency$
-      .pipe(takeUntilDestroyed())
-      .subscribe((userCurrency) =>
-        this.store.dispatch(getCurrencyConversion({ userCurrency }))
-      );
+    this.userCurrency$.pipe(takeUntilDestroyed()).subscribe((userCurrency) => {
+      this.userCurrency = userCurrency;
+      this.store.dispatch(getCurrencyConversion({ userCurrency }));
+    });
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart?.id) {
         this.cartId = cart?.id;
       }
     });
 
+    this.conversionData$
+      .pipe(takeUntilDestroyed())
+      .subscribe((conversionData) => {
+        this.conversionData = conversionData;
+      });
+
     this.cartProducts$.pipe(takeUntilDestroyed()).subscribe((products) => {
       this.cartTotal = 0;
       for (const product of products) {
-        this.cartTotal += product.price;
+        if (
+          product.currency === "EUR" &&
+          product.quantity > 0 &&
+          this.conversionData
+        ) {
+          this.cartTotal += this.getPrice(
+            product.price,
+            this.conversionData["EUR"].value
+          );
+        } else if (
+          product.currency === "ZAR" &&
+          product.quantity > 0 &&
+          this.conversionData
+        ) {
+          this.cartTotal += this.getPrice(
+            product.price,
+            this.conversionData["ZAR"].value
+          );
+        }
+        if (
+          product.currency === "GBP" &&
+          product.quantity > 0 &&
+          this.conversionData
+        ) {
+          this.cartTotal += this.getPrice(
+            product.price,
+            this.conversionData["GBP"].value
+          );
+        }
+        if (
+          product.currency === "USD" &&
+          product.quantity > 0 &&
+          this.conversionData
+        ) {
+          this.cartTotal += this.getPrice(
+            product.price,
+            this.conversionData["USD"].value
+          );
+        }
       }
     });
 
     this.userCurrency$
       .pipe(takeUntilDestroyed())
       .subscribe((userCurrency) => this.currency.setValue(userCurrency));
+  }
+
+  getPrice(baseValue: number, conversionRate: number | undefined) {
+    if (baseValue && conversionRate)
+      return Number((baseValue / conversionRate).toFixed(2));
+    else return baseValue;
   }
 
   deleteProductFromCart(productId: string) {
