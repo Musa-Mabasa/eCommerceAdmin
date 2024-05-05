@@ -18,7 +18,7 @@ export interface Cart {
 
 export interface UserCart {
   cart?: Cart;
-  products: CorrelatedProduct[];
+  products: Product[];
 }
 
 export interface Tag {

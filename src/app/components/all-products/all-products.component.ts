@@ -72,7 +72,7 @@ export class AllProductsComponent {
     this.store.dispatch(getTags());
 
     this.userCart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
-      this.cartId = cart.cart?.id;
+      this.cartId = cart?.cart?.id;
     });
   }
 

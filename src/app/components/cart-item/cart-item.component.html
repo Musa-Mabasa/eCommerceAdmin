@@ -1,23 +1,23 @@
 <div class="flex justify-between w-full">
   <div class="flex gap-4">
     <img
-      [src]="product?.product?.imageUrl"
-      [alt]="product?.product?.name"
-      class="w-20 object-cover rounded-lg"
+      [src]="product?.imageUrl"
+      [alt]="product?.name"
+      class="w-20 h-20 object-cover rounded-lg"
     />
     <div class="flex flex-col gap-1">
-      <h1 class="text-lg">{{ product?.product?.name }}</h1>
+      <h1 class="text-lg">{{ product?.name }}</h1>
       <div class="flex">
-        <p>{{ product?.product?.price }}</p>
+        <p>{{ product?.price }}</p>
         <div class="divider divider-horizontal mx-1"></div>
-        <p *ngIf="product?.product?.quantity" class="text-green">In Stock</p>
-        <p *ngIf="!product?.product?.quantity" class="text-red">Out of Stock</p>
+        <p *ngIf="product?.quantity != 0" class="text-green">In Stock</p>
+        <p *ngIf="product?.quantity == 0" class="text-red">Out of Stock</p>
       </div>
     </div>
   </div>
   <button
     class="btn btn-ghost font-normal"
-    (click)="onDelete.emit(product?.product?.id)"
+    (click)="onDelete.emit(product?.id)"
   >
     <ng-icon name="matDelete" />Delete
   </button>

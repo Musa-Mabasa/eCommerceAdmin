@@ -74,6 +74,11 @@ export const selectAllProductsWithTags = createSelector(
         }
 
         return false;
+      })
+      .filter((product) => {
+        if (!state.cart) return true;
+
+        return product.product.cartId !== state.cart?.id;
       });
 
     return products;
@@ -103,10 +108,11 @@ export const selectSelectedTags = createSelector(
 
 export const selectUserCart = createSelector(
   previewSelectFeature,
-  selectAllProductsWithTags,
-  (state, correlatedProducts): UserCart => {
-    const products = correlatedProducts.filter(
-      (product) => product.product.cartId === state.cart?.id
+  (state): UserCart | undefined => {
+    if (!state.cart) return undefined;
+
+    const products = state.allProducts.filter(
+      (product) => product.cartId === state.cart?.id
     );
 
     return { cart: state.cart, products };

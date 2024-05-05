@@ -30,19 +30,19 @@
           <ng-icon name="matNotificationsNoneOutline" class="text-2xl" />
         </div>
         <ng-icon
-          *ngIf="!(userCart$ | async)?.products?.length"
+          *ngIf="!(userCart$ | async)"
           name="matShoppingCartOutline"
-          class="text-2xl"
+          class="text-2xl h-fit"
         />
         <div
-          *ngIf="(userCart$ | async)?.products?.length"
-          class="dropdown dropdown-end h-fit"
+          *ngIf="(userCart$ | async)"
+          class="dropdown dropdown-end h-5"
         >
           <div class="indicator w-fit" tabindex="0" role="button">
             <span
               class="indicator-item badge size-2 p-0 bg-primary-color absolute top-1 right-[0.30rem]"
             ></span>
-            <ng-icon name="matShoppingCartOutline" class="text-2xl" />
+            <ng-icon name="matShoppingCartOutline" class="text-2xl h-fit" />
           </div>
           <ul
             tabindex="0"
@@ -52,13 +52,16 @@
             <div class="divider mt-3 mb-1"></div>
             <div class="flex flex-col">
               @if((userCart$ | async); as userCart){ @for(product of
-              userCart.products; track product.product.id){
+              userCart.products; track product.id){
               <app-cart-item
                 (onDelete)="deleteProductFromCart($event)"
                 [product]="product"
                 class="p-2"
               />
-              <div class="divider my-1"></div>
+              <div
+                *ngIf="$index < userCart.products.length - 1"
+                class="divider my-1"
+              ></div>
               } }
             </div>
           </ul>

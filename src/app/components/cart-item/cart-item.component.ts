@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { matDelete } from "@ng-icons/material-icons/baseline";
-import { CorrelatedProduct } from "../../models/admin";
+import { CorrelatedProduct, Product } from "../../models/admin";
 import { NgIf } from "@angular/common";
 
 @Component({
@@ -13,6 +13,10 @@ import { NgIf } from "@angular/common";
   viewProviders: [provideIcons({ matDelete })],
 })
 export class CartItemComponent {
-  @Input() product: CorrelatedProduct | undefined;
+  @Input() product: Product | undefined;
   @Output() onDelete: EventEmitter<string> = new EventEmitter();
+
+  constructor() {
+    console.log(this.product?.quantity);
+  }
 }

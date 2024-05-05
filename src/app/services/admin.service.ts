@@ -25,7 +25,7 @@ import { getCookie } from "../utils/utils";
 })
 export class AdminService {
   firestore = inject(Firestore);
-  
+
   getAdminProducts(adminId: string): Observable<Product[]> {
     const fetchQuery = query(
       collection(this.firestore, "Product"),
@@ -128,6 +128,7 @@ export class AdminService {
                 category: finalProduct.category,
                 quantity: finalProduct.quantity,
                 imageUrl: finalProduct.imageUrl,
+                cartId: finalProduct.cartId,
               }
             ).catch((err) => Error(err.message));
           })
