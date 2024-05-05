@@ -3,6 +3,7 @@ import {
   Cart,
   Category,
   CorrelatedProduct,
+  Data,
   Product,
   Tag,
   UserCart,
@@ -26,6 +27,7 @@ import {
   getUserCartsComplete,
   setProductToView,
   setCurrency,
+  getCurrencyConversionComplete,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -47,6 +49,7 @@ export interface PreviewState {
   upperPriceBound?: number;
   searchTerm: string;
   userCurrency: string;
+  currencyConversion?: Data;
 }
 
 const initialState: PreviewState = {
@@ -60,7 +63,7 @@ const initialState: PreviewState = {
   selectedTags: [],
   priceRangeType: "",
   searchTerm: "",
-  userCurrency: "ZAR",
+  userCurrency: "USD",
 };
 
 export const previewReducer = createReducer(
@@ -142,6 +145,10 @@ export const previewReducer = createReducer(
   on(setCurrency, (state, { userCurrency }) => ({
     ...state,
     userCurrency,
+  })),
+  on(getCurrencyConversionComplete, (state, { currencyConversion }) => ({
+    ...state,
+    currencyConversion,
   }))
 );
 

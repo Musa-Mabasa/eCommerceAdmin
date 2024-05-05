@@ -108,7 +108,7 @@
                 selectedPriceRangeType !== 'None'
               "
               type="number"
-              [placeholder]="userCurrency"
+              [placeholder]="userCurrency$ | async"
               class="input input-bordered bg-edit-input-color w-24 h-9"
               [formControl]="lowerBoundPrice"
             />
@@ -118,14 +118,14 @@
             >
               <input
                 type="number"
-                [placeholder]="userCurrency"
+                [placeholder]="userCurrency$ | async"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
                 [formControl]="lowerBoundPrice"
               />
               <ng-icon name="matArrowForwardOutline" class="text-2xl" />
               <input
                 type="number"
-                [placeholder]="userCurrency"
+                [placeholder]="userCurrency$ | async"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
                 [formControl]="upperBoundPrice"
               />
@@ -156,6 +156,8 @@
       class="w-72"
       (onClick)="routeToProduct($event)"
       (onAddToCart)="addProductToCart($event)"
+      [conversionData]="conversionData$ | async"
+      [userCurrency]="userCurrency$ | async"
     />
     }
   </div>

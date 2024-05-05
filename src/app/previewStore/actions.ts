@@ -3,6 +3,7 @@ import {
   Cart,
   Category,
   CorrelatedProduct,
+  Data,
   Product,
   Tag,
   UserCart,
@@ -110,4 +111,14 @@ export const setProductToView = createAction(
 export const setCurrency = createAction(
   "[PREVIEW] SetCurrency",
   props<{ userCurrency: string }>()
+);
+
+export const getCurrencyConversion = createAction(
+  "[PREVIEW] GetCurrencyConversion",
+  props<{ userCurrency: string }>()
+);
+
+export const getCurrencyConversionComplete = createAction(
+  "[PREVIEW] GetCurrencyConversionComplete",
+  props<{ currencyConversion: Data }>()
 );

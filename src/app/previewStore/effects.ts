@@ -15,18 +15,23 @@ import {
   getCartComplete,
   getCategories,
   getCategoriesComplete,
+  getCurrencyConversion,
+  getCurrencyConversionComplete,
   getTags,
   getTagsComplete,
   getUserCarts,
   getUserCartsComplete,
 } from "./actions";
+import { CurrencyService } from "../services/currency.service";
+import { user } from "@angular/fire/auth";
 
 @Injectable()
 export class PreviewEffects {
   constructor(
     private actions$: Actions,
     private previewService: PreviewService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private currencyService: CurrencyService
   ) {}
 
   getAllProducts$ = createEffect(() =>
@@ -153,7 +158,7 @@ export class PreviewEffects {
     )
   );
 
-  deletProductFromCart$ = createEffect(() =>
+  deleteProductFromCart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteProductFromCart.type),
       switchMap(
@@ -178,6 +183,29 @@ export class PreviewEffects {
                 return EMPTY;
               })
             )
+      )
+    )
+  );
+
+  getCurrencyConversion$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCurrencyConversion.type),
+      switchMap(({ userCurrency }: { userCurrency: string }) =>
+        this.currencyService.getCurrencyExchangeRates(userCurrency).pipe(
+          map((currencyConversion) =>
+            getCurrencyConversionComplete({
+              currencyConversion: currencyConversion.data,
+            })
+          ),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to delete product",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
       )
     )
   );

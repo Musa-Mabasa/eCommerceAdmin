@@ -36,3 +36,23 @@ export interface CorrelatedProduct {
   product: Product;
   tags: Tag[];
 }
+
+export interface CurrencyExhangeRates {
+  meta: Meta;
+  data: Data;
+}
+export interface Meta {
+  last_updated_at: string;
+}
+
+export interface Data {
+  EUR: Currency;
+  GBP: Currency;
+  USD: Currency;
+  ZAR: Currency;
+}
+
+export interface Currency {
+  code: string;
+  value: number;
+}

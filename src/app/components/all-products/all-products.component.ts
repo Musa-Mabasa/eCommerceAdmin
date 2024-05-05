@@ -28,6 +28,8 @@ import {
   selectAllProductsWithTags,
   selectCart,
   selectCategories,
+  selectCurrency,
+  selectCurrencyConversion,
   selectSelectedTags,
   selectTags,
 } from "../../previewStore/selectors";
@@ -66,9 +68,10 @@ export class AllProductsComponent {
   selectedTags$ = this.store.select(selectSelectedTags);
   cart$ = this.store.select(selectCart);
   isLoading$ = this.store.select(selectAllProductsLoading);
+  conversionData$ = this.store.select(selectCurrencyConversion);
+  userCurrency$ = this.store.select(selectCurrency);
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
-  userCurrency = "ZAR";
   cartId? = "";
 
   constructor() {

@@ -21,9 +21,14 @@ import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
 import {
   selectCart,
+  selectCurrency,
   selectUserCartProducts,
 } from "../../previewStore/selectors";
-import { deleteProductFromCart, getCart } from "../../previewStore/actions";
+import {
+  deleteProductFromCart,
+  getCart,
+  getCurrencyConversion,
+} from "../../previewStore/actions";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
@@ -54,7 +59,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   ],
 })
 export class HomeComponent {
-[x: string]: any;
+  [x: string]: any;
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");
@@ -62,11 +67,17 @@ export class HomeComponent {
   store = inject(Store<PreviewState>);
   cart$ = this.store.select(selectCart);
   cartProducts$ = this.store.select(selectUserCartProducts);
+  userCurrency$ = this.store.select(selectCurrency);
   cartId = "";
   cartTotal = 0;
 
   constructor() {
     this.store.dispatch(getCart({ userId: getCookie("userId") }));
+    this.userCurrency$
+      .pipe(takeUntilDestroyed())
+      .subscribe((userCurrency) =>
+        this.store.dispatch(getCurrencyConversion({ userCurrency }))
+      );
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart?.id) {
         this.cartId = cart?.id;

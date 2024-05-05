@@ -167,3 +167,8 @@ export const selectCurrency = createSelector(
   previewSelectFeature,
   (state) => state.userCurrency
 );
+
+export const selectCurrencyConversion = createSelector(
+  previewSelectFeature,
+  (state) => state.currencyConversion
+);
