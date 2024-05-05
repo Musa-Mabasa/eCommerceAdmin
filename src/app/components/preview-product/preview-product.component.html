@@ -23,12 +23,27 @@
     <p class="line-clamp-6">
       {{ (product$ | async)?.product?.description }}
     </p>
+    <div>
+      @if((product$ | async)?.tags; as tags){
+      <div class="flex flex-col gap-3">
+        <p class="text-lg font-medium">Tags:</p>
+        <div class="flex gap-2">
+          @for(tag of tags; track tag.id){
+          <div class="badge badge-outline cursor-pointer px-3 py-4 font-rubik">
+            {{ tag.name }}
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
     <div class="flex gap-8">
-      <button
+      <a
         class="btn btn-outline w-44 rounded-3xl shadow-lg mt-4 justify-self-end"
+        routerLink="/home/all-products"
       >
         Back
-      </button>
+      </a>
       <button
         class="btn bg-secondary-color w-44 rounded-3xl shadow-xl text-whiteSmoke mt-4 justify-self-end"
         (click)="addProductToCart()"

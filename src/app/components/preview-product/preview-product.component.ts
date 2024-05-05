@@ -8,12 +8,12 @@ import { AsyncPipe } from "@angular/common";
 import { CorrelatedProduct } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { addProductToCart } from "../../previewStore/actions";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-preview-product",
   standalone: true,
-  imports: [NgIconComponent, AsyncPipe],
+  imports: [NgIconComponent, AsyncPipe, RouterLink],
   templateUrl: "./preview-product.component.html",
   styleUrl: "./preview-product.component.scss",
   viewProviders: [
