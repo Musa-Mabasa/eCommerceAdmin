@@ -71,8 +71,6 @@ export class PreviewService {
   }
 
   addProductToCart(cartId: string, product: CorrelatedProduct) {
-    console.log(product);
-    
     return from(
       setDoc(doc(collection(this.firestore, "UserCart")), {
         cartId,

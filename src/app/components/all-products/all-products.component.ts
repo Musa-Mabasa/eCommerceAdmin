@@ -72,8 +72,6 @@ export class AllProductsComponent {
     this.store.dispatch(getTags());
 
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
-      console.log(cart);
-      
       this.cartId = cart?.id;
     });
   }
@@ -127,8 +125,6 @@ export class AllProductsComponent {
   }
 
   addProductToCart(product: CorrelatedProduct) {
-    console.log(this.cartId);
-    
     if (this.cartId)
       this.store.dispatch(
         addProductToCart({ productToAdd: { cartId: this.cartId, product } })
