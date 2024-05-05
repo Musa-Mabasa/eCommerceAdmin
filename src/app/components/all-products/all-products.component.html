@@ -8,11 +8,19 @@
   <p class="font-rubik">We offer a wide range of products from end to end.</p>
 </section>
 <section class="px-6 flex flex-col items-center">
+  @if(isLoading$ | async){
+  <app-all-products-skeleton class="flex flex-col w-full items-center" />
+  }@else {
   <div class="flex">
     <label
       class="input input-bordered pr-6 mr-0 sm:w-96 rounded-none bg-search-color flex items-center justify-between"
     >
-      <input type="text" class="w-4/5" placeholder="Search Products..." (input)="onSearch($event)" />
+      <input
+        type="text"
+        class="w-4/5"
+        placeholder="Search Products..."
+        (input)="onSearch($event)"
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -95,7 +103,10 @@
               } }
             </div>
             <input
-              *ngIf="selectedPriceRangeType !== 'Between' && selectedPriceRangeType !== 'None' "
+              *ngIf="
+                selectedPriceRangeType !== 'Between' &&
+                selectedPriceRangeType !== 'None'
+              "
               type="number"
               [placeholder]="userCurrency"
               class="input input-bordered bg-edit-input-color w-24 h-9"
@@ -148,5 +159,5 @@
     />
     }
   </div>
-  }
+  } }
 </section>

@@ -90,7 +90,7 @@ export const previewReducer = createReducer(
   })),
   on(getCategoriesComplete, (state, { categories }) => ({
     ...state,
-    productsLoadingState: false,
+    categoriesLoadingState: false,
     categories,
   })),
   on(getTags, (state) => ({

@@ -14,8 +14,8 @@ export default {
       "search-color": "#f5f7fa",
       black: "black",
       "edit-input-color": "#eeeeee",
-      grey: "#f0f3f4",
-      green: "green"
+      grey: "darkgrey",
+      green: "green",
     },
     extend: {
       fontFamily: {

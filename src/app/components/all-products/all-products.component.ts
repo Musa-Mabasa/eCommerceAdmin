@@ -24,6 +24,7 @@ import {
   setSearchTerm,
 } from "../../previewStore/actions";
 import {
+  selectAllProductsLoading,
   selectAllProductsWithTags,
   selectCart,
   selectCategories,
@@ -34,21 +35,23 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { PreviewState } from "../../previewStore/reducer";
 import { CorrelatedProduct } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { AllProductsSkeletonComponent } from "../skeletons/all-products-skeleton/all-products-skeleton.component";
 
 @Component({
   selector: "app-all-products",
   standalone: true,
+  templateUrl: "./all-products.component.html",
+  styleUrl: "./all-products.component.scss",
+  viewProviders: [
+    provideIcons({ matFilterListOutline, matArrowForwardOutline }),
+  ],
   imports: [
     PreviewCardComponent,
     NgIconComponent,
     NgIf,
     AsyncPipe,
     ReactiveFormsModule,
-  ],
-  templateUrl: "./all-products.component.html",
-  styleUrl: "./all-products.component.scss",
-  viewProviders: [
-    provideIcons({ matFilterListOutline, matArrowForwardOutline }),
+    AllProductsSkeletonComponent,
   ],
 })
 export class AllProductsComponent {
@@ -62,6 +65,7 @@ export class AllProductsComponent {
   upperBoundPrice = new FormControl("");
   selectedTags$ = this.store.select(selectSelectedTags);
   cart$ = this.store.select(selectCart);
+  isLoading$ = this.store.select(selectAllProductsLoading);
   selectedPriceRangeType = "Equals";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   userCurrency = "ZAR";

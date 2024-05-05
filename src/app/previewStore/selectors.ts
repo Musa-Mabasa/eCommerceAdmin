@@ -156,3 +156,11 @@ export const selectRelatedProducts = createSelector(
     );
   }
 );
+
+export const selectAllProductsLoading = createSelector(
+  previewSelectFeature,
+  (state) =>
+    state.productsLoadingState ||
+    state.categoriesLoadingState ||
+    state.tagsLoadingState
+);
