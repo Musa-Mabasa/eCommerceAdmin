@@ -106,46 +106,32 @@ export class HomeComponent {
     this.cartProducts$.pipe(takeUntilDestroyed()).subscribe((products) => {
       this.cartTotal = 0;
       for (const product of products) {
-        if (
-          product.currency === "EUR" &&
-          product.quantity > 0 &&
-          this.conversionData
-        ) {
+        if (product.currency === "EUR" && product.quantity > 0) {
           this.cartTotal += this.getPrice(
             product.price,
-            this.conversionData["EUR"].value
+            this.conversionData?.["EUR"].value
           );
-        } else if (
-          product.currency === "ZAR" &&
-          product.quantity > 0 &&
-          this.conversionData
-        ) {
+        } else if (product.currency === "ZAR" && product.quantity > 0) {
           this.cartTotal += this.getPrice(
             product.price,
-            this.conversionData["ZAR"].value
+            this.conversionData?.["ZAR"].value
           );
         }
-        if (
-          product.currency === "GBP" &&
-          product.quantity > 0 &&
-          this.conversionData
-        ) {
+        if (product.currency === "GBP" && product.quantity > 0) {
           this.cartTotal += this.getPrice(
             product.price,
-            this.conversionData["GBP"].value
+            this.conversionData?.["GBP"].value
           );
         }
-        if (
-          product.currency === "USD" &&
-          product.quantity > 0 &&
-          this.conversionData
-        ) {
+        if (product.currency === "USD" && product.quantity > 0) {
           this.cartTotal += this.getPrice(
             product.price,
-            this.conversionData["USD"].value
+            this.conversionData?.["USD"].value
           );
         }
+        console.log(product.price);
       }
+      console.log(this.cartTotal);
     });
 
     this.userCurrency$
