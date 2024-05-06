@@ -16,9 +16,7 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
-  getProductById,
   getProductByIdComplete,
-  getProductByIdError,
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
@@ -76,17 +74,9 @@ export const adminReducer = createReducer(
     adminProducts,
     productLoadingState: false,
   })),
-  on(getProductById, (state) => ({
-    ...state,
-    productLoadingState: true,
-  })),
   on(getProductByIdComplete, (state, { product }) => ({
     ...state,
     productToEdit: product,
-    productLoadingState: false,
-  })),
-  on(getProductByIdError, (state) => ({
-    ...state,
     productLoadingState: false,
   })),
   on(getAllTags, (state) => ({
@@ -131,11 +121,19 @@ export const adminReducer = createReducer(
     ...state,
     addingLoadingState: false,
   })),
+  on(addProductError, (state) => ({
+    ...state,
+    addingLoadingState: false,
+  })),
   on(editProduct, (state) => ({
     ...state,
     editLoadingState: true,
   })),
   on(editProductComplete, (state) => ({
+    ...state,
+    editLoadingState: false,
+  })),
+  on(editProductError, (state) => ({
     ...state,
     editLoadingState: false,
   })),

@@ -70,7 +70,7 @@ export class AllProductsComponent {
   isLoading$ = this.store.select(selectAllProductsLoading);
   conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
-  selectedPriceRangeType = "Equals";
+  selectedPriceRangeType = "None";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   cartId? = "";
 

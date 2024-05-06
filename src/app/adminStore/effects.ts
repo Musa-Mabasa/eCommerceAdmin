@@ -18,8 +18,6 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
-  getProductById,
-  getProductByIdComplete,
 } from "./actions";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
 import { Product } from "../models/admin";
@@ -62,27 +60,6 @@ export class AdminEffects {
             this.notification.create(
               "error",
               "Failed to fetch categories",
-              err.message
-            );
-            return EMPTY;
-          })
-        )
-      )
-    )
-  );
-
-  getProductById$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(getProductById.type),
-      switchMap(({ productId }: { productId: string }) =>
-        this.adminService.getProductById(productId).pipe(
-          map((product) => {
-            return getProductByIdComplete({ product: product });
-          }),
-          catchError((err) => {
-            this.notification.create(
-              "error",
-              "Failed to fetch product",
               err.message
             );
             return EMPTY;
