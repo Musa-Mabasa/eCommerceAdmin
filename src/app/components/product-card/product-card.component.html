@@ -2,8 +2,15 @@
   class="p-5 w-full flex flex-col gap-5 bg-search-color rounded-2xl hover:scale-105 shadow-lg"
 >
   <img
+    *ngIf="product?.product?.imageUrl"
     class="rounded-xl w-full h-44 object-cover"
     [src]="product?.product?.imageUrl"
+    alt="Camera"
+  />
+  <img
+    *ngIf="!product?.product?.imageUrl"
+    class="rounded-xl w-full h-44 object-cover"
+    src="../../../assets/images/placeholderImage.webp"
     alt="Camera"
   />
   <div class="flex flex-col gap-2">

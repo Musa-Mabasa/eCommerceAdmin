@@ -61,8 +61,15 @@
           ><ng-icon name="matEdit" class="text-lg text-whiteSmoke"
         /></span>
         <img
+          *ngIf="(product$ | async)?.imageUrl"
           class="rounded-xl grid w-full h-56 object-cover place-items-center"
           [src]="(product$ | async)?.imageUrl"
+          [alt]="(product$ | async)?.name"
+        />
+        <img
+          *ngIf="!(product$ | async)?.imageUrl"
+          class="rounded-xl grid w-full h-56 object-cover place-items-center"
+          src="../../../assets/images/placeholderImage.webp"
           [alt]="(product$ | async)?.name"
         />
       </div>
