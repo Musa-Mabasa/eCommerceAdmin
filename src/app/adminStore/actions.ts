@@ -12,10 +12,6 @@ export const getAdminProductsComplete = createAction(
   props<{ adminProducts: Product[] }>()
 );
 
-export const getProductByIdComplete = createAction(
-  "[ADMIN] GetProductByIdComplete",
-  props<{ product: Product }>()
-);
 
 export const getAllTags = createAction("[ADMIN] GetAllTags");
 

@@ -16,7 +16,6 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
-  getProductByIdComplete,
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
@@ -72,11 +71,6 @@ export const adminReducer = createReducer(
   on(getAdminProductsComplete, (state, { adminProducts }) => ({
     ...state,
     adminProducts,
-    productLoadingState: false,
-  })),
-  on(getProductByIdComplete, (state, { product }) => ({
-    ...state,
-    productToEdit: product,
     productLoadingState: false,
   })),
   on(getAllTags, (state) => ({
