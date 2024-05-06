@@ -30,7 +30,7 @@
         />
         <div
           *ngIf="(cartProducts$ | async)?.length"
-          class="dropdown dropdown-end h-5"
+          class="dropdown dropdown-end dropdown-open h-5"
         >
           <div class="indicator w-fit" tabindex="0" role="button">
             <span
@@ -40,7 +40,7 @@
           </div>
           <ul
             tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-[500px]"
+            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-72 sm:w-[500px] "
           >
             <p class="text-xl font-normal px-2">Cart</p>
             <div class="divider mt-3 mb-1"></div>

@@ -200,8 +200,8 @@ export class PreviewEffects {
           catchError((err) => {
             this.notification.create(
               "error",
-              "Failed to delete product",
-              err.message
+              "Failed to get currency info",
+              "Currency information failed to fetch."
             );
             return EMPTY;
           })

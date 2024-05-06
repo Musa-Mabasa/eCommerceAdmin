@@ -1,4 +1,4 @@
-<div class="flex justify-between w-full">
+<div class="flex flex-col justify-between w-full sm:flex-row">
   <div class="flex gap-4">
     <img
       [src]="product?.imageUrl"
@@ -41,7 +41,7 @@
     </div>
   </div>
   <button
-    class="btn btn-ghost font-normal"
+    class="btn btn-ghost font-normal w-fit flex justify-start p-0"
     (click)="onDelete.emit(product?.id)"
   >
     <ng-icon name="matDelete" />Delete
