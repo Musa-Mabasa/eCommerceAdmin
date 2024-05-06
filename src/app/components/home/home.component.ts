@@ -129,9 +129,7 @@ export class HomeComponent {
             this.conversionData?.["USD"].value
           );
         }
-        console.log(product.price);
       }
-      console.log(this.cartTotal);
     });
 
     this.userCurrency$
