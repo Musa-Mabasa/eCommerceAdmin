@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { PreviewState, previewFeatureKey } from "./reducer";
 import { CorrelatedProduct, Product, UserCart } from "../models/admin";
+import { getPrice } from "../utils/utils";
 
 export const previewSelectFeature =
   createFeatureSelector<PreviewState>(previewFeatureKey);
@@ -43,32 +44,77 @@ export const selectAllProductsWithTags = createSelector(
         );
       })
       .filter((product) => {
+        let lowerBoundPrice: number | undefined;
+        let upperBoundPrice: number | undefined;
+
+        if (product.product.currency === "ZAR") {
+          lowerBoundPrice = getPrice(
+            state.lowerPriceBound,
+            state.currencyConversion?.["ZAR"].value
+          );
+
+          upperBoundPrice = getPrice(
+            state.upperPriceBound,
+            state.currencyConversion?.["ZAR"].value
+          );
+        } else if (product.product.currency === "USD") {
+          lowerBoundPrice = getPrice(
+            state.lowerPriceBound,
+            state.currencyConversion?.["USD"].value
+          );
+
+          upperBoundPrice = getPrice(
+            state.upperPriceBound,
+            state.currencyConversion?.["USD"].value
+          );
+        } else if (product.product.currency === "GBP") {
+          lowerBoundPrice = getPrice(
+            state.lowerPriceBound,
+            state.currencyConversion?.["GBP"].value
+          );
+
+          upperBoundPrice = getPrice(
+            state.upperPriceBound,
+            state.currencyConversion?.["GBP"].value
+          );
+        } else if (product.product.currency === "EUR") {
+          lowerBoundPrice = getPrice(
+            state.lowerPriceBound,
+            state.currencyConversion?.["EUR"].value
+          );
+
+          upperBoundPrice = getPrice(
+            state.upperPriceBound,
+            state.currencyConversion?.["EUR"].value
+          );
+        }
+        
         if (state.priceRangeType === "") {
           return true;
         } else if (
           state.priceRangeType === "Equals" &&
-          state.lowerPriceBound &&
-          product.product.price === state.lowerPriceBound
+          lowerBoundPrice &&
+          Math.round(product.product.price) === Math.round(lowerBoundPrice)
         ) {
           return true;
         } else if (
           state.priceRangeType === "Less Than" &&
-          state.lowerPriceBound &&
-          product.product.price < state.lowerPriceBound
+          lowerBoundPrice &&
+          product.product.price < lowerBoundPrice
         ) {
           return true;
         } else if (
           state.priceRangeType === "More Than" &&
-          state.lowerPriceBound &&
-          product.product.price > state.lowerPriceBound
+          lowerBoundPrice &&
+          product.product.price > lowerBoundPrice
         ) {
           return true;
         } else if (
           state.priceRangeType === "Between" &&
-          state.lowerPriceBound &&
-          state.upperPriceBound &&
-          product.product.price > state.lowerPriceBound &&
-          product.product.price < state.upperPriceBound
+          lowerBoundPrice &&
+          upperBoundPrice &&
+          product.product.price > lowerBoundPrice &&
+          product.product.price < upperBoundPrice
         ) {
           return true;
         }

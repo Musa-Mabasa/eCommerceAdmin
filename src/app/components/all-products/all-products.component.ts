@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { PreviewCardComponent } from "../preview-card/preview-card.component";
-import { Router } from "@angular/router";
+import { Data, Router } from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
   matArrowForwardOutline,
@@ -70,6 +70,8 @@ export class AllProductsComponent {
   isLoading$ = this.store.select(selectAllProductsLoading);
   conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
+  conversionData?: Data;
+  userCurrency = "";
   selectedPriceRangeType = "None";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   cartId? = "";
@@ -81,6 +83,14 @@ export class AllProductsComponent {
 
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       this.cartId = cart?.id;
+    });
+
+    this.conversionData$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.conversionData = data;
+    });
+
+    this.userCurrency$.pipe(takeUntilDestroyed()).subscribe((userCurrency) => {
+      this.userCurrency = userCurrency;
     });
   }
 
@@ -114,15 +124,27 @@ export class AllProductsComponent {
 
     this.store.dispatch(
       selectLowerPriceBound({
-        lowerPriceBound: Number(this.lowerBoundPrice.value) ?? undefined,
+        lowerPriceBound: this.getPrice(
+          Number(this.lowerBoundPrice.value),
+          this.conversionData?.[this.userCurrency].value
+        ),
       })
     );
 
     this.store.dispatch(
       selectUpperPriceBound({
-        upperPriceBound: Number(this.upperBoundPrice.value) ?? undefined,
+        upperPriceBound: this.getPrice(
+          Number(this.upperBoundPrice.value),
+          this.conversionData?.[this.userCurrency].value
+        ),
       })
     );
+  }
+
+  getPrice(baseValue: number, conversionRate: number | undefined) {
+    if (baseValue && conversionRate)
+      return Number((baseValue / conversionRate).toFixed(2));
+    else return baseValue;
   }
 
   onSearch(event: Event) {
