@@ -18,25 +18,29 @@
     @if(userCurrency){
     <p *ngIf="product?.product?.currency === 'EUR'">
       {{
-        getPrice(product?.product?.price, conversionData?.EUR?.value)
+       product?.product?.price
+          | currencyConversion : conversionData?.EUR?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
     <p *ngIf="product?.product?.currency === 'ZAR'">
       {{
-        getPrice(product?.product?.price, conversionData?.ZAR?.value)
+        product?.product?.price
+          | currencyConversion : conversionData?.ZAR?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
     <p *ngIf="product?.product?.currency === 'GBP'">
       {{
-        getPrice(product?.product?.price, conversionData?.GBP?.value)
+        product?.product?.price
+          | currencyConversion : conversionData?.GBP?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
     <p *ngIf="product?.product?.currency === 'USD'">
       {{
-        getPrice(product?.product?.price, conversionData?.USD?.value)
+        product?.product?.price
+          | currencyConversion : conversionData?.USD?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>

@@ -15,18 +15,19 @@ import { CorrelatedProduct } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { addProductToCart, setProductToView } from "../../previewStore/actions";
 import { Router, RouterLink } from "@angular/router";
+import { CurrencyConversionPipe } from "../../pipes/currency-conversion.pipe";
 
 @Component({
-  selector: "app-preview-product",
-  standalone: true,
-  imports: [NgIconComponent, AsyncPipe, RouterLink, CurrencyPipe, NgIf],
-  templateUrl: "./preview-product.component.html",
-  styleUrl: "./preview-product.component.scss",
-  viewProviders: [
-    provideIcons({
-      matShoppingCartOutline,
-    }),
-  ],
+    selector: "app-preview-product",
+    standalone: true,
+    templateUrl: "./preview-product.component.html",
+    styleUrl: "./preview-product.component.scss",
+    viewProviders: [
+        provideIcons({
+            matShoppingCartOutline,
+        }),
+    ],
+    imports: [NgIconComponent, AsyncPipe, RouterLink, CurrencyPipe, NgIf, CurrencyConversionPipe]
 })
 export class PreviewProductComponent {
   store = inject(Store<PreviewState>);
@@ -48,12 +49,6 @@ export class PreviewProductComponent {
       if (product) this.product = product;
       else this.router.navigate([`home/all-products`]);
     });
-  }
-
-  getPrice(baseValue: number | undefined, conversionRate: number | undefined) {
-    if (baseValue && conversionRate)
-      return (baseValue / conversionRate).toFixed(2);
-    else return baseValue;
   }
 
   addProductToCart() {
