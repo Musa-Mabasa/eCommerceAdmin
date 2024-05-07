@@ -1,7 +1,14 @@
 <div class="flex flex-col justify-between w-full sm:flex-row">
   <div class="flex gap-4">
     <img
+      *ngIf="product?.imageUrl"
       [src]="product?.imageUrl"
+      [alt]="product?.name"
+      class="w-20 h-20 object-cover rounded-lg"
+    />
+    <img
+      *ngIf="!product?.imageUrl"
+      src="../../../assets/images/placeholderImage.webp"
       [alt]="product?.name"
       class="w-20 h-20 object-cover rounded-lg"
     />
