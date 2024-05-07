@@ -25,48 +25,39 @@
       }}</span>
     </p>
     @if(userCurrency$ | async ; as userCurrency ){
-
-    <p
-      *ngIf="product?.product?.currency === 'EUR'"
-      class="text-lg font-semibold"
-    >
+    @switch(product?.product?.currency) { @case ('EUR') {
+    <p class="text-xl font-semibold">
       {{
         product?.product?.price
           | currencyConversion : (conversionData$ | async)?.EUR?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
-    <p
-      *ngIf="product?.product?.currency === 'ZAR'"
-      class="text-lg font-semibold"
-    >
+    } @case ('ZAR') {
+    <p class="text-xl font-semibold">
       {{
         product?.product?.price
           | currencyConversion : (conversionData$ | async)?.ZAR?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
-    <p
-      *ngIf="product?.product?.currency === 'GBP'"
-      class="text-lg font-semibold"
-    >
+    } @case ('GBP') {
+    <p class="text-xl font-semibold">
       {{
         product?.product?.price
           | currencyConversion : (conversionData$ | async)?.GBP?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
-    <p
-      *ngIf="product?.product?.currency === 'USD'"
-      class="text-lg font-semibold"
-    >
+    } @case ('USD') {
+    <p class="text-xl font-semibold">
       {{
         product?.product?.price
           | currencyConversion : (conversionData$ | async)?.USD?.value
           | currency : userCurrency : "symbol-narrow"
       }}
     </p>
-    }
+    } } }
     <p class="line-clamp-6">
       {{ (product$ | async)?.product?.description }}
     </p>
@@ -123,29 +114,32 @@
           alt="Camera"
         />
         <p class="line-clamp-1">{{ product.product.name }}</p>
-        @if(userCurrency$ | async ; as userCurrency ){
-
-        <p *ngIf="product?.product?.currency === 'EUR'">
+        @if(userCurrency$ | async ; as userCurrency ){ @switch
+        (product?.product?.currency) { @case ('EUR') {
+        <p>
           {{
             product?.product?.price
               | currencyConversion : (conversionData$ | async)?.EUR?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        <p *ngIf="product?.product?.currency === 'ZAR'">
+        } @case ('ZAR') {
+        <p>
           {{
             product?.product?.price
               | currencyConversion : (conversionData$ | async)?.ZAR?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        <p *ngIf="product?.product?.currency === 'GBP'">
+        } @case ('GBP') {
+        <p>
           {{
             product?.product?.price
               | currencyConversion : (conversionData$ | async)?.GBP?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
+        } @case ('USD') {
         <p *ngIf="product?.product?.currency === 'USD'">
           {{
             product?.product?.price
@@ -153,7 +147,7 @@
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        }
+        } } }
       </div>
       }
     </div>

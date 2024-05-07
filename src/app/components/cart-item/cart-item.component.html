@@ -15,28 +15,31 @@
     <div class="flex flex-col gap-1">
       <h1 class="text-lg">{{ product?.name }}</h1>
       <div class="flex">
-        @if(userCurrency){
-        <p *ngIf="product?.currency === 'EUR'">
+        @if(userCurrency){ @switch (product?.currency) { @case ('EUR') {
+        <p>
           {{
             product?.price
               | currencyConversion : conversionData?.EUR?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        <p *ngIf="product?.currency === 'ZAR'">
+        } @case ('ZAR') {
+        <p>
           {{
             product?.price
               | currencyConversion : conversionData?.ZAR?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        <p *ngIf="product?.currency === 'GBP'">
+        } @case ('GBP') {
+        <p>
           {{
             product?.price
               | currencyConversion : conversionData?.GBP?.value
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
+        } @case ('USD') {
         <p *ngIf="product?.currency === 'USD'">
           {{
             product?.price
@@ -44,7 +47,7 @@
               | currency : userCurrency : "symbol-narrow"
           }}
         </p>
-        }
+        } } }
         <div class="divider divider-horizontal mx-1"></div>
         <p *ngIf="product?.quantity != 0" class="text-green">In Stock</p>
         <p *ngIf="product?.quantity == 0" class="text-red">Out of Stock</p>

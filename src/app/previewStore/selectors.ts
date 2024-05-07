@@ -47,6 +47,54 @@ export const selectAllProductsWithTags = createSelector(
         let lowerBoundPrice: number | undefined;
         let upperBoundPrice: number | undefined;
 
+        switch (product.product.currency) {
+          case "ZAR":
+            lowerBoundPrice = getPrice(
+              state.lowerPriceBound,
+              state.currencyConversion?.["ZAR"].value
+            );
+
+            upperBoundPrice = getPrice(
+              state.upperPriceBound,
+              state.currencyConversion?.["ZAR"].value
+            );
+            break;
+          case "USD":
+            lowerBoundPrice = getPrice(
+              state.lowerPriceBound,
+              state.currencyConversion?.["USD"].value
+            );
+
+            upperBoundPrice = getPrice(
+              state.upperPriceBound,
+              state.currencyConversion?.["USD"].value
+            );
+            break;
+          case "GBP":
+            lowerBoundPrice = getPrice(
+              state.lowerPriceBound,
+              state.currencyConversion?.["GBP"].value
+            );
+
+            upperBoundPrice = getPrice(
+              state.upperPriceBound,
+              state.currencyConversion?.["GBP"].value
+            );
+            break;
+          case "EUR":
+            lowerBoundPrice = getPrice(
+              state.lowerPriceBound,
+              state.currencyConversion?.["EUR"].value
+            );
+
+            upperBoundPrice = getPrice(
+              state.upperPriceBound,
+              state.currencyConversion?.["EUR"].value
+            );
+            break;
+          default:
+        }
+
         if (product.product.currency === "ZAR") {
           lowerBoundPrice = getPrice(
             state.lowerPriceBound,
@@ -88,7 +136,7 @@ export const selectAllProductsWithTags = createSelector(
             state.currencyConversion?.["EUR"].value
           );
         }
-        
+
         if (state.priceRangeType === "") {
           return true;
         } else if (
