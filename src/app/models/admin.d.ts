@@ -1,7 +1,6 @@
 export interface Product {
   id?: string;
   adminId: string;
-  cartId?: string;
   name: string;
   description: string;
   price: number;
@@ -13,7 +12,13 @@ export interface Product {
 
 export interface Cart {
   id: string;
-  adminId: string;
+  userId: string;
+}
+
+export interface UserCart {
+  id: string;
+  cart?: Cart;
+  productId: string;
 }
 
 export interface Tag {
@@ -30,4 +35,24 @@ export interface Category {
 export interface CorrelatedProduct {
   product: Product;
   tags: Tag[];
+}
+
+export interface CurrencyExhangeRates {
+  meta: Meta;
+  data: Data;
+}
+export interface Meta {
+  last_updated_at: string;
+}
+
+export interface Data {
+  EUR: Currency;
+  GBP: Currency;
+  USD: Currency;
+  ZAR: Currency;
+}
+
+export interface Currency {
+  code: string;
+  value: number;
 }

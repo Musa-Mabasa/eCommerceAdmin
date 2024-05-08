@@ -16,6 +16,8 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { provideHttpClient } from "@angular/common/http";
 import { firebase } from "../../environment/environment";
 import { AdminEffects } from "./adminStore/effects";
+import { PreviewEffects } from "./previewStore/effects";
+import { previewFeatureKey, previewReducer } from "./previewStore/reducer";
 
 registerLocaleData(en);
 
@@ -24,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(),
     provideState({ name: adminFeatureKey, reducer: adminReducer }),
-    provideEffects(AdminEffects),
+    provideState({ name: previewFeatureKey, reducer: previewReducer }),
+    provideEffects(AdminEffects, PreviewEffects),
     importProvidersFrom(provideFirebaseApp(() => initializeApp(firebase))),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),

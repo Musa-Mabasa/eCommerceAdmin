@@ -12,12 +12,10 @@ import {
   editProductError,
   getAdminProducts,
   getAdminProductsComplete,
+  getAllTags,
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
-  getProductById,
-  getProductByIdComplete,
-  getProductByIdError,
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
@@ -39,9 +37,10 @@ export interface AdminState {
   allTags: Tag[];
   cart?: Cart;
   productLoadingState: boolean;
+  categoryLoadingState: boolean;
+  tagsLoadingState: boolean;
   addingLoadingState: boolean;
   editLoadingState: boolean;
-  categoryLoadingState: boolean;
   addTagLoadingState: boolean;
   isAuthLoading: boolean;
 }
@@ -55,9 +54,10 @@ const initialState: AdminState = {
   searchTerm: "",
   allTags: [],
   productLoadingState: false,
+  categoryLoadingState: false,
+  tagsLoadingState: false,
   addingLoadingState: false,
   editLoadingState: false,
-  categoryLoadingState: false,
   addTagLoadingState: false,
   isAuthLoading: false,
 };
@@ -73,22 +73,14 @@ export const adminReducer = createReducer(
     adminProducts,
     productLoadingState: false,
   })),
-  on(getProductById, (state) => ({
+  on(getAllTags, (state) => ({
     ...state,
-    productLoadingState: true,
-  })),
-  on(getProductByIdComplete, (state, { product }) => ({
-    ...state,
-    productToEdit: product,
-    productLoadingState: false,
-  })),
-  on(getProductByIdError, (state) => ({
-    ...state,
-    productLoadingState: false,
+    tagsLoadingState: true,
   })),
   on(getAllTagsComplete, (state, { allTags }) => ({
     ...state,
     allTags,
+    tagsLoadingState: false,
   })),
   on(getCategories, (state) => ({
     ...state,
@@ -123,11 +115,19 @@ export const adminReducer = createReducer(
     ...state,
     addingLoadingState: false,
   })),
+  on(addProductError, (state) => ({
+    ...state,
+    addingLoadingState: false,
+  })),
   on(editProduct, (state) => ({
     ...state,
     editLoadingState: true,
   })),
   on(editProductComplete, (state) => ({
+    ...state,
+    editLoadingState: false,
+  })),
+  on(editProductError, (state) => ({
     ...state,
     editLoadingState: false,
   })),

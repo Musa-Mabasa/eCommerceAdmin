@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
 import {
+  selectAdminProductsLoading,
   selectAdminProductsWithTags,
   selectCategories,
   selectFilterBy,
@@ -30,6 +31,11 @@ import {
 import { getCookie } from "../../utils/utils";
 import { Subscription } from "rxjs";
 import { Product } from "../../models/admin";
+import { AdminProductsSkeletonComponent } from "../skeletons/admin-products-skeleton/admin-products-skeleton.component";
+import {
+  selectCurrency,
+  selectCurrencyConversion,
+} from "../../previewStore/selectors";
 
 @Component({
   selector: "app-admin-products",
@@ -37,7 +43,13 @@ import { Product } from "../../models/admin";
   templateUrl: "./admin-products.component.html",
   styleUrl: "./admin-products.component.scss",
   viewProviders: [provideIcons({ matPlus, matSort, matCheck, matDelete })],
-  imports: [NgIconComponent, ProductCardComponent, NgIf, AsyncPipe],
+  imports: [
+    NgIconComponent,
+    ProductCardComponent,
+    NgIf,
+    AsyncPipe,
+    AdminProductsSkeletonComponent,
+  ],
 })
 export class AdminProductsComponent {
   router = inject(Router);
@@ -46,8 +58,10 @@ export class AdminProductsComponent {
   myProducts$ = this.store.select(selectAdminProductsWithTags);
   filterBy$ = this.store.select(selectFilterBy);
   sortBy$ = this.store.select(selectSortBy);
-  subscription: undefined | Subscription;
+  isLoading$ = this.store.select(selectAdminProductsLoading);
   productToDeleteId: string | undefined;
+  conversionData$ = this.store.select(selectCurrencyConversion);
+  userCurrency$ = this.store.select(selectCurrency);
 
   constructor() {
     this.store.dispatch(getAdminProducts({ adminId: getCookie("userId") }));

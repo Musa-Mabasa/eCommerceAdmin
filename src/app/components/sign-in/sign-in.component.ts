@@ -90,7 +90,7 @@ export class SignInComponent implements OnInit {
   }
 
   byGoogle(): void {
-    this._service.byGoogle();
+    this._service.byGoogle(true);
   }
 
   byForm(): void {

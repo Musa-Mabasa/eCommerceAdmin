@@ -61,9 +61,16 @@
           ><ng-icon name="matEdit" class="text-lg text-whiteSmoke"
         /></span>
         <img
+          *ngIf="(product$ | async)?.imageUrl"
           class="rounded-xl grid w-full h-56 object-cover place-items-center"
           [src]="(product$ | async)?.imageUrl"
-          [alt]="(product$ | async)?.name"
+          [alt]="(product$ | async)?.name ?? 'Product Image'"
+        />
+        <img
+          *ngIf="!(product$ | async)?.imageUrl"
+          class="rounded-xl grid w-full h-56 object-cover place-items-center"
+          src="../../../assets/images/placeholderImage.webp"
+          [alt]="(product$ | async)?.name ?? 'Product Image'"
         />
       </div>
       <div
@@ -168,7 +175,7 @@
             class="select select-bordered bg-edit-input-color w-full border border-primary-color"
             formControlName="currency"
           >
-            <option selected value="ZAR">ZAR</option>
+            <option value="ZAR">ZAR</option>
             <option value="GBP">GBP</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>

@@ -2,10 +2,11 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AdminState, adminFeatureKey } from "./reducer";
 import { Category, CorrelatedProduct } from "../models/admin";
 
-export const selectFeature = createFeatureSelector<AdminState>(adminFeatureKey);
+export const adminSelectFeature =
+  createFeatureSelector<AdminState>(adminFeatureKey);
 
 export const selectAdminProductsWithTags = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state): CorrelatedProduct[] => {
     if (!(state.adminProducts && state.allTags)) {
       return [];
@@ -45,7 +46,7 @@ export const selectAdminProductsWithTags = createSelector(
   }
 );
 
-export const selectCategories = createSelector(selectFeature, (state) => {
+export const selectCategories = createSelector(adminSelectFeature, (state) => {
   const newCategories = [
     ...state.categories.filter(({ name }) => name === "All Products"),
     ...state.categories.filter(({ name }) => name !== "All Products"),
@@ -53,63 +54,60 @@ export const selectCategories = createSelector(selectFeature, (state) => {
   return newCategories;
 });
 
-export const selectAllProductsWithTags = createSelector(
-  selectFeature,
-  (state): CorrelatedProduct[] => {
-    if (!(state.allProducts && state.allTags)) {
-      return [];
-    }
-
-    return state.allProducts.map((product) => {
-      const tags = state.allTags.filter((tag) => tag.productId == product.id);
-      return { product, tags };
-    });
-  }
-);
-
 export const selectFilterBy = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.filterBy
 );
 
 export const selectSortBy = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.sortBy
 );
 
 export const selectProductToEdit = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.productToEdit
 );
 
-export const selectCart = createSelector(selectFeature, (state) => state.cart);
+export const selectCart = createSelector(
+  adminSelectFeature,
+  (state) => state.cart
+);
 
 export const selectProductLoadingState = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.productLoadingState
 );
 
 export const selectAddLoadingState = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.addingLoadingState
 );
 
 export const selectEditLoadingState = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.editLoadingState
 );
 
 export const selectCategoriesLoadingState = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.categoryLoadingState
 );
 
 export const selectTagsLoadingState = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.addTagLoadingState
 );
 
 export const selectIsAuthLoading = createSelector(
-  selectFeature,
+  adminSelectFeature,
   (state) => state.isAuthLoading
+);
+
+export const selectAdminProductsLoading = createSelector(
+  adminSelectFeature,
+  (state) =>
+    state.productLoadingState ||
+    state.categoryLoadingState ||
+    state.tagsLoadingState
 );

@@ -44,3 +44,8 @@ export function setUserProfile(result: UserCredential) {
 
   if (result.user.email) setCookie("email", result.user.email);
 }
+
+export function getPrice(baseValue?: number, conversionRate?: number) {
+  if (baseValue && conversionRate) return Number(baseValue * conversionRate);
+  else return baseValue;
+}

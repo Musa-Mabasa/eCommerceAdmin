@@ -1,18 +1,28 @@
 <section
   class="flex flex-col justify-center items-center w-full h-fit px-6 pt-20 pb-10"
 >
-  <p class="text-6xl font-medium font-rubik text-center">Your Number One</p>
-  <p class="text-6xl font-medium font-rubik text-center">
+  <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">Your Number One</p>
+  <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">
     Go-To <span class="text-secondary-color">Store</span>.
   </p>
-  <p class="font-rubik">We offer a wide range of products from end to end.</p>
+  <p class="font-rubik text-center">
+    We offer a wide range of products from end to end.
+  </p>
 </section>
 <section class="px-6 flex flex-col items-center">
+  @if(isLoading$ | async){
+  <app-all-products-skeleton class="flex flex-col w-full items-center" />
+  }@else {
   <div class="flex">
     <label
       class="input input-bordered pr-6 mr-0 sm:w-96 rounded-none bg-search-color flex items-center justify-between"
     >
-      <input type="text" class="w-4/5" placeholder="Search Products..." />
+      <input
+        type="text"
+        class="w-4/5"
+        placeholder="Search Products..."
+        (input)="onSearch($event)"
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -42,11 +52,14 @@
         <div class="flex flex-col gap-3 w-full">
           <div class="flex flex-col gap-2">
             <p>Category</p>
-            <select class="select w-full bg-edit-input-color">
-              <option disabled selected>Select a Category</option>
-              <option>Tech</option>
-              <option>Shoes</option>
-              <option>Clothes</option>
+            <select
+              class="select w-full bg-edit-input-color"
+              [formControl]="selectedCategory"
+              (change)="selectCategory()"
+            >
+              @for (category of (categories$ | async); track category) {
+              <option [value]="category.name">{{ category.name }}</option>
+              }
             </select>
           </div>
           <div class="flex flex-col gap-2 overflow-auto">
@@ -54,19 +67,20 @@
             <div
               class="flex items-center gap-4 w-full pb-5 font-rubik font-light text-nowrap overflow-auto"
             >
-              @for(tag of tags; track tag){ @if(selectedTags.includes(tag)){
+              @for(tag of (tags$ | async); track tag){ @if((selectedTags$ |
+              async)?.includes(tag.name)){
               <div
-                (click)="selectedTags.splice(selectedTags.indexOf(tag), 1)"
+                (click)="removeFromSelectedTags(tag.name)"
                 class="badge bg-primary-color text-black cursor-pointer px-3 py-4 font-rubik"
               >
-                {{ tag }}
+                {{ tag.name }}
               </div>
               } @else{
               <div
-                (click)="selectedTags.push(tag)"
+                (click)="addToSelectedTags(tag.name)"
                 class="badge badge-outline cursor-pointer px-3 py-4 font-rubik"
               >
-                {{ tag }}
+                {{ tag.name }}
               </div>
               } }
             </div>
@@ -91,10 +105,14 @@
               } }
             </div>
             <input
-              *ngIf="selectedPriceRangeType !== 'Between'"
+              *ngIf="
+                selectedPriceRangeType !== 'Between' &&
+                selectedPriceRangeType !== 'None'
+              "
               type="number"
-              [placeholder]="userCurrency"
+              [placeholder]="userCurrency$ | async"
               class="input input-bordered bg-edit-input-color w-24 h-9"
+              [formControl]="lowerBoundPrice"
             />
             <div
               *ngIf="selectedPriceRangeType === 'Between'"
@@ -102,20 +120,22 @@
             >
               <input
                 type="number"
-                [placeholder]="userCurrency"
+                [placeholder]="userCurrency$ | async"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
+                [formControl]="lowerBoundPrice"
               />
               <ng-icon name="matArrowForwardOutline" class="text-2xl" />
               <input
                 type="number"
-                [placeholder]="userCurrency"
+                [placeholder]="userCurrency$ | async"
                 class="input input-bordered bg-edit-input-color w-24 h-9"
+                [formControl]="upperBoundPrice"
               />
             </div>
           </div>
         </div>
         <button
-          (click)="(userCurrency === 'GBP')"
+          (click)="confirmFilters()"
           class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
         >
           Done
@@ -123,13 +143,25 @@
       </div>
     </div>
   </div>
-  <div
-    class="py-8 w-full grid gap-6 grid-cols-1 sm:grid-cols-2 min-[900px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
-  >
-    <app-preview-card class="w-72" (onClick)="routeToProduct($event);" />
-    <app-preview-card class="w-72" />
-    <app-preview-card class="w-72" />
-    <app-preview-card class="w-72" />
-    <app-preview-card class="w-72" />
+  @if (!(allProducts$ | async)?.length){
+  <div class="grow flex flex-col justify-center items-center h-56">
+    <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
+    <p class="text-lg font-semibold">No products found</p>
   </div>
+  } @else {
+  <div
+    class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
+  >
+    @for(product of (allProducts$ | async); track product){
+    <app-preview-card
+      [product]="product"
+      class="w-72"
+      (onClick)="routeToProduct($event)"
+      (onAddToCart)="addProductToCart($event)"
+      [conversionData]="conversionData$ | async"
+      [userCurrency]="userCurrency$ | async"
+    />
+    }
+  </div>
+  } }
 </section>

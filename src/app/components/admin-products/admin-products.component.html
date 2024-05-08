@@ -34,6 +34,9 @@
   </div>
 </section>
 <section class="px-6 py-4 h-auto">
+  @if(isLoading$ | async){
+  <app-admin-products-skeleton />
+  }@else {
   <div class="flex">
     <div
       class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
@@ -101,19 +104,20 @@
       class="w-72"
       (editOnClick)="routeToEdit($event)"
       (deleteOnClick)="setProductToDelete($event)"
+      [conversionData]="conversionData$ | async"
+      [userCurrency]="userCurrency$ | async"
     />
     }
   </div>
-  }
-  <dialog id="my_modal_1" class="modal">
+  } }
+  <dialog id="my_modal_1" class="modal max-w-full">
     <div class="modal-box bg-search-color">
-      <h3 class="font-bold text-lg">Permantly Delete Product?</h3>
+      <h3 class="font-bold text-lg">Permantly Delete Product</h3>
       <p class="py-4">
         Are you sure you want to permanently delete the product?
       </p>
       <div class="modal-action">
         <form method="dialog" class="flex gap-4">
-          <!-- if there is a button in form, it will close the modal -->
           <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
             Close
           </button>

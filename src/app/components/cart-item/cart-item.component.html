@@ -1,0 +1,63 @@
+<div class="flex flex-col justify-between w-full sm:flex-row">
+  <div class="flex gap-4">
+    <img
+      *ngIf="product?.imageUrl"
+      [src]="product?.imageUrl"
+      [alt]="product?.name"
+      class="w-20 h-20 object-cover rounded-lg"
+    />
+    <img
+      *ngIf="!product?.imageUrl"
+      src="../../../assets/images/placeholderImage.webp"
+      [alt]="product?.name"
+      class="w-20 h-20 object-cover rounded-lg"
+    />
+    <div class="flex flex-col gap-1">
+      <h1 class="text-lg">{{ product?.name }}</h1>
+      <div class="flex">
+        @if(userCurrency){ @switch (product?.currency) { @case ('EUR') {
+        <p>
+          {{
+            product?.price
+              | currencyConversion : conversionData?.EUR?.value
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        } @case ('ZAR') {
+        <p>
+          {{
+            product?.price
+              | currencyConversion : conversionData?.ZAR?.value
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        } @case ('GBP') {
+        <p>
+          {{
+            product?.price
+              | currencyConversion : conversionData?.GBP?.value
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        } @case ('USD') {
+        <p *ngIf="product?.currency === 'USD'">
+          {{
+            product?.price
+              | currencyConversion : conversionData?.USD?.value
+              | currency : userCurrency : "symbol-narrow"
+          }}
+        </p>
+        } } }
+        <div class="divider divider-horizontal mx-1"></div>
+        <p *ngIf="product?.quantity != 0" class="text-green">In Stock</p>
+        <p *ngIf="product?.quantity == 0" class="text-red">Out of Stock</p>
+      </div>
+    </div>
+  </div>
+  <button
+    class="btn btn-ghost font-normal w-fit flex justify-start p-0"
+    (click)="onDelete.emit(product?.id)"
+  >
+    <ng-icon name="matDelete" />Delete
+  </button>
+</div>
