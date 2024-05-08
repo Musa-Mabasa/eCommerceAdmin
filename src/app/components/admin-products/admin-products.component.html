@@ -1,8 +1,8 @@
-<section class="flex justify-between gap-4 items-center w-full px-6 py-10">
+<section class="flex flex-col items-start sm:flex-row justify-between gap-4 sm:items-center w-full px-6 py-10">
   <h1 class="text-2xl font-semibold font-rubik text-nowrap">My Products</h1>
   <div class="flex">
     <label
-      class="input input-bordered mr-0 w-32 sm:w-64 lg:w-80 xl:w-96 rounded-3xl bg-search-color flex items-center justify-between"
+      class="input input-bordered mr-0 w-36 sm:w-64 lg:w-80 xl:w-96 rounded-3xl bg-search-color flex items-center justify-between"
     >
       <input
         type="text"
@@ -26,7 +26,7 @@
     <div class="divider divider-horizontal"></div>
     <button
       (click)="router.navigate(['home/add-product'])"
-      class="w-28 sm:w-52 lg:w-52 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+      class="w-28 sm:w-40 btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
     >
       Add <span class="hidden sm:block">Product</span>
       <ng-icon name="matPlus" class="text-2xl" />
