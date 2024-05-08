@@ -201,7 +201,7 @@ export class PreviewEffects {
             this.notification.create(
               "error",
               "Failed to get currency info",
-              "Currency information failed to fetch."
+              err.message
             );
             return EMPTY;
           })

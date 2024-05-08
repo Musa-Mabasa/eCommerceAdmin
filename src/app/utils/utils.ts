@@ -45,7 +45,19 @@ export function setUserProfile(result: UserCredential) {
   if (result.user.email) setCookie("email", result.user.email);
 }
 
-export function getPrice(baseValue?: number, conversionRate?: number) {
+export function convertFromCurrency(
+  baseValue?: number,
+  conversionRate?: number
+) {
   if (baseValue && conversionRate) return Number(baseValue * conversionRate);
+  else return baseValue;
+}
+
+export function convertToCurrency(
+  baseValue: number,
+  conversionRate: number | undefined
+) {
+  if (baseValue && conversionRate)
+    return Number((baseValue / conversionRate).toFixed(2));
   else return baseValue;
 }

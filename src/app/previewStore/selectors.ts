@@ -1,7 +1,8 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { PreviewState, previewFeatureKey } from "./reducer";
 import { CorrelatedProduct, Product, UserCart } from "../models/admin";
-import { getPrice } from "../utils/utils";
+import { convertFromCurrency, convertToCurrency } from "../utils/utils";
+import { retry } from "rxjs";
 
 export const previewSelectFeature =
   createFeatureSelector<PreviewState>(previewFeatureKey);
@@ -49,45 +50,45 @@ export const selectAllProductsWithTags = createSelector(
 
         switch (product.product.currency) {
           case "ZAR":
-            lowerBoundPrice = getPrice(
+            lowerBoundPrice = convertFromCurrency(
               state.lowerPriceBound,
               state.currencyConversion?.["ZAR"].value
             );
 
-            upperBoundPrice = getPrice(
+            upperBoundPrice = convertFromCurrency(
               state.upperPriceBound,
               state.currencyConversion?.["ZAR"].value
             );
             break;
           case "USD":
-            lowerBoundPrice = getPrice(
+            lowerBoundPrice = convertFromCurrency(
               state.lowerPriceBound,
               state.currencyConversion?.["USD"].value
             );
 
-            upperBoundPrice = getPrice(
+            upperBoundPrice = convertFromCurrency(
               state.upperPriceBound,
               state.currencyConversion?.["USD"].value
             );
             break;
           case "GBP":
-            lowerBoundPrice = getPrice(
+            lowerBoundPrice = convertFromCurrency(
               state.lowerPriceBound,
               state.currencyConversion?.["GBP"].value
             );
 
-            upperBoundPrice = getPrice(
+            upperBoundPrice = convertFromCurrency(
               state.upperPriceBound,
               state.currencyConversion?.["GBP"].value
             );
             break;
           case "EUR":
-            lowerBoundPrice = getPrice(
+            lowerBoundPrice = convertFromCurrency(
               state.lowerPriceBound,
               state.currencyConversion?.["EUR"].value
             );
 
-            upperBoundPrice = getPrice(
+            upperBoundPrice = convertFromCurrency(
               state.upperPriceBound,
               state.currencyConversion?.["EUR"].value
             );
@@ -96,42 +97,42 @@ export const selectAllProductsWithTags = createSelector(
         }
 
         if (product.product.currency === "ZAR") {
-          lowerBoundPrice = getPrice(
+          lowerBoundPrice = convertFromCurrency(
             state.lowerPriceBound,
             state.currencyConversion?.["ZAR"].value
           );
 
-          upperBoundPrice = getPrice(
+          upperBoundPrice = convertFromCurrency(
             state.upperPriceBound,
             state.currencyConversion?.["ZAR"].value
           );
         } else if (product.product.currency === "USD") {
-          lowerBoundPrice = getPrice(
+          lowerBoundPrice = convertFromCurrency(
             state.lowerPriceBound,
             state.currencyConversion?.["USD"].value
           );
 
-          upperBoundPrice = getPrice(
+          upperBoundPrice = convertFromCurrency(
             state.upperPriceBound,
             state.currencyConversion?.["USD"].value
           );
         } else if (product.product.currency === "GBP") {
-          lowerBoundPrice = getPrice(
+          lowerBoundPrice = convertFromCurrency(
             state.lowerPriceBound,
             state.currencyConversion?.["GBP"].value
           );
 
-          upperBoundPrice = getPrice(
+          upperBoundPrice = convertFromCurrency(
             state.upperPriceBound,
             state.currencyConversion?.["GBP"].value
           );
         } else if (product.product.currency === "EUR") {
-          lowerBoundPrice = getPrice(
+          lowerBoundPrice = convertFromCurrency(
             state.lowerPriceBound,
             state.currencyConversion?.["EUR"].value
           );
 
-          upperBoundPrice = getPrice(
+          upperBoundPrice = convertFromCurrency(
             state.upperPriceBound,
             state.currencyConversion?.["EUR"].value
           );
@@ -218,6 +219,40 @@ export const selectUserCartProducts = createSelector(
     state.allProducts.filter((product) =>
       state.userCarts?.some((userCart) => userCart.productId === product.id)
     )
+);
+
+export const selectCartTotal = createSelector(
+  previewSelectFeature,
+  selectUserCartProducts,
+  (state, cartProducts) => {
+    let cartTotal = 0;
+    for (const product of cartProducts) {
+      if (product.currency === "EUR" && product.quantity > 0) {
+        cartTotal += convertToCurrency(
+          product.price,
+          state.currencyConversion?.["EUR"].value
+        );
+      } else if (product.currency === "ZAR" && product.quantity > 0) {
+        cartTotal += convertToCurrency(
+          product.price,
+          state.currencyConversion?.["ZAR"].value
+        );
+      }
+      else if (product.currency === "GBP" && product.quantity > 0) {
+        cartTotal += convertToCurrency(
+          product.price,
+          state.currencyConversion?.["GBP"].value
+        );
+      }
+      else if (product.currency === "USD" && product.quantity > 0) {
+        cartTotal += convertToCurrency(
+          product.price,
+          state.currencyConversion?.["USD"].value
+        );
+      }
+    }
+    return cartTotal;
+  }
 );
 
 export const selectCorrelatedProducts = createSelector(

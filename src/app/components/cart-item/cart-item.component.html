@@ -16,7 +16,7 @@
       <h1 class="text-lg">{{ product?.name }}</h1>
       <div class="flex">
         @if(userCurrency){ @switch (product?.currency) { @case ('EUR') {
-        <p>
+        <p class="min-w-7">
           {{
             product?.price
               | currencyConversion : conversionData?.EUR?.value
@@ -24,7 +24,7 @@
           }}
         </p>
         } @case ('ZAR') {
-        <p>
+        <p class="min-w-7">
           {{
             product?.price
               | currencyConversion : conversionData?.ZAR?.value
@@ -32,7 +32,7 @@
           }}
         </p>
         } @case ('GBP') {
-        <p>
+        <p class="min-w-7">
           {{
             product?.price
               | currencyConversion : conversionData?.GBP?.value
@@ -40,7 +40,7 @@
           }}
         </p>
         } @case ('USD') {
-        <p *ngIf="product?.currency === 'USD'">
+        <p class="min-w-7">
           {{
             product?.price
               | currencyConversion : conversionData?.USD?.value

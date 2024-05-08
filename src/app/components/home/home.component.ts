@@ -26,6 +26,7 @@ import { Store } from "@ngrx/store";
 import { PreviewState } from "../../previewStore/reducer";
 import {
   selectCart,
+  selectCartTotal,
   selectCurrency,
   selectCurrencyConversion,
   selectUserCartProducts,
@@ -79,6 +80,7 @@ export class HomeComponent {
   cartProducts$ = this.store.select(selectUserCartProducts);
   conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
+  cartTotal$ = this.store.select(selectCartTotal);
   userCurrency = "";
   cartId = "";
   cartTotal = 0;
@@ -102,35 +104,6 @@ export class HomeComponent {
       .subscribe((conversionData) => {
         this.conversionData = conversionData;
       });
-
-    this.cartProducts$.pipe(takeUntilDestroyed()).subscribe((products) => {
-      this.cartTotal = 0;
-      for (const product of products) {
-        if (product.currency === "EUR" && product.quantity > 0) {
-          this.cartTotal += this.getPrice(
-            product.price,
-            this.conversionData?.["EUR"].value
-          );
-        } else if (product.currency === "ZAR" && product.quantity > 0) {
-          this.cartTotal += this.getPrice(
-            product.price,
-            this.conversionData?.["ZAR"].value
-          );
-        }
-        if (product.currency === "GBP" && product.quantity > 0) {
-          this.cartTotal += this.getPrice(
-            product.price,
-            this.conversionData?.["GBP"].value
-          );
-        }
-        if (product.currency === "USD" && product.quantity > 0) {
-          this.cartTotal += this.getPrice(
-            product.price,
-            this.conversionData?.["USD"].value
-          );
-        }
-      }
-    });
 
     this.userCurrency$
       .pipe(takeUntilDestroyed())

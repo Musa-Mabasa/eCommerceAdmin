@@ -40,7 +40,7 @@
           </div>
           <ul
             tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-72 sm:w-[500px] "
+            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-72 sm:w-[500px]"
           >
             <p class="text-xl font-normal px-2">Cart</p>
             <div class="divider mt-3 mb-1"></div>
@@ -59,7 +59,11 @@
               <div class="flex justify-between px-2 py-8">
                 <p class="font-medium">Subtotal</p>
                 <p *ngIf="userCurrency$ | async">
-                  {{ cartTotal | currency : userCurrency : "symbol-narrow" }}
+                  {{
+                    cartTotal$
+                      | async
+                      | currency : userCurrency : "symbol-narrow"
+                  }}
                 </p>
               </div>
             </div>
