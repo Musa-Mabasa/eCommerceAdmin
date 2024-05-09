@@ -37,7 +37,7 @@
         <p>Product Name</p>
         <input
           type="text"
-          class="input bg-edit-input-color w-full border border-primary-color"
+          class="input bg-edit-input-color w-full border focus:border-primary-color"
           formControlName="name"
         />
       </div>
@@ -45,7 +45,7 @@
         <p>Product Description</p>
         <textarea
           row="5"
-          class="input py-2 px-4 bg-edit-input-color w-full h-40 border border-primary-color"
+          class="input py-2 px-4 bg-edit-input-color w-full h-40 border focus:border-primary-color"
           formControlName="description"
         ></textarea>
       </div>
@@ -155,7 +155,7 @@
             name="price"
             [value]="(product$ | async)?.price"
             step="0.01"
-            class="input bg-edit-input-color w-full border border-primary-color"
+            class="input bg-edit-input-color w-full border focus:border-primary-color"
             formControlName="price"
           />
         </div>
@@ -165,14 +165,14 @@
             type="number"
             name="quantity"
             [value]="(product$ | async)?.quantity"
-            class="input bg-edit-input-color w-full border border-primary-color"
+            class="input bg-edit-input-color w-full border focus:border-primary-color"
             formControlName="quantity"
           />
         </div>
         <div class="flex flex-col gap-2">
           <p>Currency</p>
           <select
-            class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+            class="select select-bordered bg-edit-input-color w-full border focus:border-primary-color"
             formControlName="currency"
           >
             <option value="ZAR">ZAR</option>
@@ -190,22 +190,19 @@
       <div class="flex flex-col gap-2">
         <p>Category</p>
         <div
-          class="h-12 rounded-lg py-2 px-3 text-base bg-edit-input-color w-full border border-primary-color"
+          class="h-12 rounded-lg py-2 px-3 text-base bg-edit-input-color w-full border focus:border-primary-color"
         >
           {{ (product$ | async)?.category }}
         </div>
       </div>
       <div class="flex flex-col gap-2">
         <p>Tags</p>
-        <div class="indicator w-full">
-          <span class="indicator-item text-red text-lg h-fit top-1">*</span>
-          <input
-            type="text"
-            placeholder="Enter tag..."
-            class="input bg-edit-input-color w-full border border-primary-color"
-            formControlName="tag"
-          />
-        </div>
+        <input
+          type="text"
+          placeholder="Enter tag..."
+          class="input bg-edit-input-color w-full border focus:border-primary-color"
+          formControlName="tag"
+        />
       </div>
       <button
         class="w-40 sm:w-44 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
