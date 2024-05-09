@@ -237,14 +237,12 @@ export const selectCartTotal = createSelector(
           product.price,
           state.currencyConversion?.["ZAR"].value
         );
-      }
-      else if (product.currency === "GBP" && product.quantity > 0) {
+      } else if (product.currency === "GBP" && product.quantity > 0) {
         cartTotal += convertToCurrency(
           product.price,
           state.currencyConversion?.["GBP"].value
         );
-      }
-      else if (product.currency === "USD" && product.quantity > 0) {
+      } else if (product.currency === "USD" && product.quantity > 0) {
         cartTotal += convertToCurrency(
           product.price,
           state.currencyConversion?.["USD"].value

@@ -14,40 +14,65 @@ import { PreviewProductComponent } from "./components/preview-product/preview-pr
 export const routes: Routes = [
   {
     path: "login",
-    component: LoginComponent,
+    loadComponent: () =>
+      import("./components/login/login.component").then(
+        (m) => m.LoginComponent
+      ),
   },
   {
     path: "sign-up",
-    component: SignInComponent,
+    loadComponent: () =>
+      import("./components/sign-in/sign-in.component").then(
+        (m) => m.SignInComponent
+      ),
   },
   {
     path: "reset",
-    component: ResetPasswordComponent,
+    loadComponent: () =>
+      import("./components/reset-password/reset-password.component").then(
+        (m) => m.ResetPasswordComponent
+      ),
   },
   {
     path: "home",
-    component: HomeComponent,
+    loadComponent: () =>
+      import("./components/home/home.component").then((m) => m.HomeComponent),
     canActivate: [authGuard],
     children: [
       {
         path: "admin-products",
-        component: AdminProductsComponent,
+        loadComponent: () =>
+          import("./components/admin-products/admin-products.component").then(
+            (m) => m.AdminProductsComponent
+          ),
       },
       {
         path: "edit-product/:product-id",
-        component: EditProductComponent,
+        loadComponent: () =>
+          import("./components/edit-product/edit-product.component").then(
+            (m) => m.EditProductComponent
+          ),
       },
       {
         path: "add-product",
-        component: AddProductComponent,
+        loadComponent: () =>
+          import("./components/add-product/add-product.component").then(
+            (m) => m.AddProductComponent
+          ),
       },
       {
         path: "all-products",
-        component: AllProductsComponent,
+        loadComponent: () =>
+          import("./components/all-products/all-products.component").then(
+            (m) => m.AllProductsComponent
+          ),
       },
       {
         path: "preview-product/:product-id",
-        component: PreviewProductComponent,
+        loadComponent: () =>
+          import("./components/preview-product/preview-product.component").then(
+            (m) => m.PreviewProductComponent
+          ),
       },
     ],
   },
@@ -58,6 +83,9 @@ export const routes: Routes = [
   },
   {
     path: "**",
-    component: RouteErrorComponent,
+    loadComponent: () =>
+      import("./components/route-error/route-error.component").then(
+        (m) => m.RouteErrorComponent
+      ),
   },
 ];
