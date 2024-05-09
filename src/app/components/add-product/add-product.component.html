@@ -163,10 +163,13 @@
           <div class="indicator w-full">
             <span class="indicator-item text-red text-lg h-fit top-1">*</span>
             <select
-              class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+              class="select select-bordered bg-edit-input-color w-full border border-primary-color text-base"
               formControlName="currency"
             >
-              <option selected value="ZAR">ZAR</option>
+              <option value="Select a currency" disabled>
+                Select a currency
+              </option>
+              <option value="ZAR">ZAR</option>
               <option value="GBP">GBP</option>
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
@@ -184,10 +187,13 @@
         <div class="indicator w-full">
           <span class="indicator-item text-red text-lg h-fit top-1">*</span>
           <select
-            class="select select-bordered bg-edit-input-color w-full border border-primary-color"
+            class="select select-bordered bg-edit-input-color w-full border border-primary-color text-base"
             formControlName="category"
             [value]="(categories$ | async)?.[1]?.name"
           >
+            <option value="Select a category" disabled>
+              Select a category
+            </option>
             @for(category of (categories$ | async); track category){
             @if(category.name !== "All Products"){
             <option [value]="category.name">{{ category.name }}</option>

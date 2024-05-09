@@ -11,7 +11,7 @@ import {
   matImage,
   matClose,
 } from "@ng-icons/material-icons/baseline";
-import { Product } from "../../models/admin";
+import { Category, Product } from "../../models/admin";
 import { getCookie } from "../../utils/utils";
 import { AdminState } from "../../adminStore/reducer";
 import { Store } from "@ngrx/store";
@@ -20,6 +20,7 @@ import {
   selectAddLoadingState,
   selectCategories,
 } from "../../adminStore/selectors";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-add-product",
@@ -45,9 +46,14 @@ export class AddProductComponent {
   addProductForm: FormGroup | undefined;
   isAdding$ = this.store.select(selectAddLoadingState);
   categories$ = this.store.select(selectCategories);
+  categories?: Category[];
 
   constructor() {
     this.store.dispatch(getCategories());
+
+    this.categories$
+      .pipe(takeUntilDestroyed())
+      .subscribe((categories) => (this.categories = categories));
   }
 
   ngOnInit(): void {
@@ -64,10 +70,10 @@ export class AddProductComponent {
       quantity: new FormControl("0", {
         updateOn: "blur",
       }),
-      currency: new FormControl("ZAR", {
+      currency: new FormControl("Select a currency", {
         updateOn: "blur",
       }),
-      category: new FormControl("", {
+      category: new FormControl("Select a category", {
         updateOn: "change",
       }),
     });
