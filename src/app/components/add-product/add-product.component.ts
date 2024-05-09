@@ -1,6 +1,11 @@
 import { AsyncPipe, NgIf } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
@@ -59,22 +64,28 @@ export class AddProductComponent {
   ngOnInit(): void {
     this.addProductForm = new FormGroup({
       name: new FormControl("", {
-        updateOn: "blur",
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
       description: new FormControl("", {
-        updateOn: "blur",
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
-      price: new FormControl("0", {
-        updateOn: "blur",
+      price: new FormControl("", {
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
-      quantity: new FormControl("0", {
-        updateOn: "blur",
+      quantity: new FormControl("", {
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
       currency: new FormControl("Select a currency", {
-        updateOn: "blur",
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
       category: new FormControl("Select a category", {
-        updateOn: "change",
+        updateOn: "submit",
+        validators: [Validators.required],
       }),
     });
   }
@@ -104,6 +115,7 @@ export class AddProductComponent {
 
   onConfirm() {
     if (this.addProductForm?.invalid) {
+      return;
     }
 
     const { name, description, price, quantity, currency, category } =
