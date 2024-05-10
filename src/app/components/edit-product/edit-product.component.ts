@@ -113,7 +113,7 @@ export class EditProductComponent implements OnInit {
     return this.editProductForm?.get("tag");
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: Event) {
     this.selectedFile = (event?.target as HTMLInputElement)?.files?.[0];
   }
 
