@@ -70,7 +70,6 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
   ],
 })
 export class HomeComponent {
-  [x: string]: any;
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");
