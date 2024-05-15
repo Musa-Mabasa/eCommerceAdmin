@@ -1,3 +1,9 @@
 <div class="h-10 w-full flex items-center justify-between">
   <p>{{ productName }}</p>
+  <progress
+    class="progress progress-accent w-56 h-4"
+    [value]="remaining"
+    max="100"
+  ></progress>
+  <p>{{ quantity }}</p>
 </div>
