@@ -41,7 +41,7 @@
   }@else {
   <div class="flex">
     <div
-      class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto"
+      class="flex items-center gap-4 font-rubik font-light text-nowrap overflow-auto pb-4 sm:pb-0"
     >
       @for (category of (categories$ | async); track category) { @if((filterBy$
       | async) === category.name){
