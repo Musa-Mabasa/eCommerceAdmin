@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { SummaryComponent } from '../summary/summary.component';
+import { Component } from "@angular/core";
+import { SummaryComponent } from "../summary/summary.component";
+import { DashboardOrdersComponent } from "../dashboard-orders/dashboard-orders.component";
 
 @Component({
-  selector: 'app-dashboard',
+  selector: "app-dashboard",
   standalone: true,
-  imports: [SummaryComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  imports: [SummaryComponent, DashboardOrdersComponent],
+  templateUrl: "./dashboard.component.html",
+  styleUrl: "./dashboard.component.scss",
 })
-export class DashboardComponent {
-
-}
+export class DashboardComponent {}
