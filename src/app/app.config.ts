@@ -18,6 +18,11 @@ import { firebase } from "../../environment/environment";
 import { AdminEffects } from "./adminStore/effects";
 import { PreviewEffects } from "./previewStore/effects";
 import { previewFeatureKey, previewReducer } from "./previewStore/reducer";
+import {
+  dashboardFeatureKey,
+  dashboardReducer,
+} from "./dashboardStore/reducer";
+import { DashboardEffects } from "./dashboardStore/effects";
 
 registerLocaleData(en);
 
@@ -27,7 +32,8 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({ name: adminFeatureKey, reducer: adminReducer }),
     provideState({ name: previewFeatureKey, reducer: previewReducer }),
-    provideEffects(AdminEffects, PreviewEffects),
+    provideState({ name: dashboardFeatureKey, reducer: dashboardReducer }),
+    provideEffects(AdminEffects, PreviewEffects, DashboardEffects),
     importProvidersFrom(provideFirebaseApp(() => initializeApp(firebase))),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
@@ -35,6 +41,7 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(en_US),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
-    provideHttpClient(), provideAnimationsAsync('noop'),
+    provideHttpClient(),
+    provideAnimationsAsync("noop"),
   ],
 };

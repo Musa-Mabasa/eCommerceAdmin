@@ -1,10 +1,16 @@
-<div class="h-10 w-full flex items-center justify-between">
-  <div class="flex gap-4 items-center">
+<div class="h-10 w-full gap-10 grid grid-cols-5 items-center">
+  <div class="flex gap-4 items-center col-span-2">
     <div class="avatar w-8 rounded-full">
-      <img [src]="customerAvatar" alt="" class="rounded-full" />
+      <img
+        [src]="customerAvatar"
+        alt=""
+        class="rounded-full"
+        referrerpolicy="no-referrer"
+      />
     </div>
     <p>{{ customerName }}</p>
   </div>
+  <p>{{ orderName }}</p>
   <p>{{ orderDate }}</p>
-  <p>{{ orderTotal | currency : "ZAR" : "symbol-narrow" }}</p>
+  <p>{{ orderPrice | currency : "ZAR" : "symbol-narrow" }}</p>
 </div>

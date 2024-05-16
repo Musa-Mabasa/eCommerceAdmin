@@ -97,12 +97,25 @@ export class PreviewService {
 
   checkOut(userCarts?: UserCart[]) {
     if (!userCarts) return EMPTY;
+    const now = new Date();
+    const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+    });
+    const formattedDate = dateTimeFormatter.format(now);
+    const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    const day = days[now.getDay()];
+    console.log(day);
+    console.log(formattedDate);
+
     for (const userCart of userCarts) {
       from(
         setDoc(doc(collection(this.firestore, "OrderItem")), {
-          customerId: getCookie("userId"),
+          customerName: getCookie("displayName") ?? getCookie("email"),
+          customerAvatar: getCookie("avatar"),
           adminId: userCart.adminId,
           productId: userCart.productId,
+          date: formattedDate,
+          day: day,
         })
           .then(() =>
             this.deleteProductFromCart(userCart.cartId, userCart.productId)

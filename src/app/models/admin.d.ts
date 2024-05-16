@@ -57,3 +57,20 @@ export interface Currency {
   code: string;
   value: number;
 }
+
+export interface OrderItem {
+  id: string;
+  adminId: string;
+  customerAvatar: string;
+  customerName: string;
+  date: string;
+  day: string;
+  productId: string;
+}
+
+export interface CorrelatedOrderItem {
+  orderItem: OrderItem;
+  productName: string;
+  productPrice: number;
+  productCurrency: string;
+}

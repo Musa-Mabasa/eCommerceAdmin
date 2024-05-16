@@ -11,6 +11,8 @@ import { Component, Input } from "@angular/core";
 export class DashboardOrdersComponent {
   @Input() customerName?: string;
   @Input() customerAvatar?: string;
+  @Input() orderName?: string;
   @Input() orderDate?: string;
-  @Input() orderTotal?: number;
+  @Input() orderPrice?: number;
+  @Input() orderCurrency?: string;
 }
