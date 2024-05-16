@@ -13,6 +13,7 @@ import {
   matSettings,
   matExitToApp,
   matCheck,
+  matShoppingCartCheckout,
 } from "@ng-icons/material-icons/baseline";
 import { getCookie } from "../../utils/utils";
 import { AsyncPipe, CurrencyPipe, NgIf } from "@angular/common";
@@ -55,6 +56,7 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
       matNotificationsNoneOutline,
       matShoppingCartOutline,
       matCheck,
+      matShoppingCartCheckout,
     }),
   ],
   imports: [
