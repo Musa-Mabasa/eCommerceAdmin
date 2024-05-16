@@ -35,8 +35,6 @@ export class CountUpDirective implements OnInit {
       // get the time when animation is triggered
       const startTime = animationFrameScheduler.now();
 
-      console.log(count);
-
       return interval(0, animationFrameScheduler).pipe(
         // calculate elapsed time
         map(() => animationFrameScheduler.now() - startTime),
@@ -73,8 +71,6 @@ export class CountUpDirective implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("iniy");
-
     this.displayCurrentCount();
   }
 
