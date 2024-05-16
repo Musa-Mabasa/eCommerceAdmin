@@ -7,7 +7,7 @@
   </div>
   <div class="divider px-4"></div>
   <div class="px-4 flex justify-between">
-    <p class="text-4xl font-medium">{{ count }}</p>
+    <p class="text-4xl font-medium" [countUp]="count" [duration]="4000"></p>
     <div class="flex items-center">
       <ng-icon
         name="matArrowDropUp"
