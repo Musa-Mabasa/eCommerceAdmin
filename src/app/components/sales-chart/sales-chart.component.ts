@@ -77,6 +77,12 @@ export class SalesChartComponent implements OnInit {
             display: true,
             text: "Sales",
             position: "top",
+            font: {
+              weight: 500,
+              size: 20,
+              family: "rubik",
+              style: "normal",
+            },
           },
         },
       },
