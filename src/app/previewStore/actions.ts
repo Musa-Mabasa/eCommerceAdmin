@@ -122,3 +122,12 @@ export const getCurrencyConversionComplete = createAction(
   "[PREVIEW] GetCurrencyConversionComplete",
   props<{ currencyConversion: Data }>()
 );
+
+export const checkoutCart = createAction(
+  "[PREVIEW] CheckoutCart",
+  props<{ userCart: UserCart[] | undefined }>()
+);
+
+export const checkoutCartComplete = createAction(
+  "[PREVIEW] CheckoutCartComplete"
+);

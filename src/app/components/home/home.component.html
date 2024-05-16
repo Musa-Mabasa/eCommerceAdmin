@@ -72,9 +72,18 @@
               </div>
               <button
                 class="btn bg-secondary-color rounded-3xl shadow-xl w-40 text-whiteSmoke my-4 mx-2"
+                (click)="checkout()"
               >
                 Checkout
-                <ng-icon name="matShoppingCartCheckout" class="text-2xl" />
+                <ng-icon
+                  *ngIf="(isCheckingout$ | async) === false"
+                  name="matShoppingCartCheckout"
+                  class="text-2xl"
+                />
+                <span
+                  *ngIf="(isCheckingout$ | async) ?? false"
+                  class="loading loading-spinner loading-sm"
+                ></span>
               </button>
             </div>
           </ul>

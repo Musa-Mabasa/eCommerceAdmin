@@ -213,6 +213,11 @@ export const selectProductToView = createSelector(
   (state) => state.productToView
 );
 
+export const selectUserCart = createSelector(
+  previewSelectFeature,
+  (state) => state.userCarts
+);
+
 export const selectUserCartProducts = createSelector(
   previewSelectFeature,
   (state): Product[] =>
@@ -298,4 +303,9 @@ export const selectCurrency = createSelector(
 export const selectCurrencyConversion = createSelector(
   previewSelectFeature,
   (state) => state.currencyConversion
+);
+
+export const selectIsCheckingoutState = createSelector(
+  previewSelectFeature,
+  (state) => state.isCheckingOut
 );

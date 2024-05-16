@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { EMPTY, catchError, map, switchMap } from "rxjs";
-import { CorrelatedProduct } from "../models/admin";
+import { CorrelatedProduct, UserCart } from "../models/admin";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { PreviewService } from "../services/preview.service";
 import {
   addProductToCart,
   addProductToCartComplete,
+  checkoutCart,
+  checkoutCartComplete,
   deleteProductFromCart,
   deleteProductFromCartComplete,
   getAllProducts,
@@ -201,6 +203,25 @@ export class PreviewEffects {
             this.notification.create(
               "error",
               "Failed to get currency info",
+              err.message
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  checkoutCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkoutCart.type),
+      switchMap(({ userCart }: { userCart: UserCart[] }) =>
+        this.previewService.checkOut(userCart).pipe(
+          map(() => checkoutCartComplete()),
+          catchError((err) => {
+            this.notification.create(
+              "error",
+              "Failed to checkout",
               err.message
             );
             return EMPTY;

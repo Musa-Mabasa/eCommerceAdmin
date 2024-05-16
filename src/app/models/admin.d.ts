@@ -17,8 +17,9 @@ export interface Cart {
 
 export interface UserCart {
   id: string;
-  cart?: Cart;
+  cartId: string;
   productId: string;
+  adminId: string;
 }
 
 export interface Tag {

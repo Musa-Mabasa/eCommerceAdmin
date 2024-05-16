@@ -13,7 +13,7 @@ import {
   updateDoc,
   where,
 } from "@angular/fire/firestore";
-import { Observable, from } from "rxjs";
+import { EMPTY, Observable, from } from "rxjs";
 import {
   Cart,
   Category,
@@ -23,6 +23,7 @@ import {
   UserCart,
 } from "../models/admin";
 import { user } from "@angular/fire/auth";
+import { getCookie } from "../utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -74,6 +75,7 @@ export class PreviewService {
     return from(
       setDoc(doc(collection(this.firestore, "UserCart")), {
         cartId,
+        adminId: product.product.adminId,
         productId: product.product.id,
       }).catch((err) => Error(err.message))
     );
@@ -91,5 +93,23 @@ export class PreviewService {
         docs.forEach((doc) => deleteDoc(doc.ref))
       )
     );
+  }
+
+  checkOut(userCarts?: UserCart[]) {
+    if (!userCarts) return EMPTY;
+    for (const userCart of userCarts) {
+      from(
+        setDoc(doc(collection(this.firestore, "OrderItem")), {
+          customerId: getCookie("userId"),
+          adminId: userCart.adminId,
+          productId: userCart.productId,
+        })
+          .then(() =>
+            this.deleteProductFromCart(userCart.cartId, userCart.productId)
+          )
+          .catch((err) => Error(err.message))
+      );
+    }
+    return EMPTY;
   }
 }

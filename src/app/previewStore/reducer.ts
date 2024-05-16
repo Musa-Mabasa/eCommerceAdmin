@@ -28,6 +28,8 @@ import {
   setProductToView,
   setCurrency,
   getCurrencyConversionComplete,
+  checkoutCart,
+  checkoutCartComplete,
 } from "./actions";
 
 export const previewFeatureKey = "preview";
@@ -42,6 +44,7 @@ export interface PreviewState {
   productsLoadingState: boolean;
   categoriesLoadingState: boolean;
   tagsLoadingState: boolean;
+  isCheckingOut: boolean;
   selectedCategory: string;
   selectedTags: string[];
   priceRangeType: string;
@@ -59,6 +62,7 @@ const initialState: PreviewState = {
   productsLoadingState: false,
   categoriesLoadingState: false,
   tagsLoadingState: false,
+  isCheckingOut: false,
   selectedCategory: "All Products",
   selectedTags: [],
   priceRangeType: "",
@@ -149,6 +153,14 @@ export const previewReducer = createReducer(
   on(getCurrencyConversionComplete, (state, { currencyConversion }) => ({
     ...state,
     currencyConversion,
+  })),
+  on(checkoutCart, (state) => ({
+    ...state,
+    isCheckingOut: true,
+  })),
+  on(checkoutCartComplete, (state) => ({
+    ...state,
+    isCheckingOut: false,
   }))
 );
 
