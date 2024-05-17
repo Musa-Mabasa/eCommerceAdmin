@@ -1,10 +1,10 @@
-import { CurrencyPipe } from "@angular/common";
+import { CurrencyPipe, NgIf } from "@angular/common";
 import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-dashboard-orders",
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, NgIf],
   templateUrl: "./dashboard-orders.component.html",
   styleUrl: "./dashboard-orders.component.scss",
 })

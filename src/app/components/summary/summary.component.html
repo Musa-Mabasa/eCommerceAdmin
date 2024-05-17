@@ -10,10 +10,17 @@
     <p class="text-4xl font-medium" [countUp]="count" [duration]="4000"></p>
     <div class="flex items-center">
       <ng-icon
+        *ngIf="increase !== undefined"
         name="matArrowDropUp"
         class="text-2xl font-extralight text-green"
       />
-      <p class="font-thin">30%</p>
+      <p *ngIf="increase !== undefined" class="font-thin">{{ increase }}%</p>
+      <ng-icon
+        *ngIf="decrease !== undefined"
+        name="matArrowDropDown"
+        class="text-2xl font-extralight text-red"
+      />
+      <p *ngIf="decrease !== undefined" class="font-thin">{{ decrease }}%</p>
     </div>
   </div>
 </div>

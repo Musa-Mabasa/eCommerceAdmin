@@ -1,14 +1,24 @@
 <div class="h-10 w-full gap-10 grid grid-cols-5 items-center">
   <div class="flex gap-4 items-center col-span-2">
-    <div class="avatar w-8 rounded-full">
+    <div
+      class="avatar min-w-8 h-8 rounded-full bg-secondary-color text-center flex justify-center items-center"
+    >
+      @if(customerAvatar != ''){
       <img
         [src]="customerAvatar"
         alt=""
         class="rounded-full"
         referrerpolicy="no-referrer"
-      />
+      />} @else{
+      <p class="text-center text-white text-lg h-fit w-fit">
+        {{ customerName?.charAt(0)?.toUpperCase() }}
+      </p>
+      }
     </div>
-    <p>{{ customerName }}</p>
+    <p *ngIf="!customerName?.includes('@')">{{ customerName }}</p>
+    <p *ngIf="customerName?.includes('@')">
+      {{ customerName?.substring(0, customerName?.indexOf("@")) }}
+    </p>
   </div>
   <p>{{ orderName }}</p>
   <p>{{ orderDate }}</p>

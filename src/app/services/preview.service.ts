@@ -108,7 +108,10 @@ export class PreviewService {
     for (const userCart of userCarts) {
       from(
         setDoc(doc(collection(this.firestore, "OrderItem")), {
-          customerName: getCookie("displayName") ?? getCookie("email"),
+          customerName:
+            getCookie("displayName") != ""
+              ? getCookie("displayName")
+              : getCookie("email"),
           customerAvatar: getCookie("avatar"),
           adminId: userCart.adminId,
           productId: userCart.productId,

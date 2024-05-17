@@ -8,21 +8,25 @@
         class="grow"
         title="Products Sold"
         [count]="(productsSold$ | async) ?? 0"
+        [increase]="(soldIncrease$ | async) ?? 0"
       />
       <app-summary
         class="grow"
         title="Revenue"
         [count]="(revenue$ | async) ?? 0"
+        [increase]="(revenueIncrease$ | async) ?? 0"
       />
       <app-summary
         class="grow"
         title="Total Customers"
         [count]="(totalCustomers$ | async) ?? 0"
+        [increase]="(totalCustomersIncrease$ | async) ?? 0"
       />
       <app-summary
         class="grow"
         title="Total Quantity"
         [count]="(totalQuantity$ | async) ?? 0"
+        [decrease]="(totalQuantityDecrease$ | async) ?? 0"
       />
     </div>
     <app-sales-chart />

@@ -33,6 +33,24 @@ export const selectProductsSold = createSelector(
   (items) => items?.length ?? 0
 );
 
+export const selectProductsSoldIncrease = createSelector(
+  selectOrderItems,
+  selectProductsSold,
+  (items, sold) => {
+    const today = new Date();
+    const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+    });
+    const formattedDate = dateTimeFormatter.format(today);
+    const todaysOrdersCount =
+      items?.filter((item) => item.orderItem.date == formattedDate).length ?? 0;
+    const previousCount = sold - todaysOrdersCount;
+    if (previousCount === 0) return 0;
+
+    return ((sold - previousCount) / previousCount) * 100;
+  }
+);
+
 export const selectRevenue = createSelector(selectOrderItems, (items) => {
   let revenue = 0;
   if (items)
@@ -42,6 +60,31 @@ export const selectRevenue = createSelector(selectOrderItems, (items) => {
   return revenue;
 });
 
+export const selectRevenueIncrease = createSelector(
+  selectOrderItems,
+  selectRevenue,
+  (items, revenue) => {
+    const today = new Date();
+    const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+    });
+    const formattedDate = dateTimeFormatter.format(today);
+    const yesterdaysOrders = items?.filter(
+      (item) => item.orderItem.date != formattedDate
+    );
+
+    let initialRevenue = 0;
+    if (yesterdaysOrders)
+      for (const order of yesterdaysOrders) {
+        initialRevenue += order.productPrice;
+      }
+
+    if (initialRevenue === 0) return 0;
+
+    return Math.floor(((revenue - initialRevenue) / initialRevenue) * 100);
+  }
+);
+
 export const selectTotalCustomers = createSelector(
   selectOrderItems,
   (items) =>
@@ -49,7 +92,33 @@ export const selectTotalCustomers = createSelector(
       ?.map((item) => item.orderItem.customerName)
       .filter(
         (name, index, currentValue) => currentValue.indexOf(name) === index
-      ).length
+      ).length ?? 0
+);
+
+export const selectTotalCustomersIncrease = createSelector(
+  selectOrderItems,
+  selectTotalCustomers,
+  (items, customers) => {
+    const today = new Date();
+    const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+    });
+    const formattedDate = dateTimeFormatter.format(today);
+
+    const yesterdaysCustomers = items
+      ?.filter((item) => item.orderItem.date != formattedDate)
+      .map((item) => item.orderItem.customerName)
+      .filter(
+        (name, index, currentValue) => currentValue.indexOf(name) === index
+      );
+
+    if (!yesterdaysCustomers?.length) return 0;
+    return Math.floor(
+      ((customers - yesterdaysCustomers?.length) /
+        yesterdaysCustomers?.length) *
+        100
+    );
+  }
 );
 
 export const selectTotalQuantity = createSelector(
@@ -70,12 +139,39 @@ export const selectTotalQuantity = createSelector(
   }
 );
 
+export const selectTotalQuantityDecrease = createSelector(
+  selectTotalQuantity,
+  selectOrderItems,
+  (quantity, items) => {
+    if (!items?.length) return 0;
+
+    const today = new Date();
+    const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+    });
+    const formattedDate = dateTimeFormatter.format(today);
+
+    const todaysOrders =
+      items?.filter((item) => item.orderItem.date == formattedDate).length ?? 0;
+
+    const yesterdaysOrders = quantity + todaysOrders;
+
+    if (yesterdaysOrders === 0) return 0;
+
+    console.log(yesterdaysOrders);
+
+    return Math.floor(((yesterdaysOrders - quantity) / yesterdaysOrders) * 100);
+  }
+);
+
 export const selectStockReport = createSelector(
   adminSelectFeature,
   selectOrderItems,
   (adminState, items): { product: Product; remaining: number | undefined }[] =>
     adminState.adminProducts.map((prod) => {
       if (!items) return { product: prod, remaining: 100 };
+
+      if(prod.quantity === 0) return { product: prod, remaining: 0 }
 
       const itemsOrdered = items?.filter(
         (item) => item.orderItem.productId === prod.id

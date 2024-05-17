@@ -9,11 +9,15 @@ import {
   selectOrderItems,
   selectOrdersLoadingState,
   selectProductsSold,
+  selectProductsSoldIncrease,
   selectRevenue,
+  selectRevenueIncrease,
   selectStockReport,
   selectTopProducts,
   selectTotalCustomers,
+  selectTotalCustomersIncrease,
   selectTotalQuantity,
+  selectTotalQuantityDecrease,
 } from "../../dashboardStore/selectors";
 import { getOrders } from "../../dashboardStore/actions";
 import { AsyncPipe, NgIf } from "@angular/common";
@@ -40,10 +44,14 @@ export class DashboardComponent {
   prodStore = inject(Store<AdminState>);
   orders$ = this.store.select(selectOrderItems);
   productsSold$ = this.store.select(selectProductsSold);
+  soldIncrease$ = this.store.select(selectProductsSoldIncrease);
   revenue$ = this.store.select(selectRevenue);
+  revenueIncrease$ = this.store.select(selectRevenueIncrease);
   loadingState$ = this.store.select(selectOrdersLoadingState);
   totalCustomers$ = this.store.select(selectTotalCustomers);
+  totalCustomersIncrease$ = this.store.select(selectTotalCustomersIncrease);
   totalQuantity$ = this.store.select(selectTotalQuantity);
+  totalQuantityDecrease$ = this.store.select(selectTotalQuantityDecrease);
   stockReport$ = this.store.select(selectStockReport);
   topProducts$ = this.store.select(selectTopProducts);
 
