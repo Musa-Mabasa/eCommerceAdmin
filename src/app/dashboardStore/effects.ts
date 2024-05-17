@@ -19,8 +19,6 @@ export class DashboardEffects {
       switchMap(() =>
         this.dashboardService.getOrders().pipe(
           map((orders) => {
-            console.log(orders);
-
             return getOrdersComplete({ orders });
           }),
           catchError((err) => {

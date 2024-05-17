@@ -1,19 +1,51 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import Chart from "chart.js/auto";
+import { DashboardState } from "../../dashboardStore/reducer";
+import { Store } from "@ngrx/store";
+import {
+  selectLastSevenDays,
+  selectLastSevenDaysSales,
+  selectProductsSold,
+} from "../../dashboardStore/selectors";
+import { AsyncPipe } from "@angular/common";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-sales-chart",
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: "./sales-chart.component.html",
   styleUrl: "./sales-chart.component.scss",
 })
 export class SalesChartComponent implements OnInit {
   chart: any;
+  store = inject(Store<DashboardState>);
+  sevenDays$ = this.store.select(selectLastSevenDays);
+  sevenDaysSales$ = this.store.select(selectLastSevenDaysSales);
+  productsSold$ = this.store.select(selectProductsSold);
+  sevenDays: string[] = [];
+  sevenDaysSales: number[] = [];
+  productsSold: number[] = [];
 
-  ngOnInit(): void {
-    this.createChart();
+  constructor() {
+    this.sevenDays$
+      .pipe(takeUntilDestroyed())
+      .subscribe((days) => (this.sevenDays = days));
+
+    this.sevenDaysSales$.pipe(takeUntilDestroyed()).subscribe((sales) => {
+      this.sevenDaysSales = sales;
+    });
+
+    this.productsSold$.pipe(takeUntilDestroyed()).subscribe((sold) => {
+      this.productsSold = [];
+
+      for (let i = 0; i < 7; i++) this.productsSold.push(sold);
+
+      this.createChart();
+    });
   }
+
+  ngOnInit(): void {}
 
   createChart() {
     this.chart = new Chart("MyChart", {
@@ -21,24 +53,15 @@ export class SalesChartComponent implements OnInit {
 
       data: {
         // values on X-Axis
-        labels: ["Tue", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon"],
+        labels: this.sevenDays,
         datasets: [
           {
-            data: ["467", "576", "572", "79", "92", "574", "573", "576"],
+            data: this.sevenDaysSales,
             backgroundColor: "#01bbab",
             borderRadius: 5,
           },
           {
-            data: [
-              "1000",
-              "1000",
-              "1000",
-              "1000",
-              "1000",
-              "1000",
-              "1000",
-              "1000",
-            ],
+            data: this.productsSold,
             backgroundColor: "lightgrey",
             borderRadius: 5,
           },

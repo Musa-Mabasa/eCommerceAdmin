@@ -15,8 +15,6 @@ export const selectOrderItems = createSelector(
         (products) => products.id === order.productId
       );
 
-      console.log(product);
-
       if (product)
         return {
           orderItem: order,
@@ -28,6 +26,11 @@ export const selectOrderItems = createSelector(
       else return {} as CorrelatedOrderItem;
     });
   }
+);
+
+export const selectProductsSold = createSelector(
+  selectOrderItems,
+  (items) => items?.length ?? 0
 );
 
 export const selectRevenue = createSelector(selectOrderItems, (items) => {
@@ -81,7 +84,6 @@ export const selectStockReport = createSelector(
       if (itemsOrdered > 0) {
         const remaining =
           ((prod.quantity - itemsOrdered) / prod.quantity) * 100;
-        console.log(remaining);
 
         return { product: prod, remaining };
       }
@@ -103,6 +105,46 @@ export const selectTopProducts = createSelector(
       }))
       .sort((a, b) => b.sold - a.sold)
       .slice(0, 6)
+);
+
+export const selectLastSevenDays = createSelector(() => {
+  const today = new Date();
+  const lastSevenDays: string[] = ["Today"];
+  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+
+  for (let i = 1; i < 7; i++) {
+    let now = new Date(today);
+    const date = new Date(now.setDate(now.getDate() - i));
+    const day = days[date.getDay()];
+    lastSevenDays.push(day);
+  }
+
+  return lastSevenDays.reverse();
+});
+
+export const selectLastSevenDaysSales = createSelector(
+  selectOrderItems,
+  (items) => {
+    const today = new Date();
+    const lastSevenDays: Date[] = [];
+
+    for (let i = 0; i < 7; i++) {
+      let now = new Date(today);
+      lastSevenDays.push(new Date(now.setDate(now.getDate() - i)));
+    }
+
+    return lastSevenDays.reverse().map(
+      (day) =>
+        items?.filter((item) => {
+          const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+            dateStyle: "long",
+          });
+          const formattedDate = dateTimeFormatter.format(day);
+
+          return item.orderItem.date == formattedDate;
+        }).length ?? 0
+    );
+  }
 );
 
 export const selectOrdersLoadingState = createSelector(

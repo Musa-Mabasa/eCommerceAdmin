@@ -8,6 +8,7 @@ import { Store } from "@ngrx/store";
 import {
   selectOrderItems,
   selectOrdersLoadingState,
+  selectProductsSold,
   selectRevenue,
   selectStockReport,
   selectTopProducts,
@@ -38,6 +39,7 @@ export class DashboardComponent {
   store = inject(Store<DashboardState>);
   prodStore = inject(Store<AdminState>);
   orders$ = this.store.select(selectOrderItems);
+  productsSold$ = this.store.select(selectProductsSold);
   revenue$ = this.store.select(selectRevenue);
   loadingState$ = this.store.select(selectOrdersLoadingState);
   totalCustomers$ = this.store.select(selectTotalCustomers);

@@ -104,8 +104,6 @@ export class PreviewService {
     const formattedDate = dateTimeFormatter.format(now);
     const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
     const day = days[now.getDay()];
-    console.log(day);
-    console.log(formattedDate);
 
     for (const userCart of userCarts) {
       from(

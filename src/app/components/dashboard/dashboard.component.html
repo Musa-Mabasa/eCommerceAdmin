@@ -7,7 +7,7 @@
       <app-summary
         class="grow"
         title="Products Sold"
-        [count]="(orders$ | async)?.length ?? 0"
+        [count]="(productsSold$ | async) ?? 0"
       />
       <app-summary
         class="grow"
