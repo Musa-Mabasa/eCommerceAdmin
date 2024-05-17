@@ -2,67 +2,33 @@
   class="flex flex-col items-start justify-between gap-4 w-full px-6 py-10"
 >
   <p class="text-2xl font-semibold font-rubik text-nowrap">Dashboard</p>
-  <div class="flex flex-wrap gap-10">
-    <div class="flex flex-col justify-between gap-10 max-w-[500px]">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-10 w-full">
+    <div class="flex flex-wrap gap-10 w-full xl:col-span-2">
       <app-summary
+        class="grow"
         title="Products Sold"
         [count]="(orders$ | async)?.length ?? 0"
       />
-      <app-summary title="Revenue" [count]="(revenue$ | async) ?? 0" />
+      <app-summary
+        class="grow"
+        title="Revenue"
+        [count]="(revenue$ | async) ?? 0"
+      />
+      <app-summary
+        class="grow"
+        title="Total Customers"
+        [count]="(revenue$ | async) ?? 0"
+      />
+      <app-summary
+        class="grow"
+        title="Total Quantity"
+        [count]="(revenue$ | async) ?? 0"
+      />
     </div>
-    <app-sales-chart />
-  </div>
-  <div class="flex flex-wrap gap-8 mt-16">
-    <div class="bg-edit-input-color w-[700px] p-6 rounded-3xl">
-      <h2 class="text-xl font-medium">Recent Orders</h2>
-      <div class="flex flex-col gap-6 w-[650px] pt-4">
-        @for(order of (orders$ | async); track order?.orderItem?.id){
-        <app-dashboard-orders
-          [customerName]="order.orderItem.customerName"
-          [customerAvatar]="order.orderItem.customerAvatar"
-          [orderDate]="order.orderItem.date"
-          [orderPrice]="order.productPrice"
-          [orderName]="order.productName"
-          [orderCurrency]="order.productCurrency"
-        />
-        }
-        <!-- <app-dashboard-orders
-          [customerName]="'Musa mabasa'"
-          [customerAvatar]="
-            'https://lh3.googleusercontent.com/a/ACg8ocI2m1AWGtjXMbs3GEtm9CUJXbHsPPL7HGkw0lL5iJLgiesCazjzig=s96-c'
-          "
-          [orderDate]="'March 12, 2024'"
-          [orderTotal]="20000"
-        />
-        <app-dashboard-orders
-          [customerName]="'Musa mabasa'"
-          [customerAvatar]="
-            'https://lh3.googleusercontent.com/a/ACg8ocI2m1AWGtjXMbs3GEtm9CUJXbHsPPL7HGkw0lL5iJLgiesCazjzig=s96-c'
-          "
-          [orderDate]="'March 12, 2024'"
-          [orderTotal]="20000"
-        />
-        <app-dashboard-orders
-          [customerName]="'Musa mabasa'"
-          [customerAvatar]="
-            'https://lh3.googleusercontent.com/a/ACg8ocI2m1AWGtjXMbs3GEtm9CUJXbHsPPL7HGkw0lL5iJLgiesCazjzig=s96-c'
-          "
-          [orderDate]="'March 12, 2024'"
-          [orderTotal]="20000"
-        />
-        <app-dashboard-orders
-          [customerName]="'Musa mabasa'"
-          [customerAvatar]="
-            'https://lh3.googleusercontent.com/a/ACg8ocI2m1AWGtjXMbs3GEtm9CUJXbHsPPL7HGkw0lL5iJLgiesCazjzig=s96-c'
-          "
-          [orderDate]="'March 12, 2024'"
-          [orderTotal]="20000"
-        /> -->
-      </div>
-    </div>
-    <div class="bg-edit-input-color w-[550px] p-6 rounded-3xl">
+    <app-sales-chart class="" />
+    <div class="bg-edit-input-color p-6 rounded-3xl">
       <h2 class="text-xl font-medium">Stock Report</h2>
-      <div class="flex flex-col gap-6 w-96 pt-4">
+      <div class="flex flex-col gap-6 pt-4 w-full">
         <app-stock-item
           [productName]="'Samsung'"
           [quantity]="10"
@@ -88,6 +54,36 @@
           [quantity]="10"
           [remaining]="30"
         />
+      </div>
+    </div>
+    <div class="bg-edit-input-color grow p-6 rounded-3xl">
+      <h2 class="text-xl font-medium">Recent Orders</h2>
+      <div class="flex flex-col gap-6 pt-4">
+        @for(order of (orders$ | async); track order?.orderItem?.id){
+        <app-dashboard-orders
+          [customerName]="order.orderItem.customerName"
+          [customerAvatar]="order.orderItem.customerAvatar"
+          [orderDate]="order.orderItem.date"
+          [orderPrice]="order.productPrice"
+          [orderName]="order.productName"
+          [orderCurrency]="order.productCurrency"
+        />
+        }
+      </div>
+    </div>
+    <div class="bg-edit-input-color grow p-6 rounded-3xl">
+      <h2 class="text-xl font-medium">Recent Orders</h2>
+      <div class="flex flex-col gap-6 pt-4">
+        @for(order of (orders$ | async); track order?.orderItem?.id){
+        <app-dashboard-orders
+          [customerName]="order.orderItem.customerName"
+          [customerAvatar]="order.orderItem.customerAvatar"
+          [orderDate]="order.orderItem.date"
+          [orderPrice]="order.productPrice"
+          [orderName]="order.productName"
+          [orderCurrency]="order.productCurrency"
+        />
+        }
       </div>
     </div>
   </div>

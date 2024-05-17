@@ -45,8 +45,8 @@ export class SalesChartComponent implements OnInit {
         ],
       },
       options: {
-        responsive: true,
-        aspectRatio: 2.5,
+        // responsive: true,
+        aspectRatio: 2,
         scales: {
           x: {
             grid: {
