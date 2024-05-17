@@ -10,8 +10,6 @@ export const selectOrderItems = createSelector(
   dashboardSelectFeature,
   adminSelectFeature,
   (state, adminState): CorrelatedOrderItem[] | undefined => {
-    console.log(state.orders);
-
     return state.orders.map((order): CorrelatedOrderItem => {
       const product = adminState.adminProducts.find(
         (products) => products.id === order.productId
@@ -25,22 +23,47 @@ export const selectOrderItems = createSelector(
           productName: product?.name,
           productPrice: product?.price,
           productCurrency: product?.currency,
+          productQuantity: product.quantity,
         };
       else return {} as CorrelatedOrderItem;
     });
   }
 );
 
-export const selectRevenue = createSelector(
-  dashboardSelectFeature,
+export const selectRevenue = createSelector(selectOrderItems, (items) => {
+  let revenue = 0;
+  if (items)
+    for (const item of items) {
+      revenue += item.productPrice;
+    }
+  return revenue;
+});
+
+export const selectTotalCustomers = createSelector(
   selectOrderItems,
-  (state, items) => {
-    let revenue = 0;
+  (items) =>
+    items
+      ?.map((item) => item.orderItem.customerName)
+      .filter(
+        (name, index, currentValue) => currentValue.indexOf(name) === index
+      ).length
+);
+
+export const selectTotalQuantity = createSelector(
+  adminSelectFeature,
+  selectOrderItems,
+  (adminState, items) => {
+    let totalQuantity = 0;
+    for (const product of adminState.adminProducts) {
+      totalQuantity += product.quantity;
+    }
+    let productsSold = 0;
     if (items)
       for (const item of items) {
-        revenue += item.productPrice;
+        productsSold++;
       }
-    return revenue;
+
+    return totalQuantity - productsSold;
   }
 );
 

@@ -9,6 +9,8 @@ import {
   selectOrderItems,
   selectOrdersLoadingState,
   selectRevenue,
+  selectTotalCustomers,
+  selectTotalQuantity,
 } from "../../dashboardStore/selectors";
 import { getOrders } from "../../dashboardStore/actions";
 import { AsyncPipe } from "@angular/common";
@@ -35,6 +37,8 @@ export class DashboardComponent {
   orders$ = this.store.select(selectOrderItems);
   revenue$ = this.store.select(selectRevenue);
   loadingState$ = this.store.select(selectOrdersLoadingState);
+  totalCustomers$ = this.store.select(selectTotalCustomers);
+  totalQuantity$ = this.store.select(selectTotalQuantity);
 
   constructor() {
     this.prodStore.dispatch(getAdminProducts({ adminId: getCookie("userId") }));

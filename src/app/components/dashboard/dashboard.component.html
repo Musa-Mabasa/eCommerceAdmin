@@ -17,12 +17,12 @@
       <app-summary
         class="grow"
         title="Total Customers"
-        [count]="(revenue$ | async) ?? 0"
+        [count]="(totalCustomers$ | async) ?? 0"
       />
       <app-summary
         class="grow"
         title="Total Quantity"
-        [count]="(revenue$ | async) ?? 0"
+        [count]="(totalQuantity$ | async) ?? 0"
       />
     </div>
     <app-sales-chart class="" />

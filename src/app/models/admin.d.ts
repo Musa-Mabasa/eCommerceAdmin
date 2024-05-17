@@ -73,4 +73,5 @@ export interface CorrelatedOrderItem {
   productName: string;
   productPrice: number;
   productCurrency: string;
+  productQuantity: number;
 }
