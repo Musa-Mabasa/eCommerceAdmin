@@ -90,6 +90,21 @@ export const selectStockReport = createSelector(
     })
 );
 
+export const selectTopProducts = createSelector(
+  adminSelectFeature,
+  selectOrderItems,
+  (adminState, items) =>
+    adminState.adminProducts
+      .map((prod) => ({
+        product: prod,
+        sold:
+          items?.filter((item) => item.orderItem.productId === prod.id)
+            .length ?? 0,
+      }))
+      .sort((a, b) => b.sold - a.sold)
+      .slice(0, 6)
+);
+
 export const selectOrdersLoadingState = createSelector(
   dashboardSelectFeature,
   (state) => state.ordersLoadingState

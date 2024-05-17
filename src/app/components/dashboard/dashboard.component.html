@@ -55,16 +55,20 @@
       </div>
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl">
-      <h2 class="text-xl font-medium">Recent Orders</h2>
-      <div class="flex flex-col gap-6 pt-4">
-        @for(order of (orders$ | async); track order?.orderItem?.id){
-        <app-dashboard-orders
-          [customerName]="order.orderItem.customerName"
-          [customerAvatar]="order.orderItem.customerAvatar"
-          [orderDate]="order.orderItem.date"
-          [orderPrice]="order.productPrice"
-          [orderName]="order.productName"
-          [orderCurrency]="order.productCurrency"
+      <h2 class="text-xl font-medium">Top Products</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-5 py-4">
+        @for(product of (topProducts$ | async); track product.product.id){
+        <img
+          *ngIf="product.product.imageUrl"
+          [src]="product.product.imageUrl"
+          [alt]="product.product.name"
+          class="min-w-32 min-h-32 object-cover rounded-lg place-self-stretch"
+        />
+        <img
+          *ngIf="!product.product.imageUrl"
+          [src]="'../../../assets/images/placeholderImage.webp'"
+          [alt]="product.product.name"
+          class="min-w-32 min-h-32 object-cover rounded-lg place-self-stretch"
         />
         }
       </div>

@@ -10,11 +10,12 @@ import {
   selectOrdersLoadingState,
   selectRevenue,
   selectStockReport,
+  selectTopProducts,
   selectTotalCustomers,
   selectTotalQuantity,
 } from "../../dashboardStore/selectors";
 import { getOrders } from "../../dashboardStore/actions";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 import { AdminState } from "../../adminStore/reducer";
 import { getAdminProducts } from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
@@ -28,6 +29,7 @@ import { getCookie } from "../../utils/utils";
     StockItemComponent,
     SalesChartComponent,
     AsyncPipe,
+    NgIf,
   ],
   templateUrl: "./dashboard.component.html",
   styleUrl: "./dashboard.component.scss",
@@ -41,6 +43,7 @@ export class DashboardComponent {
   totalCustomers$ = this.store.select(selectTotalCustomers);
   totalQuantity$ = this.store.select(selectTotalQuantity);
   stockReport$ = this.store.select(selectStockReport);
+  topProducts$ = this.store.select(selectTopProducts);
 
   constructor() {
     this.prodStore.dispatch(getAdminProducts({ adminId: getCookie("userId") }));
