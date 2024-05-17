@@ -9,6 +9,7 @@ import {
   selectOrderItems,
   selectOrdersLoadingState,
   selectRevenue,
+  selectStockReport,
   selectTotalCustomers,
   selectTotalQuantity,
 } from "../../dashboardStore/selectors";
@@ -39,6 +40,7 @@ export class DashboardComponent {
   loadingState$ = this.store.select(selectOrdersLoadingState);
   totalCustomers$ = this.store.select(selectTotalCustomers);
   totalQuantity$ = this.store.select(selectTotalQuantity);
+  stockReport$ = this.store.select(selectStockReport);
 
   constructor() {
     this.prodStore.dispatch(getAdminProducts({ adminId: getCookie("userId") }));

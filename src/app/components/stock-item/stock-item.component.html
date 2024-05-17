@@ -1,11 +1,9 @@
-<div class="h-10 w-fu grid grid-cols-[8fr_1fr] items-center">
-  <div class="flex gap-4 items-center">
-    <p>{{ productName }}</p>
-    <progress
-      class="progress progress-accent w-40 sm:w-72 h-4"
-      [value]="remaining"
-      max="100"
-    ></progress>
-  </div>
-  <p>{{ quantity }}</p>
+<div class="h-10 w-full grid grid-cols-4 items-center">
+  <p>{{ productName }}</p>
+  <progress
+    class="progress progress-accent h-4 col-span-2"
+    [value]="remaining"
+    max="100"
+  ></progress>
+  <p class="place-self-center">{{ quantity }}</p>
 </div>

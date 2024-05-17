@@ -26,34 +26,17 @@
       />
     </div>
     <app-sales-chart class="" />
-    <div class="bg-edit-input-color p-6 rounded-3xl">
+    <div class="bg-edit-input-color p-6 rounded-3xl max-h-96">
       <h2 class="text-xl font-medium">Stock Report</h2>
-      <div class="flex flex-col gap-6 pt-4 w-full">
+      <div class="flex flex-col gap-6 pt-4 w-full h-full overflow-scroll mb-2">
+        @for(item of (stockReport$ | async); track item.product.id){
+
         <app-stock-item
-          [productName]="'Samsung'"
-          [quantity]="10"
-          [remaining]="60"
+          [productName]="item.product.name"
+          [quantity]="item.product.quantity"
+          [remaining]="item.remaining"
         />
-        <app-stock-item
-          [productName]="'Samsung'"
-          [quantity]="10"
-          [remaining]="50"
-        />
-        <app-stock-item
-          [productName]="'Samsung'"
-          [quantity]="10"
-          [remaining]="90"
-        />
-        <app-stock-item
-          [productName]="'Samsung'"
-          [quantity]="10"
-          [remaining]="45"
-        />
-        <app-stock-item
-          [productName]="'Samsung'"
-          [quantity]="10"
-          [remaining]="30"
-        />
+        }
       </div>
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl">
