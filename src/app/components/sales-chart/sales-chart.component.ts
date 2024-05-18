@@ -64,6 +64,7 @@ export class SalesChartComponent implements OnInit {
             data: this.productsSold,
             backgroundColor: "lightgrey",
             borderRadius: 5,
+            animation: false,
           },
         ],
       },
