@@ -108,17 +108,26 @@ export const selectRevenueIncrease = createSelector(
             order.productPrice,
             previewState.currencyConversion?.["EUR"].value
           );
-        } else if (order.productCurrency === "ZAR" && order.productQuantity > 0) {
+        } else if (
+          order.productCurrency === "ZAR" &&
+          order.productQuantity > 0
+        ) {
           initialRevenue += convertToCurrency(
             order.productPrice,
             previewState.currencyConversion?.["ZAR"].value
           );
-        } else if (order.productCurrency === "GBP" && order.productQuantity > 0) {
+        } else if (
+          order.productCurrency === "GBP" &&
+          order.productQuantity > 0
+        ) {
           initialRevenue += convertToCurrency(
             order.productPrice,
             previewState.currencyConversion?.["GBP"].value
           );
-        } else if (order.productCurrency === "USD" && order.productQuantity > 0) {
+        } else if (
+          order.productCurrency === "USD" &&
+          order.productQuantity > 0
+        ) {
           initialRevenue += convertToCurrency(
             order.productPrice,
             previewState.currencyConversion?.["USD"].value
@@ -204,8 +213,6 @@ export const selectTotalQuantityDecrease = createSelector(
     const yesterdaysOrders = quantity + todaysOrders;
 
     if (yesterdaysOrders === 0) return 0;
-
-    console.log(yesterdaysOrders);
 
     return Math.floor(((yesterdaysOrders - quantity) / yesterdaysOrders) * 100);
   }
