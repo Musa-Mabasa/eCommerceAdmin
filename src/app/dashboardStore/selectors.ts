@@ -2,6 +2,8 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { DashboardState, dashboardFeatureKey } from "./reducer";
 import { adminSelectFeature } from "../adminStore/selectors";
 import { CorrelatedOrderItem, Product } from "../models/admin";
+import { previewSelectFeature } from "../previewStore/selectors";
+import { convertToCurrency } from "../utils/utils";
 
 export const dashboardSelectFeature =
   createFeatureSelector<DashboardState>(dashboardFeatureKey);
@@ -51,19 +53,44 @@ export const selectProductsSoldIncrease = createSelector(
   }
 );
 
-export const selectRevenue = createSelector(selectOrderItems, (items) => {
-  let revenue = 0;
-  if (items)
-    for (const item of items) {
-      revenue += item.productPrice;
-    }
-  return revenue;
-});
+export const selectRevenue = createSelector(
+  selectOrderItems,
+  previewSelectFeature,
+  (items, previewState) => {
+    let revenue = 0;
+    if (items)
+      for (const item of items) {
+        if (item.productCurrency === "EUR" && item.productQuantity > 0) {
+          revenue += convertToCurrency(
+            item.productPrice,
+            previewState.currencyConversion?.["EUR"].value
+          );
+        } else if (item.productCurrency === "ZAR" && item.productQuantity > 0) {
+          revenue += convertToCurrency(
+            item.productPrice,
+            previewState.currencyConversion?.["ZAR"].value
+          );
+        } else if (item.productCurrency === "GBP" && item.productQuantity > 0) {
+          revenue += convertToCurrency(
+            item.productPrice,
+            previewState.currencyConversion?.["GBP"].value
+          );
+        } else if (item.productCurrency === "USD" && item.productQuantity > 0) {
+          revenue += convertToCurrency(
+            item.productPrice,
+            previewState.currencyConversion?.["USD"].value
+          );
+        }
+      }
+    return Number(revenue.toFixed(2));
+  }
+);
 
 export const selectRevenueIncrease = createSelector(
   selectOrderItems,
   selectRevenue,
-  (items, revenue) => {
+  previewSelectFeature,
+  (items, revenue, previewState) => {
     const today = new Date();
     const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
       dateStyle: "long",
@@ -76,7 +103,27 @@ export const selectRevenueIncrease = createSelector(
     let initialRevenue = 0;
     if (yesterdaysOrders)
       for (const order of yesterdaysOrders) {
-        initialRevenue += order.productPrice;
+        if (order.productCurrency === "EUR" && order.productQuantity > 0) {
+          initialRevenue += convertToCurrency(
+            order.productPrice,
+            previewState.currencyConversion?.["EUR"].value
+          );
+        } else if (order.productCurrency === "ZAR" && order.productQuantity > 0) {
+          initialRevenue += convertToCurrency(
+            order.productPrice,
+            previewState.currencyConversion?.["ZAR"].value
+          );
+        } else if (order.productCurrency === "GBP" && order.productQuantity > 0) {
+          initialRevenue += convertToCurrency(
+            order.productPrice,
+            previewState.currencyConversion?.["GBP"].value
+          );
+        } else if (order.productCurrency === "USD" && order.productQuantity > 0) {
+          initialRevenue += convertToCurrency(
+            order.productPrice,
+            previewState.currencyConversion?.["USD"].value
+          );
+        }
       }
 
     if (initialRevenue === 0) return 0;
@@ -171,7 +218,7 @@ export const selectStockReport = createSelector(
     adminState.adminProducts.map((prod) => {
       if (!items) return { product: prod, remaining: 100 };
 
-      if(prod.quantity === 0) return { product: prod, remaining: 0 }
+      if (prod.quantity === 0) return { product: prod, remaining: 0 };
 
       const itemsOrdered = items?.filter(
         (item) => item.orderItem.productId === prod.id

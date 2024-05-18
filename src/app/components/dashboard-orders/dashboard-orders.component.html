@@ -22,5 +22,38 @@
   </div>
   <p>{{ orderName }}</p>
   <p>{{ orderDate }}</p>
-  <p>{{ orderPrice | currency : "ZAR" : "symbol-narrow" }}</p>
+  @if(userCurrency){ @switch (orderCurrency) { @case ('EUR') {
+  <p>
+    {{
+      orderPrice
+        | currencyConversion : conversionData?.EUR?.value
+        | currency : userCurrency : "symbol-narrow"
+    }}
+  </p>
+
+  } @case ('ZAR') {
+  <p>
+    {{
+      orderPrice
+        | currencyConversion : conversionData?.ZAR?.value
+        | currency : userCurrency : "symbol-narrow"
+    }}
+  </p>
+  }@case ('USD') {
+  <p>
+    {{
+      orderPrice
+        | currencyConversion : conversionData?.USD?.value
+        | currency : userCurrency : "symbol-narrow"
+    }}
+  </p>
+  }@case ('GBP') {
+  <p>
+    {{
+      orderPrice
+        | currencyConversion : conversionData?.GBP?.value
+        | currency : userCurrency : "symbol-narrow"
+    }}
+  </p>
+  }}}
 </div>

@@ -54,6 +54,8 @@
           [orderPrice]="order.productPrice"
           [orderName]="order.productName"
           [orderCurrency]="order.productCurrency"
+          [userCurrency]="(userCurrency$ | async) ?? 'ZAR'"
+          [conversionData]="conversionData$ | async"
         />
         }
       </div>

@@ -24,6 +24,10 @@ import { AsyncPipe, NgIf } from "@angular/common";
 import { AdminState } from "../../adminStore/reducer";
 import { getAdminProducts } from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
+import {
+  selectCurrency,
+  selectCurrencyConversion,
+} from "../../previewStore/selectors";
 
 @Component({
   selector: "app-dashboard",
@@ -54,6 +58,8 @@ export class DashboardComponent {
   totalQuantityDecrease$ = this.store.select(selectTotalQuantityDecrease);
   stockReport$ = this.store.select(selectStockReport);
   topProducts$ = this.store.select(selectTopProducts);
+  conversionData$ = this.store.select(selectCurrencyConversion);
+  userCurrency$ = this.store.select(selectCurrency);
 
   constructor() {
     this.prodStore.dispatch(getAdminProducts({ adminId: getCookie("userId") }));
