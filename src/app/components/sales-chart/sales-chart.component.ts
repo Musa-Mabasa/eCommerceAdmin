@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   styleUrl: "./sales-chart.component.scss",
 })
 export class SalesChartComponent implements OnInit {
-  chart: any;
+  chart?: Chart;
   store = inject(Store<DashboardState>);
   sevenDays$ = this.store.select(selectLastSevenDays);
   sevenDaysSales$ = this.store.select(selectLastSevenDaysSales);
@@ -40,12 +40,12 @@ export class SalesChartComponent implements OnInit {
       this.productsSold = [];
 
       for (let i = 0; i < 7; i++) this.productsSold.push(sold);
-
-      this.createChart();
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.createChart();
+  }
 
   createChart() {
     this.chart = new Chart("MyChart", {
@@ -69,8 +69,8 @@ export class SalesChartComponent implements OnInit {
         ],
       },
       options: {
-        // responsive: true,
-        aspectRatio: 2,
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           x: {
             grid: {
@@ -94,6 +94,9 @@ export class SalesChartComponent implements OnInit {
           },
         },
         plugins: {
+          tooltip: {
+            enabled: false,
+          },
           legend: {
             display: false,
           },

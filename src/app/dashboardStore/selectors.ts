@@ -297,7 +297,9 @@ export const selectLastSevenDaysSales = createSelector(
   }
 );
 
-export const selectOrdersLoadingState = createSelector(
+export const selectDashboardLoadingState = createSelector(
   dashboardSelectFeature,
-  (state) => state.ordersLoadingState
+  adminSelectFeature,
+  (state, adminState) =>
+    state.ordersLoadingState || adminState.productLoadingState
 );

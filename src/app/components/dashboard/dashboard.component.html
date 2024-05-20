@@ -2,8 +2,13 @@
   class="flex flex-col items-start justify-between gap-4 w-full px-6 py-10"
 >
   <p class="text-2xl font-semibold font-rubik text-nowrap">Dashboard</p>
+  @if(loadingState$ | async) {
+  <app-dashboard-skeleton class="w-full" />
+  }@else {
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-10 w-full">
-    <div class="flex flex-wrap gap-10 w-full xl:col-span-2">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 w-full xl:col-span-2"
+    >
       <app-summary
         class="grow"
         title="Products Sold"
@@ -80,4 +85,5 @@
       </div>
     </div>
   </div>
+  }
 </section>

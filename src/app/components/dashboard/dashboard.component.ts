@@ -6,8 +6,8 @@ import { SalesChartComponent } from "../sales-chart/sales-chart.component";
 import { DashboardState } from "../../dashboardStore/reducer";
 import { Store } from "@ngrx/store";
 import {
+  selectDashboardLoadingState,
   selectOrderItems,
-  selectOrdersLoadingState,
   selectProductsSold,
   selectProductsSoldIncrease,
   selectRevenue,
@@ -28,20 +28,22 @@ import {
   selectCurrency,
   selectCurrencyConversion,
 } from "../../previewStore/selectors";
+import { DashboardSkeletonComponent } from "../skeletons/dashboard-skeleton/dashboard-skeleton.component";
 
 @Component({
-  selector: "app-dashboard",
-  standalone: true,
-  imports: [
-    SummaryComponent,
-    DashboardOrdersComponent,
-    StockItemComponent,
-    SalesChartComponent,
-    AsyncPipe,
-    NgIf,
-  ],
-  templateUrl: "./dashboard.component.html",
-  styleUrl: "./dashboard.component.scss",
+    selector: "app-dashboard",
+    standalone: true,
+    templateUrl: "./dashboard.component.html",
+    styleUrl: "./dashboard.component.scss",
+    imports: [
+        SummaryComponent,
+        DashboardOrdersComponent,
+        StockItemComponent,
+        SalesChartComponent,
+        AsyncPipe,
+        NgIf,
+        DashboardSkeletonComponent
+    ]
 })
 export class DashboardComponent {
   store = inject(Store<DashboardState>);
@@ -51,7 +53,7 @@ export class DashboardComponent {
   soldIncrease$ = this.store.select(selectProductsSoldIncrease);
   revenue$ = this.store.select(selectRevenue);
   revenueIncrease$ = this.store.select(selectRevenueIncrease);
-  loadingState$ = this.store.select(selectOrdersLoadingState);
+  loadingState$ = this.store.select(selectDashboardLoadingState);
   totalCustomers$ = this.store.select(selectTotalCustomers);
   totalCustomersIncrease$ = this.store.select(selectTotalCustomersIncrease);
   totalQuantity$ = this.store.select(selectTotalQuantity);
