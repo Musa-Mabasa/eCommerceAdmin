@@ -1,4 +1,6 @@
-<div class="h-10 w-full gap-10 grid grid-cols-5 items-center truncate">
+<div
+  class="h-10 w-full gap-10 sm:grid grid-cols-5 items-center truncate hidden"
+>
   <div class="flex gap-4 items-center col-span-2">
     <div
       class="avatar min-w-8 h-8 rounded-full bg-secondary-color text-center flex justify-center items-center"
@@ -23,7 +25,7 @@
   <p>{{ orderName }}</p>
   <p>{{ orderDate }}</p>
   @if(userCurrency){ @switch (orderCurrency) { @case ('EUR') {
-  <p>
+  <p class="font-semibold">
     {{
       orderPrice
         | currencyConversion : conversionData?.EUR?.value
@@ -32,7 +34,7 @@
   </p>
 
   } @case ('ZAR') {
-  <p>
+  <p class="font-semibold">
     {{
       orderPrice
         | currencyConversion : conversionData?.ZAR?.value
@@ -40,7 +42,7 @@
     }}
   </p>
   }@case ('USD') {
-  <p>
+  <p class="font-semibold">
     {{
       orderPrice
         | currencyConversion : conversionData?.USD?.value
@@ -48,7 +50,7 @@
     }}
   </p>
   }@case ('GBP') {
-  <p>
+  <p class="font-semibold">
     {{
       orderPrice
         | currencyConversion : conversionData?.GBP?.value
@@ -56,4 +58,63 @@
     }}
   </p>
   }}}
+</div>
+<div class="h-10 w-full grid grid-cols-3 sm:hidden">
+  <div class="flex gap-2 w-80 col-span-2">
+    @if(customerAvatar != ''){
+    <img
+      [src]="customerAvatar"
+      alt=""
+      class="rounded-full size-8"
+      referrerpolicy="no-referrer"
+    />} @else{
+    <p class="text-center text-white text-lg h-fit w-fit">
+      {{ customerName?.charAt(0)?.toUpperCase() }}
+    </p>
+    }
+    <div class="flex flex-col">
+      <p *ngIf="!customerName?.includes('@')">{{ customerName }}</p>
+      <p *ngIf="customerName?.includes('@')">
+        {{ customerName?.substring(0, customerName?.indexOf("@")) }}
+      </p>
+      <p class="text-xs font-light">{{ orderDate }}</p>
+    </div>
+  </div>
+  <div class="flex flex-col">
+    <p>{{ orderName }}</p>
+    @if(userCurrency){ @switch (orderCurrency) { @case ('EUR') {
+    <p class="font-semibold">
+      {{
+        orderPrice
+          | currencyConversion : conversionData?.EUR?.value
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+
+    } @case ('ZAR') {
+    <p class="font-semibold">
+      {{
+        orderPrice
+          | currencyConversion : conversionData?.ZAR?.value
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    }@case ('USD') {
+    <p class="font-semibold">
+      {{
+        orderPrice
+          | currencyConversion : conversionData?.USD?.value
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    }@case ('GBP') {
+    <p class="font-semibold">
+      {{
+        orderPrice
+          | currencyConversion : conversionData?.GBP?.value
+          | currency : userCurrency : "symbol-narrow"
+      }}
+    </p>
+    }}}
+  </div>
 </div>

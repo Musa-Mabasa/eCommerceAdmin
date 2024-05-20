@@ -35,7 +35,7 @@
       />
     </div>
     <app-sales-chart />
-    <div class="bg-edit-input-color p-6 rounded-3xl max-h-96 shadow-lg">
+    <div class="bg-edit-input-color p-6 rounded-3xl h-96 shadow-lg">
       <h2 class="text-xl font-medium">Stock Report</h2>
       <div class="flex flex-col gap-6 pt-4 w-full h-full overflow-scroll mb-2">
         @for(item of (stockReport$ | async); track item.product.id){
