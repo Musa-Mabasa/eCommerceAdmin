@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import {
   Data,
+  Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
@@ -45,6 +46,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { UserCart } from "../../models/admin";
 import { faEye } from "@ng-icons/font-awesome/regular";
+import { routeToPreview } from "../../adminStore/actions";
+import { AdminState } from "../../adminStore/reducer";
 
 @Component({
   selector: "app-home",
@@ -78,11 +81,13 @@ import { faEye } from "@ng-icons/font-awesome/regular";
   ],
 })
 export class HomeComponent {
+  router = inject(Router);
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");
   authService = inject(AuthService);
   store = inject(Store<PreviewState>);
+  adminStore = inject(Store<AdminState>);
   cart$ = this.store.select(selectCart);
   cartProducts$ = this.store.select(selectUserCartProducts);
   userCart$ = this.store.select(selectUserCart);
@@ -130,15 +135,6 @@ export class HomeComponent {
     else return baseValue;
   }
 
-  deleteProductFromCart(productId: string) {
-    if (this.cartId !== "")
-      this.store.dispatch(
-        deleteProductFromCart({
-          productToDelete: { cartId: this.cartId, productId },
-        })
-      );
-  }
-
   signOut() {
     this.authService.signOut();
   }
@@ -152,8 +148,8 @@ export class HomeComponent {
     );
   }
 
-  checkout() {
-    if (this.userCart)
-      this.store.dispatch(checkoutCart({ userCart: this.userCart }));
+  routeToPreview() {
+    this.adminStore.dispatch(routeToPreview());
+    this.router.navigate(["/all-products"]);
   }
 }

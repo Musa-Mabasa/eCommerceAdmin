@@ -111,3 +111,8 @@ export const selectAdminProductsLoading = createSelector(
     state.categoryLoadingState ||
     state.tagsLoadingState
 );
+
+export const selectFromHome = createSelector(
+  adminSelectFeature,
+  (state) => state.fromHome
+);

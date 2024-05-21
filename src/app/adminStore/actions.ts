@@ -12,7 +12,6 @@ export const getAdminProductsComplete = createAction(
   props<{ adminProducts: Product[] }>()
 );
 
-
 export const getAllTags = createAction("[ADMIN] GetAllTags");
 
 export const getAllTagsComplete = createAction(
@@ -89,3 +88,7 @@ export const deleteProduct = createAction(
 export const deleteProductComplete = createAction(
   "[ADMIN] DeleteProductComplete"
 );
+
+export const routeToPreview = createAction("[ADMIN] RouteToPreview");
+
+export const insidePreview = createAction("[ADMIN] InsidePreview");

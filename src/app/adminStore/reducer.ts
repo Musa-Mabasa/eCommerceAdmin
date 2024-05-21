@@ -16,6 +16,8 @@ import {
   getAllTagsComplete,
   getCategories,
   getCategoriesComplete,
+  insidePreview,
+  routeToPreview,
   setFilterBy,
   setIsAuthLoading,
   setIsAuthLoadingComplete,
@@ -43,6 +45,7 @@ export interface AdminState {
   editLoadingState: boolean;
   addTagLoadingState: boolean;
   isAuthLoading: boolean;
+  fromHome: boolean;
 }
 
 const initialState: AdminState = {
@@ -60,6 +63,7 @@ const initialState: AdminState = {
   editLoadingState: false,
   addTagLoadingState: false,
   isAuthLoading: false,
+  fromHome: false,
 };
 
 export const adminReducer = createReducer(
@@ -146,6 +150,14 @@ export const adminReducer = createReducer(
   on(setIsAuthLoadingComplete, (state) => ({
     ...state,
     isAuthLoading: false,
+  })),
+  on(routeToPreview, (state) => ({
+    ...state,
+    fromHome: true,
+  })),
+  on(insidePreview, (state) => ({
+    ...state,
+    fromHome: false,
   }))
 );
 

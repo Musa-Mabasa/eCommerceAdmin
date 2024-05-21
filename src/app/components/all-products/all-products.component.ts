@@ -49,38 +49,49 @@ import { AllProductsSkeletonComponent } from "../skeletons/all-products-skeleton
 import { AuthService } from "../../services/auth.service";
 import { getCookie } from "../../utils/utils";
 import { CartItemComponent } from "../cart-item/cart-item.component";
-import { matSettings, matExitToApp, matHome } from "@ng-icons/material-icons/baseline";
+import {
+  matSettings,
+  matExitToApp,
+  matHome,
+  matShoppingCartCheckout,
+} from "@ng-icons/material-icons/baseline";
+import { selectFromHome } from "../../adminStore/selectors";
+import { insidePreview } from "../../adminStore/actions";
+import { PreviewSplashComponent } from "../preview-splash/preview-splash.component";
 
 @Component({
-  selector: "app-all-products",
-  standalone: true,
-  templateUrl: "./all-products.component.html",
-  styleUrl: "./all-products.component.scss",
-  viewProviders: [
-    provideIcons({
-      matFilterListOutline,
-      matArrowForwardOutline,
-      matShoppingCartOutline,
-      matSettings,
-      matExitToApp,
-      matHome,
-    }),
-  ],
-  imports: [
-    PreviewCardComponent,
-    NgIconComponent,
-    NgIf,
-    AsyncPipe,
-    ReactiveFormsModule,
-    AllProductsSkeletonComponent,
-    CartItemComponent,
-    CurrencyPipe,
-    RouterLink
-  ],
+    selector: "app-all-products",
+    standalone: true,
+    templateUrl: "./all-products.component.html",
+    styleUrl: "./all-products.component.scss",
+    viewProviders: [
+        provideIcons({
+            matFilterListOutline,
+            matArrowForwardOutline,
+            matShoppingCartOutline,
+            matSettings,
+            matExitToApp,
+            matHome,
+            matShoppingCartCheckout,
+        }),
+    ],
+    imports: [
+        PreviewCardComponent,
+        NgIconComponent,
+        NgIf,
+        AsyncPipe,
+        ReactiveFormsModule,
+        AllProductsSkeletonComponent,
+        CartItemComponent,
+        CurrencyPipe,
+        RouterLink,
+        PreviewSplashComponent
+    ]
 })
 export class AllProductsComponent {
   router = inject(Router);
   store = inject(Store<PreviewState>);
+  adminStore = inject(Store<AdminState>);
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");
@@ -100,6 +111,7 @@ export class AllProductsComponent {
   conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
   cartTotal$ = this.store.select(selectCartTotal);
+  fromHome$ = this.store.select(selectFromHome);
   userCart?: UserCart[];
   conversionData?: Data;
   cartTotal = 0;
@@ -112,6 +124,7 @@ export class AllProductsComponent {
     this.store.dispatch(getAllProducts());
     this.store.dispatch(getCategories());
     this.store.dispatch(getTags());
+    // this.adminStore.dispatch(insidePreview())
 
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart?.id) this.cartId = cart?.id;
@@ -133,7 +146,7 @@ export class AllProductsComponent {
 
   routeToProduct(productToView: CorrelatedProduct) {
     this.store.dispatch(setProductToView({ productToView }));
-    this.router.navigate([`home/preview-product/${productToView.product.id}`]);
+    this.router.navigate([`/preview-product/${productToView.product.id}`]);
   }
 
   selectCategory() {
