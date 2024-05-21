@@ -229,24 +229,37 @@ export const selectTotalQuantityDecrease = createSelector(
 export const selectStockReport = createSelector(
   adminSelectFeature,
   selectOrderItems,
-  (adminState, items): { product: Product; remaining: number | undefined }[] =>
+  (
+    adminState,
+    items
+  ): {
+    product: Product;
+    remaining: number | undefined;
+    remainingPercentage: number;
+  }[] =>
     adminState.adminProducts.map((prod) => {
-      if (!items) return { product: prod, remaining: 100 };
+      if (prod.quantity === 0)
+        return { product: prod, remaining: 0, remainingPercentage: 0 };
 
-      if (prod.quantity === 0) return { product: prod, remaining: 0 };
+      if (!items)
+        return {
+          product: prod,
+          remaining: prod.quantity,
+          remainingPercentage: 100,
+        };
 
       const itemsOrdered = items?.filter(
         (item) => item.orderItem.productId === prod.id
       ).length;
 
       if (itemsOrdered > 0) {
-        const remaining =
+        const remainingPercentage =
           ((prod.quantity - itemsOrdered) / prod.quantity) * 100;
 
-        return { product: prod, remaining };
+        return { product: prod, remaining: prod.quantity - itemsOrdered, remainingPercentage };
       }
 
-      return { product: prod, remaining: 100 };
+      return { product: prod, remaining: prod.quantity, remainingPercentage: 100 };
     })
 );
 

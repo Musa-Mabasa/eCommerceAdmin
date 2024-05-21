@@ -12,4 +12,5 @@ export class StockItemComponent {
   @Input() productName?: string;
   @Input() quantity?: number;
   @Input() remaining?: number;
+  @Input() remainingPercantage?: number;
 }
