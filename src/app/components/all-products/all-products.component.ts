@@ -24,6 +24,7 @@ import {
   selectLowerPriceBound,
   selectPriceRangeType,
   selectUpperPriceBound,
+  setCurrency,
   setProductToView,
   setSearchTerm,
 } from "../../previewStore/actions";
@@ -54,39 +55,42 @@ import {
   matExitToApp,
   matHome,
   matShoppingCartCheckout,
+  matCheck,
 } from "@ng-icons/material-icons/baseline";
 import { selectFromHome } from "../../adminStore/selectors";
 import { insidePreview } from "../../adminStore/actions";
 import { PreviewSplashComponent } from "../preview-splash/preview-splash.component";
 
 @Component({
-    selector: "app-all-products",
-    standalone: true,
-    templateUrl: "./all-products.component.html",
-    styleUrl: "./all-products.component.scss",
-    viewProviders: [
-        provideIcons({
-            matFilterListOutline,
-            matArrowForwardOutline,
-            matShoppingCartOutline,
-            matSettings,
-            matExitToApp,
-            matHome,
-            matShoppingCartCheckout,
-        }),
-    ],
-    imports: [
-        PreviewCardComponent,
-        NgIconComponent,
-        NgIf,
-        AsyncPipe,
-        ReactiveFormsModule,
-        AllProductsSkeletonComponent,
-        CartItemComponent,
-        CurrencyPipe,
-        RouterLink,
-        PreviewSplashComponent
-    ]
+  selector: "app-all-products",
+  standalone: true,
+  templateUrl: "./all-products.component.html",
+  styleUrl: "./all-products.component.scss",
+  viewProviders: [
+    provideIcons({
+      matFilterListOutline,
+      matArrowForwardOutline,
+      matShoppingCartOutline,
+      matSettings,
+      matExitToApp,
+      matHome,
+      matShoppingCartCheckout,
+      matCheck,
+    }),
+  ],
+  imports: [
+    PreviewCardComponent,
+    NgIconComponent,
+    NgIf,
+    AsyncPipe,
+    ReactiveFormsModule,
+    AllProductsSkeletonComponent,
+    CartItemComponent,
+    CurrencyPipe,
+    RouterLink,
+    PreviewSplashComponent,
+    ReactiveFormsModule,
+  ],
 })
 export class AllProductsComponent {
   router = inject(Router);
@@ -119,12 +123,12 @@ export class AllProductsComponent {
   selectedPriceRangeType = "None";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
   cartId = "";
+  currency = new FormControl("");
 
   constructor() {
     this.store.dispatch(getAllProducts());
     this.store.dispatch(getCategories());
     this.store.dispatch(getTags());
-    // this.adminStore.dispatch(insidePreview())
 
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart?.id) this.cartId = cart?.id;
@@ -138,6 +142,10 @@ export class AllProductsComponent {
       this.userCurrency = userCurrency;
       this.store.dispatch(getCurrencyConversion({ userCurrency }));
     });
+
+    this.userCurrency$
+      .pipe(takeUntilDestroyed())
+      .subscribe((userCurrency) => this.currency.setValue(userCurrency));
 
     this.userCart$
       .pipe(takeUntilDestroyed())
@@ -228,5 +236,14 @@ export class AllProductsComponent {
 
   signOut() {
     this.authService.signOut();
+  }
+
+  onSelectUserCurrency() {
+    this.store.dispatch(
+      setCurrency({ userCurrency: this.currency.value ?? "ZAR" })
+    );
+    this.store.dispatch(
+      getCurrencyConversion({ userCurrency: this.currency.value ?? "ZAR" })
+    );
   }
 }

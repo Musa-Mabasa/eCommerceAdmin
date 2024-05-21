@@ -33,7 +33,7 @@ export class AuthService {
       .then((result) => {
         if (isSignUp) this.addCartOnAuth(result.user.uid);
         setUserProfile(result);
-        this._router.navigate(["/home/admin-products"]);
+        this._router.navigate(["/home/dashboard"]);
       })
       .catch((err) => console.error(err));
   }
@@ -44,7 +44,7 @@ export class AuthService {
       .then((result) => {
         this.addCartOnAuth(result.user.uid);
         setUserProfile(result);
-        this._router.navigate(["/home/admin-products"]);
+        this._router.navigate(["/home/dashboard"]);
       })
       .catch((err) => {
         this.notification.create("error", "Sign In failed", err.message);
@@ -57,7 +57,7 @@ export class AuthService {
     signInWithEmailAndPassword(this._auth, email.trim(), password.trim())
       .then((result) => {
         setUserProfile(result);
-        this._router.navigate(["/home/admin-products"]);
+        this._router.navigate(["/home/dashboard"]);
       })
       .catch((err) => {
         this.notification.create(

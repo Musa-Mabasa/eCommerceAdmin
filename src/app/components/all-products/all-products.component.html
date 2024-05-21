@@ -1,13 +1,11 @@
 @if((fromHome$ | async) && (isLoading$ | async) ){
 <app-preview-splash />
 }@else {
-<header
-  class="w-full py-3 px-8 flex justify-between items-center shadow-md"
->
+<header class="w-full py-3 px-8 flex justify-between items-center shadow-md">
   <div class="flex items-center">
     <img class="w-8" src="../../../assets/images/logo.png" alt="" />
     <h1 class="text-2xl font-bold font-rubik-scribble text-secondary-color">
-      <a routerLink="/home/admin-products">
+      <a routerLink="/home/dashboard">
         <img src="https://www.flaticon.com/free-icons/mobile-shopping" alt="" />
         Store<span class="text-primary-color">Hero</span>
       </a>
@@ -301,5 +299,35 @@
     </div>
     } }
   </section>
+  <dialog id="my_modal_2" class="modal">
+    <div class="modal-box bg-search-color">
+      <h3 class="font-bold text-lg">Select Currency</h3>
+      <p class="py-4">Select your preffered currency below:</p>
+      <select
+        class="select w-full bg-edit-input-color"
+        [formControl]="currency"
+      >
+        <option value="ZAR">ZAR - Rand</option>
+        <option value="GBP">GBP - Pound Sterling</option>
+        <option value="USD">USD - Us Dollars</option>
+        <option value="EUR">EUR - Euro</option>
+      </select>
+      <div class="modal-action">
+        <form method="dialog" class="flex gap-4">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
+            Close
+          </button>
+          <button
+            class="btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+            (click)="onSelectUserCurrency()"
+          >
+            Confirm
+            <ng-icon name="matCheck" class="text-2xl" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </main>
 }
