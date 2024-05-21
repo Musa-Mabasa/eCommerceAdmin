@@ -108,7 +108,7 @@
           </div>
           <ul
             tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-72"
+            class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-[330px]"
           >
             <li
               class="h-44 p-3 flex flex-col gap-1 justify-center items-center"
@@ -131,6 +131,11 @@
               <p class="font-medium text-center">
                 {{ !displayName || displayName === "" ? email : displayName }}
               </p>
+            </li>
+            <li onclick="">
+              <a routerLink="/all-products"
+                ><ng-icon name="faEye" class="text-2xl" />Preview</a
+              >
             </li>
             <li onclick="my_modal_2.showModal()">
               <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
@@ -192,13 +197,6 @@
           routerLinkActive="active-item"
           ><ng-icon name="matAdminPanelSettings" class="text-2xl" />My
           Products</a
-        >
-      </li>
-      <li
-        class="text-base text-whiteSmoke hover:bg-sidebar-item rounded-xl font-rubik"
-      >
-        <a routerLink="all-products" routerLinkActive="active-item"
-          ><ng-icon name="matShoppingBag" class="text-2xl" />Preview</a
         >
       </li>
     </ul>

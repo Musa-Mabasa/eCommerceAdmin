@@ -1,19 +1,23 @@
 import { Component, inject } from "@angular/core";
 import { PreviewCardComponent } from "../preview-card/preview-card.component";
-import { Data, Router } from "@angular/router";
+import { Data, Router, RouterLink } from "@angular/router";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import {
   matArrowForwardOutline,
   matFilterListOutline,
+  matShoppingCartOutline,
 } from "@ng-icons/material-icons/outline";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe, CurrencyPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { AdminState } from "../../adminStore/reducer";
 import {
   addProductToCart,
   addToSelectedTags,
+  checkoutCart,
+  deleteProductFromCart,
   getAllProducts,
   getCategories,
+  getCurrencyConversion,
   getTags,
   removeFromSelectedTags,
   selectCategory,
@@ -27,17 +31,25 @@ import {
   selectAllProductsLoading,
   selectAllProductsWithTags,
   selectCart,
+  selectCartTotal,
   selectCategories,
   selectCurrency,
   selectCurrencyConversion,
+  selectIsCheckingoutState,
   selectSelectedTags,
   selectTags,
+  selectUserCart,
+  selectUserCartProducts,
 } from "../../previewStore/selectors";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { PreviewState } from "../../previewStore/reducer";
-import { CorrelatedProduct } from "../../models/admin";
+import { CorrelatedProduct, UserCart } from "../../models/admin";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { AllProductsSkeletonComponent } from "../skeletons/all-products-skeleton/all-products-skeleton.component";
+import { AuthService } from "../../services/auth.service";
+import { getCookie } from "../../utils/utils";
+import { CartItemComponent } from "../cart-item/cart-item.component";
+import { matSettings, matExitToApp, matHome } from "@ng-icons/material-icons/baseline";
 
 @Component({
   selector: "app-all-products",
@@ -45,7 +57,14 @@ import { AllProductsSkeletonComponent } from "../skeletons/all-products-skeleton
   templateUrl: "./all-products.component.html",
   styleUrl: "./all-products.component.scss",
   viewProviders: [
-    provideIcons({ matFilterListOutline, matArrowForwardOutline }),
+    provideIcons({
+      matFilterListOutline,
+      matArrowForwardOutline,
+      matShoppingCartOutline,
+      matSettings,
+      matExitToApp,
+      matHome,
+    }),
   ],
   imports: [
     PreviewCardComponent,
@@ -54,11 +73,20 @@ import { AllProductsSkeletonComponent } from "../skeletons/all-products-skeleton
     AsyncPipe,
     ReactiveFormsModule,
     AllProductsSkeletonComponent,
+    CartItemComponent,
+    CurrencyPipe,
+    RouterLink
   ],
 })
 export class AllProductsComponent {
   router = inject(Router);
   store = inject(Store<PreviewState>);
+  avatar: string | undefined = getCookie("avatar");
+  displayName: string | undefined = getCookie("displayName");
+  email = getCookie("email");
+  authService = inject(AuthService);
+  cartProducts$ = this.store.select(selectUserCartProducts);
+  userCart$ = this.store.select(selectUserCart);
   allProducts$ = this.store.select(selectAllProductsWithTags);
   categories$ = this.store.select(selectCategories);
   tags$ = this.store.select(selectTags);
@@ -68,13 +96,17 @@ export class AllProductsComponent {
   selectedTags$ = this.store.select(selectSelectedTags);
   cart$ = this.store.select(selectCart);
   isLoading$ = this.store.select(selectAllProductsLoading);
+  isCheckingout$ = this.store.select(selectIsCheckingoutState);
   conversionData$ = this.store.select(selectCurrencyConversion);
   userCurrency$ = this.store.select(selectCurrency);
+  cartTotal$ = this.store.select(selectCartTotal);
+  userCart?: UserCart[];
   conversionData?: Data;
+  cartTotal = 0;
   userCurrency = "";
   selectedPriceRangeType = "None";
   priceRangeTypes = ["None", "Equals", "Less Than", "More Than", "Between"];
-  cartId? = "";
+  cartId = "";
 
   constructor() {
     this.store.dispatch(getAllProducts());
@@ -82,7 +114,7 @@ export class AllProductsComponent {
     this.store.dispatch(getTags());
 
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
-      this.cartId = cart?.id;
+      if (cart?.id) this.cartId = cart?.id;
     });
 
     this.conversionData$.pipe(takeUntilDestroyed()).subscribe((data) => {
@@ -91,7 +123,12 @@ export class AllProductsComponent {
 
     this.userCurrency$.pipe(takeUntilDestroyed()).subscribe((userCurrency) => {
       this.userCurrency = userCurrency;
+      this.store.dispatch(getCurrencyConversion({ userCurrency }));
     });
+
+    this.userCart$
+      .pipe(takeUntilDestroyed())
+      .subscribe((userCart) => (this.userCart = userCart));
   }
 
   routeToProduct(productToView: CorrelatedProduct) {
@@ -160,5 +197,23 @@ export class AllProductsComponent {
       this.store.dispatch(
         addProductToCart({ productToAdd: { cartId: this.cartId, product } })
       );
+  }
+
+  deleteProductFromCart(productId: string) {
+    if (this.cartId !== "")
+      this.store.dispatch(
+        deleteProductFromCart({
+          productToDelete: { cartId: this.cartId, productId },
+        })
+      );
+  }
+
+  checkout() {
+    if (this.userCart)
+      this.store.dispatch(checkoutCart({ userCart: this.userCart }));
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 }

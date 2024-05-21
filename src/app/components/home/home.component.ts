@@ -44,6 +44,7 @@ import {
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { UserCart } from "../../models/admin";
+import { faEye } from "@ng-icons/font-awesome/regular";
 
 @Component({
   selector: "app-home",
@@ -61,6 +62,7 @@ import { UserCart } from "../../models/admin";
       matShoppingCartOutline,
       matCheck,
       matShoppingCartCheckout,
+      faEye,
     }),
   ],
   imports: [
