@@ -4,6 +4,7 @@ import { adminSelectFeature } from "../adminStore/selectors";
 import { CorrelatedOrderItem, Product } from "../models/admin";
 import { previewSelectFeature } from "../previewStore/selectors";
 import { convertToCurrency } from "../utils/utils";
+import { or } from "@angular/fire/firestore";
 
 export const dashboardSelectFeature =
   createFeatureSelector<DashboardState>(dashboardFeatureKey);
@@ -12,21 +13,28 @@ export const selectOrderItems = createSelector(
   dashboardSelectFeature,
   adminSelectFeature,
   (state, adminState): CorrelatedOrderItem[] | undefined => {
-    return state.orders.map((order): CorrelatedOrderItem => {
-      const product = adminState.adminProducts.find(
-        (products) => products.id === order.productId
-      );
+    return state.orders
+      .map((order): CorrelatedOrderItem => {
+        const product = adminState.adminProducts.find(
+          (products) => products.id === order.productId
+        );
 
-      if (product)
-        return {
-          orderItem: order,
-          productName: product?.name,
-          productPrice: product?.price,
-          productCurrency: product?.currency,
-          productQuantity: product.quantity,
-        };
-      else return {} as CorrelatedOrderItem;
-    });
+        if (product)
+          return {
+            orderItem: order,
+            productName: product?.name,
+            productPrice: product?.price,
+            productCurrency: product?.currency,
+            productQuantity: product.quantity,
+          };
+        else return {} as CorrelatedOrderItem;
+      })
+      .sort((a, b) => {
+        return (
+          new Date(b.orderItem.date).getDate() -
+          new Date(a.orderItem.date).getDate()
+        );
+      });
   }
 );
 
