@@ -57,7 +57,7 @@ export const selectProductsSoldIncrease = createSelector(
     const previousCount = sold - todaysOrdersCount;
     if (previousCount === 0) return 0;
 
-    return ((sold - previousCount) / previousCount) * 100;
+    return Math.floor(((sold - previousCount) / previousCount) * 100);
   }
 );
 
@@ -256,10 +256,18 @@ export const selectStockReport = createSelector(
         const remainingPercentage =
           ((prod.quantity - itemsOrdered) / prod.quantity) * 100;
 
-        return { product: prod, remaining: prod.quantity - itemsOrdered, remainingPercentage };
+        return {
+          product: prod,
+          remaining: prod.quantity - itemsOrdered,
+          remainingPercentage,
+        };
       }
 
-      return { product: prod, remaining: prod.quantity, remainingPercentage: 100 };
+      return {
+        product: prod,
+        remaining: prod.quantity,
+        remainingPercentage: 100,
+      };
     })
 );
 

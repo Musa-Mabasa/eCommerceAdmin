@@ -49,9 +49,9 @@
         }
       </div>
     </div>
-    <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg">
+    <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg h-96">
       <h2 class="text-xl font-medium">Recent Orders</h2>
-      <div class="flex flex-col gap-6 pt-4">
+      <div class="flex flex-col gap-6 pt-4 h-full overflow-scroll">
         @for(order of (orders$ | async); track order?.orderItem?.id){
         <app-dashboard-orders
           [customerName]="order.orderItem.customerName"
@@ -66,9 +66,9 @@
         }
       </div>
     </div>
-    <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg">
+    <div class="bg-edit-input-color grow p-6 rounded-3xl h-96 shadow-lg">
       <h2 class="text-xl font-medium">Top Products</h2>
-      <div class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 py-4">
+      <div class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6">
         @for(product of (topProducts$ | async); track product.product.id){
         <img
           *ngIf="product.product.imageUrl"
