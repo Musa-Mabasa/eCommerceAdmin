@@ -25,6 +25,15 @@ export default {
       gridTemplateColumns: {
         edit: "2fr 1fr",
       },
+      animation: {
+        fade: "fadeIn 2s ease-in",
+      },
+      keyframes: () => ({
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 0.8 },
+        },
+      }),
       display: ["group-hover"],
     },
   },
