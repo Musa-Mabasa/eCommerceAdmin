@@ -20,11 +20,12 @@ export default {
     extend: {
       fontFamily: {
         rubik: ['"Rubik"', ...defaultTheme.fontFamily.sans],
-        'rubik-scribble': ["Rubik Scribble", "system-ui"],
+        "rubik-scribble": ["Rubik Scribble", "system-ui"],
       },
       gridTemplateColumns: {
         edit: "2fr 1fr",
       },
+      display: ["group-hover"],
     },
   },
   plugins: [require("daisyui")],

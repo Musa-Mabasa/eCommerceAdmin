@@ -22,30 +22,36 @@ import {
 import { getOrders } from "../../dashboardStore/actions";
 import { AsyncPipe, NgIf } from "@angular/common";
 import { AdminState } from "../../adminStore/reducer";
-import { getAdminProducts } from "../../adminStore/actions";
+import {
+  getAdminProducts,
+  setSelectEditProduct,
+} from "../../adminStore/actions";
 import { getCookie } from "../../utils/utils";
 import {
   selectCurrency,
   selectCurrencyConversion,
 } from "../../previewStore/selectors";
 import { DashboardSkeletonComponent } from "../skeletons/dashboard-skeleton/dashboard-skeleton.component";
+import { Router } from "@angular/router";
+import { Product } from "../../models/admin";
 
 @Component({
-    selector: "app-dashboard",
-    standalone: true,
-    templateUrl: "./dashboard.component.html",
-    styleUrl: "./dashboard.component.scss",
-    imports: [
-        SummaryComponent,
-        DashboardOrdersComponent,
-        StockItemComponent,
-        SalesChartComponent,
-        AsyncPipe,
-        NgIf,
-        DashboardSkeletonComponent
-    ]
+  selector: "app-dashboard",
+  standalone: true,
+  templateUrl: "./dashboard.component.html",
+  styleUrl: "./dashboard.component.scss",
+  imports: [
+    SummaryComponent,
+    DashboardOrdersComponent,
+    StockItemComponent,
+    SalesChartComponent,
+    AsyncPipe,
+    NgIf,
+    DashboardSkeletonComponent,
+  ],
 })
 export class DashboardComponent {
+  router = inject(Router);
   store = inject(Store<DashboardState>);
   prodStore = inject(Store<AdminState>);
   orders$ = this.store.select(selectOrderItems);
@@ -66,5 +72,10 @@ export class DashboardComponent {
   constructor() {
     this.prodStore.dispatch(getAdminProducts({ adminId: getCookie("userId") }));
     this.store.dispatch(getOrders());
+  }
+
+  routeToEdit(product: Product) {
+    this.store.dispatch(setSelectEditProduct({ productToEdit: product }));
+    this.router.navigate([`home/edit-product/${product.id}`]);
   }
 }

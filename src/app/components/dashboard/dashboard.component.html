@@ -167,20 +167,32 @@
           </div>
         </div>
       </div>
-      <div class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6">
+      <div
+        class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6 place-content-stretch"
+      >
         @for(product of (topProducts$ | async); track product.product.id){
-        <img
-          *ngIf="product.product.imageUrl"
-          [src]="product.product.imageUrl"
-          [alt]="product.product.name"
-          class="min-w-32 min-h-32 object-cover rounded-lg place-self-stretch"
-        />
-        <img
-          *ngIf="!product.product.imageUrl"
-          [src]="'../../../assets/images/placeholderImage.webp'"
-          [alt]="product.product.name"
-          class="min-w-32 min-h-32 object-cover rounded-lg place-self-stretch"
-        />
+        <div
+          class="min-w-32 min-h-32 rounded-lg place-self-stretch relative group cursor-pointer"
+          (click)="routeToEdit(product.product)"
+        >
+          <div
+            class="bg-black w-full h-full rounded-lg top-0 opacity-90 absolute z-10 justify-center items-center text-white text-lg hidden group-hover:flex ease-in"
+          >
+            {{ product.product.name }}
+          </div>
+          <img
+            *ngIf="product.product.imageUrl"
+            [src]="product.product.imageUrl"
+            [alt]="product.product.name"
+            class="size-full object-cover rounded-lg"
+          />
+          <img
+            *ngIf="!product.product.imageUrl"
+            [src]="'../../../assets/images/placeholderImage.webp'"
+            [alt]="product.product.name"
+            class="size-full object-cover"
+          />
+        </div>
         }
       </div>
     </div>
