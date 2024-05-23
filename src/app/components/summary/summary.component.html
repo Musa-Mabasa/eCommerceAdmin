@@ -7,7 +7,11 @@
   </div>
   <div class="divider px-4"></div>
   <div class="px-4 flex justify-between">
-    <p class="text-4xl font-medium" [countUp]="count" [duration]="4000"></p>
+    <p
+      class="text-4xl font-medium max-w-38 truncate"
+      [countUp]="count"
+      [duration]="4000"
+    ></p>
     <div class="flex items-center">
       <ng-icon
         *ngIf="increase !== undefined"

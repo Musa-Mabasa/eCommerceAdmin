@@ -36,7 +36,40 @@
     </div>
     <app-sales-chart />
     <div class="bg-edit-input-color p-6 rounded-3xl h-96 shadow-lg">
-      <h2 class="text-xl font-medium">Stock Report</h2>
+      <div class="flex items-center gap-2">
+        <h2 class="text-xl font-medium">Stock Report</h2>
+        <div class="dropdown dropdown-end">
+          <div
+            tabindex="0"
+            role="button"
+            class="btn btn-circle btn-ghost btn-xs text-info"
+          >
+            <svg
+              tabindex="0"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="size-fit stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <div
+            tabindex="0"
+            class="card compact dropdown-content z-[1] shadow bg-white rounded-box w-64"
+          >
+            <div tabindex="0" class="card-body">
+              <h2 class="card-title">You needed more info?</h2>
+              <p>Check out what you have left in your store!</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex flex-col gap-6 pt-4 w-full h-full overflow-scroll mb-2">
         @for(item of (stockReport$ | async); track item.product.id){
 
@@ -50,7 +83,40 @@
       </div>
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg h-96">
-      <h2 class="text-xl font-medium">Recent Orders</h2>
+      <div class="flex items-center gap-2">
+        <h2 class="text-xl font-medium">Recent Orders</h2>
+        <div class="dropdown">
+          <div
+            tabindex="0"
+            role="button"
+            class="btn btn-circle btn-ghost btn-xs text-info"
+          >
+            <svg
+              tabindex="0"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="size-fit stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <div
+            tabindex="0"
+            class="card compact dropdown-content z-[1] shadow bg-white rounded-box w-64"
+          >
+            <div tabindex="0" class="card-body">
+              <h2 class="card-title">You needed more info?</h2>
+              <p>Check out your orders here!</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex flex-col gap-6 pt-4 h-full overflow-scroll">
         @for(order of (orders$ | async); track order?.orderItem?.id){
         <app-dashboard-orders
@@ -67,7 +133,40 @@
       </div>
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl h-96 shadow-lg">
-      <h2 class="text-xl font-medium">Top Products</h2>
+      <div class="flex items-center gap-2">
+        <h2 class="text-xl font-medium">Top Products</h2>
+        <div class="dropdown dropdown-end">
+          <div
+            tabindex="0"
+            role="button"
+            class="btn btn-circle btn-ghost btn-xs text-info"
+          >
+            <svg
+              tabindex="0"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="size-fit stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <div
+            tabindex="0"
+            class="card compact dropdown-content z-[1] shadow bg-white rounded-box w-64"
+          >
+            <div tabindex="0" class="card-body">
+              <h2 class="card-title">You needed more info?</h2>
+              <p>These products have been ordered the most!</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6">
         @for(product of (topProducts$ | async); track product.product.id){
         <img
