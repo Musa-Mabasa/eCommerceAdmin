@@ -16,6 +16,7 @@ import {
   checkoutCart,
   deleteProductFromCart,
   getAllProducts,
+  getCart,
   getCategories,
   getCurrencyConversion,
   getTags,
@@ -126,6 +127,7 @@ export class AllProductsComponent {
   currency = new FormControl("");
 
   constructor() {
+    this.store.dispatch(getCart({ userId: getCookie("userId") }));
     this.store.dispatch(getAllProducts());
     this.store.dispatch(getCategories());
     this.store.dispatch(getTags());

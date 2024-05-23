@@ -68,7 +68,7 @@
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg">
       <h2 class="text-xl font-medium">Top Products</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-5 py-4">
+      <div class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 py-4">
         @for(product of (topProducts$ | async); track product.product.id){
         <img
           *ngIf="product.product.imageUrl"

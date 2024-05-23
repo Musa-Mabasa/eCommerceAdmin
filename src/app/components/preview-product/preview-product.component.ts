@@ -18,16 +18,23 @@ import { Router, RouterLink } from "@angular/router";
 import { CurrencyConversionPipe } from "../../pipes/currency-conversion.pipe";
 
 @Component({
-    selector: "app-preview-product",
-    standalone: true,
-    templateUrl: "./preview-product.component.html",
-    styleUrl: "./preview-product.component.scss",
-    viewProviders: [
-        provideIcons({
-            matShoppingCartOutline,
-        }),
-    ],
-    imports: [NgIconComponent, AsyncPipe, RouterLink, CurrencyPipe, NgIf, CurrencyConversionPipe]
+  selector: "app-preview-product",
+  standalone: true,
+  templateUrl: "./preview-product.component.html",
+  styleUrl: "./preview-product.component.scss",
+  viewProviders: [
+    provideIcons({
+      matShoppingCartOutline,
+    }),
+  ],
+  imports: [
+    NgIconComponent,
+    AsyncPipe,
+    RouterLink,
+    CurrencyPipe,
+    NgIf,
+    CurrencyConversionPipe,
+  ],
 })
 export class PreviewProductComponent {
   store = inject(Store<PreviewState>);
@@ -47,7 +54,7 @@ export class PreviewProductComponent {
 
     this.product$.pipe(takeUntilDestroyed()).subscribe((product) => {
       if (product) this.product = product;
-      else this.router.navigate([`home/all-products`]);
+      else this.router.navigate([`/all-products`]);
     });
   }
 
@@ -59,7 +66,7 @@ export class PreviewProductComponent {
         })
       );
 
-      this.router.navigate([`home/all-products`]);
+      this.router.navigate([`/all-products`]);
     }
   }
 
