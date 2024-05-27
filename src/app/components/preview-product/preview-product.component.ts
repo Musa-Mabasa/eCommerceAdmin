@@ -16,6 +16,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { addProductToCart, setProductToView } from "../../previewStore/actions";
 import { Router, RouterLink } from "@angular/router";
 import { CurrencyConversionPipe } from "../../pipes/currency-conversion.pipe";
+import { AdminState } from "../../adminStore/reducer";
+import { insidePreview } from "../../adminStore/actions";
 
 @Component({
   selector: "app-preview-product",
@@ -38,6 +40,7 @@ import { CurrencyConversionPipe } from "../../pipes/currency-conversion.pipe";
 })
 export class PreviewProductComponent {
   store = inject(Store<PreviewState>);
+  adminStore = inject(Store<AdminState>);
   router = inject(Router);
   product$ = this.store.select(selectProductToView);
   cart$ = this.store.select(selectCart);
@@ -59,6 +62,7 @@ export class PreviewProductComponent {
   }
 
   addProductToCart() {
+    this.adminStore.dispatch(insidePreview());
     if (this.cartId && this.product) {
       this.store.dispatch(
         addProductToCart({

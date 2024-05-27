@@ -4,7 +4,6 @@ import { adminSelectFeature } from "../adminStore/selectors";
 import { CorrelatedOrderItem, Product } from "../models/admin";
 import { previewSelectFeature } from "../previewStore/selectors";
 import { convertToCurrency } from "../utils/utils";
-import { or } from "@angular/fire/firestore";
 
 export const dashboardSelectFeature =
   createFeatureSelector<DashboardState>(dashboardFeatureKey);
@@ -13,28 +12,36 @@ export const selectOrderItems = createSelector(
   dashboardSelectFeature,
   adminSelectFeature,
   (state, adminState): CorrelatedOrderItem[] | undefined => {
-    return state.orders
-      .map((order): CorrelatedOrderItem => {
+    const orders = state.orders
+      .filter((order) => {
         const product = adminState.adminProducts.find(
           (products) => products.id === order.productId
         );
 
+        return product;
+      })
+      .map((order): CorrelatedOrderItem => {
+        const product = adminState.adminProducts.find(
+          (products) => products.id === order.productId
+        );
         if (product)
           return {
             orderItem: order,
             productName: product?.name,
             productPrice: product?.price,
             productCurrency: product?.currency,
-            productQuantity: product.quantity,
+            productQuantity: product?.quantity,
           };
         else return {} as CorrelatedOrderItem;
       })
       .sort((a, b) => {
         return (
-          new Date(b.orderItem.date).getDate() -
-          new Date(a.orderItem.date).getDate()
+          new Date(b?.orderItem?.date).getDate() -
+          new Date(a?.orderItem?.date).getDate()
         );
       });
+
+    return orders;
   }
 );
 
@@ -53,7 +60,8 @@ export const selectProductsSoldIncrease = createSelector(
     });
     const formattedDate = dateTimeFormatter.format(today);
     const todaysOrdersCount =
-      items?.filter((item) => item.orderItem.date == formattedDate).length ?? 0;
+      items?.filter((item) => item.orderItem?.date == formattedDate).length ??
+      0;
     const previousCount = sold - todaysOrdersCount;
     if (previousCount === 0) return 0;
 
@@ -105,7 +113,7 @@ export const selectRevenueIncrease = createSelector(
     });
     const formattedDate = dateTimeFormatter.format(today);
     const yesterdaysOrders = items?.filter(
-      (item) => item.orderItem.date != formattedDate
+      (item) => item.orderItem?.date != formattedDate
     );
 
     let initialRevenue = 0;
@@ -153,7 +161,7 @@ export const selectTotalCustomers = createSelector(
   selectOrderItems,
   (items) =>
     items
-      ?.map((item) => item.orderItem.customerName)
+      ?.map((item) => item.orderItem?.customerName)
       .filter(
         (name, index, currentValue) => currentValue.indexOf(name) === index
       ).length ?? 0
@@ -170,8 +178,8 @@ export const selectTotalCustomersIncrease = createSelector(
     const formattedDate = dateTimeFormatter.format(today);
 
     const yesterdaysCustomers = items
-      ?.filter((item) => item.orderItem.date != formattedDate)
-      .map((item) => item.orderItem.customerName)
+      ?.filter((item) => item.orderItem?.date != formattedDate)
+      .map((item) => item.orderItem?.customerName)
       .filter(
         (name, index, currentValue) => currentValue.indexOf(name) === index
       );
@@ -216,7 +224,8 @@ export const selectTotalQuantityDecrease = createSelector(
     const formattedDate = dateTimeFormatter.format(today);
 
     const todaysOrders =
-      items?.filter((item) => item.orderItem.date == formattedDate).length ?? 0;
+      items?.filter((item) => item.orderItem?.date == formattedDate).length ??
+      0;
 
     const yesterdaysOrders = quantity + todaysOrders;
 
@@ -249,7 +258,7 @@ export const selectStockReport = createSelector(
         };
 
       const itemsOrdered = items?.filter(
-        (item) => item.orderItem.productId === prod.id
+        (item) => item.orderItem?.productId === prod.id
       ).length;
 
       if (itemsOrdered > 0) {
@@ -279,7 +288,7 @@ export const selectTopProducts = createSelector(
       .map((prod) => ({
         product: prod,
         sold:
-          items?.filter((item) => item.orderItem.productId === prod.id)
+          items?.filter((item) => item.orderItem?.productId === prod.id)
             .length ?? 0,
       }))
       .sort((a, b) => b.sold - a.sold)
@@ -320,7 +329,7 @@ export const selectLastSevenDaysSales = createSelector(
           });
           const formattedDate = dateTimeFormatter.format(day);
 
-          return item.orderItem.date == formattedDate;
+          return item.orderItem?.date == formattedDate;
         }).length ?? 0
     );
   }

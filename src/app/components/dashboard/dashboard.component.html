@@ -85,7 +85,7 @@
     <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg h-96">
       <div class="flex items-center gap-2">
         <h2 class="text-xl font-medium">Recent Orders</h2>
-        <div class="dropdown">
+        <div class="dropdown h-fit">
           <div
             tabindex="0"
             role="button"
@@ -176,7 +176,7 @@
           (click)="routeToEdit(product.product)"
         >
           <div
-            class="bg-black w-full h-full rounded-lg top-0 opacity-80 absolute z-10 justify-center items-center text-white text-lg hidden group-hover:flex animation-fade"
+            class="bg-black w-full h-full rounded-lg top-0 duration-500 group-hover:opacity-80 transition-opacity absolute z-10 justify-center items-center text-white text-lg flex opacity-0"
           >
             {{ product.product.name }}
           </div>
