@@ -35,10 +35,10 @@
       />
     </div>
     <app-sales-chart />
-    <div class="bg-edit-input-color p-6 rounded-3xl h-96 shadow-lg">
+    <div class="bg-edit-input-color p-6 rounded-3xl h-96 shadow-lg overflow-hidden">
       <div class="flex items-center gap-2">
         <h2 class="text-xl font-medium">Stock Report</h2>
-        <div class="dropdown dropdown-end">
+        <div class="dropdown">
           <div
             tabindex="0"
             role="button"
@@ -82,7 +82,7 @@
         }
       </div>
     </div>
-    <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg h-96">
+    <div class="bg-edit-input-color grow p-6 rounded-3xl shadow-lg h-96 overflow-hidden">
       <div class="flex items-center gap-2">
         <h2 class="text-xl font-medium">Recent Orders</h2>
         <div class="dropdown h-fit">
@@ -133,10 +133,12 @@
         } }
       </div>
     </div>
-    <div class="bg-edit-input-color grow p-6 rounded-3xl h-96 shadow-lg">
+    <div
+      class="bg-edit-input-color grow p-6 rounded-3xl h-96 shadow-lg overflow-hidden"
+    >
       <div class="flex items-center gap-2">
         <h2 class="text-xl font-medium">Top Products</h2>
-        <div class="dropdown dropdown-end">
+        <div class="dropdown">
           <div
             tabindex="0"
             role="button"
@@ -169,7 +171,7 @@
         </div>
       </div>
       <div
-        class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6 place-content-stretch"
+        class="h-full grid grid-cols-2 sm:grid-cols-3 gap-5 pt-4 pb-6 place-content-stretch overflow-scroll"
       >
         @for(product of (topProducts$ | async); track product.product.id){
         <div

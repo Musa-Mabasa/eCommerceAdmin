@@ -76,6 +76,6 @@ export class PreviewProductComponent {
 
   routeToRelatedProduct(productToView: CorrelatedProduct) {
     this.store.dispatch(setProductToView({ productToView }));
-    this.router.navigate([`/home/preview-product/${productToView.product.id}`]);
+    this.router.navigate([`/preview-product/${productToView.product.id}`]);
   }
 }
