@@ -9,7 +9,6 @@ import {
 } from "@ng-icons/material-icons/outline";
 import { AsyncPipe, CurrencyPipe, NgIf } from "@angular/common";
 import { Store } from "@ngrx/store";
-import { AdminState } from "../../adminStore/reducer";
 import {
   addProductToCart,
   addToSelectedTags,
@@ -96,7 +95,6 @@ import { PreviewSplashComponent } from "../preview-splash/preview-splash.compone
 export class AllProductsComponent {
   router = inject(Router);
   store = inject(Store<PreviewState>);
-  adminStore = inject(Store<AdminState>);
   avatar: string | undefined = getCookie("avatar");
   displayName: string | undefined = getCookie("displayName");
   email = getCookie("email");

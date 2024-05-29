@@ -1,333 +1,340 @@
 @if((fromHome$ | async) && (isLoading$ | async) ){
 <app-preview-splash />
 }@else {
-<header class="w-full py-3 px-8 flex justify-between items-center shadow-md">
-  <div class="flex items-center">
-    <img class="w-8" src="../../../assets/images/logo.png" alt="" />
-    <h1 class="text-2xl font-bold font-rubik-scribble text-secondary-color">
-      <a routerLink="/home/dashboard">
-        <img src="https://www.flaticon.com/free-icons/mobile-shopping" alt="" />
-        Store<span class="text-primary-color">Hero</span>
-      </a>
-    </h1>
-  </div>
-  <div class="flex items-center gap-8">
-    <ng-icon
-      *ngIf="!(cartProducts$ | async)?.length"
-      name="matShoppingCartOutline"
-      class="text-2xl h-fit"
-    />
-    <div
-      *ngIf="(cartProducts$ | async)?.length"
-      class="dropdown dropdown-end h-5"
-    >
-      <div class="indicator w-fit" tabindex="0" role="button">
-        <span
-          class="indicator-item badge size-2 p-0 bg-primary-color absolute top-1 right-[0.30rem]"
-        ></span>
-        <ng-icon name="matShoppingCartOutline" class="text-2xl h-fit" />
-      </div>
-      <ul
-        tabindex="0"
-        class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-72 sm:w-[500px]"
-      >
-        <p class="text-xl font-normal px-2">Cart</p>
-        <div class="divider mt-3 mb-1"></div>
-        <div class="flex flex-col">
-          @if((cartProducts$ | async); as products){ @for(product of products;
-          track product.id){
-          <app-cart-item
-            (onDelete)="deleteProductFromCart($event)"
-            [product]="product"
-            class="p-2"
-            [conversionData]="conversionData$ | async"
-            [userCurrency]="userCurrency$ | async"
+<div class="overflow-hidden w-full h-lvh">
+  <header class="w-full py-3 px-8 flex justify-between items-center shadow-md">
+    <div class="flex items-center">
+      <img class="w-8" src="../../../assets/images/logo.png" alt="" />
+      <h1 class="text-2xl font-bold font-rubik-scribble text-secondary-color">
+        <a routerLink="/home/dashboard">
+          <img
+            src="https://www.flaticon.com/free-icons/mobile-shopping"
+            alt=""
           />
-          <div class="divider my-1"></div>
-          } }
-          <div class="flex justify-between px-2 py-8">
-            <p class="font-medium">Subtotal</p>
-            <p class="font-semibold" *ngIf="userCurrency$ | async">
-              {{
-                cartTotal$ | async | currency : userCurrency : "symbol-narrow"
-              }}
-            </p>
-          </div>
-          <button
-            class="btn bg-secondary-color rounded-3xl shadow-xl w-40 text-whiteSmoke my-4 mx-2"
-            (click)="checkout()"
-          >
-            Checkout
-            <ng-icon
-              *ngIf="(isCheckingout$ | async) === false"
-              name="matShoppingCartCheckout"
-              class="text-2xl"
-            />
-            <span
-              *ngIf="(isCheckingout$ | async) ?? false"
-              class="loading loading-spinner loading-sm"
-            ></span>
-          </button>
-        </div>
-      </ul>
+          Store<span class="text-primary-color">Hero</span>
+        </a>
+      </h1>
     </div>
-    <div class="dropdown dropdown-hover dropdown-end">
+    <div class="flex items-center gap-8">
+      <ng-icon
+        *ngIf="!(cartProducts$ | async)?.length"
+        name="matShoppingCartOutline"
+        class="text-2xl h-fit"
+      />
       <div
-        tabindex="0"
-        role="button"
-        class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-base flex justify-center items-center p-0"
+        *ngIf="(cartProducts$ | async)?.length"
+        class="dropdown dropdown-end h-5"
       >
-        @if(avatar){
-        <img
-          [src]="avatar"
-          referrerpolicy="no-referrer"
-          class="rounded-full w-full"
-        />
-        }@else{
-        <p class="text-center text-lg h-fit w-fit">
-          {{ email.charAt(0).toUpperCase() }}
-        </p>
-        }
-      </div>
-      <ul
-        tabindex="0"
-        class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-[330px]"
-      >
-        <li class="h-44 p-3 flex flex-col gap-1 justify-center items-center">
-          <div
-            class="avatar w-20 h-20 bg-secondary-color rounded-full text-whiteSmoke flex justify-center items-center p-0"
-          >
-            @if(avatar){
-            <img
-              [src]="avatar"
-              referrerpolicy="no-referrer"
-              class="rounded-full w-full"
-            />
-            }@else{
-            <p class="text-center text-lg h-fit w-fit">
-              {{ email.charAt(0).toUpperCase() }}
-            </p>
-            }
-          </div>
-          <p class="font-medium text-center">
-            {{ !displayName || displayName === "" ? email : displayName }}
-          </p>
-        </li>
-        <li onclick="">
-          <a routerLink="/home/dashboard"
-            ><ng-icon name="matHome" class="text-2xl" />Home</a
-          >
-        </li>
-        <li onclick="my_modal_2.showModal()">
-          <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
-        </li>
-        <div class="divider h-fit m-1"></div>
-        <li (click)="signOut()">
-          <a><ng-icon name="matExitToApp" class="text-2xl" />Sign out</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</header>
-<main class="w-full h-full grow-0 overflow-scroll">
-  <section
-    class="flex flex-col justify-center items-center w-full h-fit px-6 pt-20 pb-10"
-  >
-    <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">
-      Your Number One
-    </p>
-    <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">
-      Go-To <span class="text-secondary-color">Store</span>.
-    </p>
-    <p class="font-rubik text-center">
-      We offer a wide range of products from end to end.
-    </p>
-  </section>
-  <section class="px-6 flex flex-col items-center">
-    @if(isLoading$ | async){
-    <app-all-products-skeleton class="flex flex-col w-full items-center" />
-    }@else {
-    <div class="flex">
-      <label
-        class="input input-bordered pr-6 mr-0 sm:w-96 rounded-none bg-search-color flex items-center justify-between"
-      >
-        <input
-          type="text"
-          class="w-4/5"
-          placeholder="Search Products..."
-          (input)="onSearch($event)"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          class="w-4 h-4 opacity-70"
+        <div class="indicator w-fit" tabindex="0" role="button">
+          <span
+            class="indicator-item badge size-2 p-0 bg-primary-color absolute top-1 right-[0.30rem]"
+          ></span>
+          <ng-icon name="matShoppingCartOutline" class="text-2xl h-fit" />
+        </div>
+        <ul
+          tabindex="0"
+          class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-72 sm:w-[500px]"
         >
-          <path
-            fill-rule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </label>
-      <div class="dropdown dropdown-end">
+          <p class="text-xl font-normal px-2">Cart</p>
+          <div class="divider mt-3 mb-1"></div>
+          <div class="flex flex-col">
+            @if((cartProducts$ | async); as products){ @for(product of products;
+            track product.id){
+            <app-cart-item
+              (onDelete)="deleteProductFromCart($event)"
+              [product]="product"
+              class="p-2"
+              [conversionData]="conversionData$ | async"
+              [userCurrency]="userCurrency$ | async"
+            />
+            <div class="divider my-1"></div>
+            } }
+            <div class="flex justify-between px-2 py-8">
+              <p class="font-medium">Subtotal</p>
+              <p class="font-semibold" *ngIf="userCurrency$ | async">
+                {{
+                  cartTotal$ | async | currency : userCurrency : "symbol-narrow"
+                }}
+              </p>
+            </div>
+            <button
+              class="btn bg-secondary-color rounded-3xl shadow-xl w-40 text-whiteSmoke my-4 mx-2"
+              (click)="checkout()"
+            >
+              Checkout
+              <ng-icon
+                *ngIf="(isCheckingout$ | async) === false"
+                name="matShoppingCartCheckout"
+                class="text-2xl"
+              />
+              <span
+                *ngIf="(isCheckingout$ | async) ?? false"
+                class="loading loading-spinner loading-sm"
+              ></span>
+            </button>
+          </div>
+        </ul>
+      </div>
+      <div class="dropdown dropdown-hover dropdown-end">
         <div
           tabindex="0"
           role="button"
-          class="bg-search-color input input-bordered flex justify-center items-center h-12 w-20 rounded-none"
+          class="avatar bg-secondary-color w-12 h-12 hover:bg-secondary-color rounded-full text-whiteSmoke font-base flex justify-center items-center p-0"
         >
-          <ng-icon name="matFilterListOutline" class="text-2xl" />
+          @if(avatar){
+          <img
+            [src]="avatar"
+            referrerpolicy="no-referrer"
+            class="rounded-full w-full"
+          />
+          }@else{
+          <p class="text-center text-lg h-fit w-fit">
+            {{ email.charAt(0).toUpperCase() }}
+          </p>
+          }
         </div>
-        <div
+        <ul
           tabindex="0"
-          class="dropdown-content menu py-5 px-5 shadow rounded-b-3xl w-[313px] sm:w-[464px] bg-search-color flex flex-col gap-5"
+          class="dropdown-content z-[1] menu p-2 shadow bg-search-color rounded-box w-64 h-[330px]"
         >
-          <p class="text-lg font-semibold font-rubik">Advanced Search Filter</p>
-          <div class="flex flex-col gap-3 w-full">
-            <div class="flex flex-col gap-2">
-              <p>Category</p>
-              <select
-                class="select w-full bg-edit-input-color"
-                [formControl]="selectedCategory"
-                (change)="selectCategory()"
-              >
-                @for (category of (categories$ | async); track category) {
-                <option [value]="category.name">{{ category.name }}</option>
-                }
-              </select>
-            </div>
-            <div class="flex flex-col gap-2 overflow-auto">
-              <p>Tags</p>
-              <div
-                class="flex items-center gap-4 w-full pb-5 font-rubik font-light text-nowrap overflow-auto"
-              >
-                @for(tag of (tags$ | async); track tag){ @if((selectedTags$ |
-                async)?.includes(tag.name)){
-                <div
-                  (click)="removeFromSelectedTags(tag.name)"
-                  class="badge bg-primary-color text-black cursor-pointer px-3 py-4 font-rubik"
-                >
-                  {{ tag.name }}
-                </div>
-                } @else{
-                <div
-                  (click)="addToSelectedTags(tag.name)"
-                  class="badge badge-outline cursor-pointer px-3 py-4 font-rubik"
-                >
-                  {{ tag.name }}
-                </div>
-                } }
-              </div>
-            </div>
-            <div class="flex flex-col gap-2">
-              <p>Price Range</p>
-              <div class="pb-3">
-                @for(rangeType of priceRangeTypes; track rangeType){
-                @if(rangeType === selectedPriceRangeType) {
-                <div
-                  class="badge badge-outline bg-primary-color rounded-none p-4"
-                >
-                  {{ rangeType }}
-                </div>
-                } @else{
-                <div
-                  (click)="selectedPriceRangeType = rangeType"
-                  class="badge badge-outline rounded-none p-4 cursor-pointer"
-                >
-                  {{ rangeType }}
-                </div>
-                } }
-              </div>
-              <input
-                *ngIf="
-                  selectedPriceRangeType !== 'Between' &&
-                  selectedPriceRangeType !== 'None'
-                "
-                type="number"
-                [placeholder]="userCurrency$ | async"
-                class="input input-bordered bg-edit-input-color w-24 h-9"
-                [formControl]="lowerBoundPrice"
+          <li class="h-44 p-3 flex flex-col gap-1 justify-center items-center">
+            <div
+              class="avatar w-20 h-20 bg-secondary-color rounded-full text-whiteSmoke flex justify-center items-center p-0"
+            >
+              @if(avatar){
+              <img
+                [src]="avatar"
+                referrerpolicy="no-referrer"
+                class="rounded-full w-full"
               />
-              <div
-                *ngIf="selectedPriceRangeType === 'Between'"
-                class="flex gap-5 items-center"
-              >
+              }@else{
+              <p class="text-center text-lg h-fit w-fit">
+                {{ email.charAt(0).toUpperCase() }}
+              </p>
+              }
+            </div>
+            <p class="font-medium text-center">
+              {{ !displayName || displayName === "" ? email : displayName }}
+            </p>
+          </li>
+          <li onclick="">
+            <a routerLink="/home/dashboard"
+              ><ng-icon name="matHome" class="text-2xl" />Home</a
+            >
+          </li>
+          <li onclick="my_modal_2.showModal()">
+            <a><ng-icon name="matSettings" class="text-2xl" />Settings</a>
+          </li>
+          <div class="divider h-fit m-1"></div>
+          <li (click)="signOut()">
+            <a><ng-icon name="matExitToApp" class="text-2xl" />Sign out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <main class="w-full h-full grow-0 overflow-scroll">
+    <section
+      class="flex flex-col justify-center items-center w-full h-fit px-6 pt-20 pb-10"
+    >
+      <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">
+        Your Number One
+      </p>
+      <p class="text-3xl sm:text-6xl font-medium font-rubik text-center">
+        Go-To <span class="text-secondary-color">Store</span>.
+      </p>
+      <p class="font-rubik text-center">
+        We offer a wide range of products from end to end.
+      </p>
+    </section>
+    <section class="px-6 flex flex-col items-center mb-16">
+      @if(isLoading$ | async){
+      <app-all-products-skeleton class="flex flex-col w-full items-center" />
+      }@else {
+      <div class="flex">
+        <label
+          class="input input-bordered pr-6 mr-0 sm:w-96 rounded-none bg-search-color flex items-center justify-between"
+        >
+          <input
+            type="text"
+            class="w-4/5"
+            placeholder="Search Products..."
+            (input)="onSearch($event)"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="w-4 h-4 opacity-70"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </label>
+        <div class="dropdown dropdown-end">
+          <div
+            tabindex="0"
+            role="button"
+            class="bg-search-color input input-bordered flex justify-center items-center h-12 w-20 rounded-none"
+          >
+            <ng-icon name="matFilterListOutline" class="text-2xl" />
+          </div>
+          <div
+            tabindex="0"
+            class="dropdown-content menu py-5 px-5 shadow rounded-b-3xl w-[313px] sm:w-[464px] bg-search-color flex flex-col gap-5"
+          >
+            <p class="text-lg font-semibold font-rubik">
+              Advanced Search Filter
+            </p>
+            <div class="flex flex-col gap-3 w-full">
+              <div class="flex flex-col gap-2">
+                <p>Category</p>
+                <select
+                  class="select w-full bg-edit-input-color"
+                  [formControl]="selectedCategory"
+                  (change)="selectCategory()"
+                >
+                  @for (category of (categories$ | async); track category) {
+                  <option [value]="category.name">{{ category.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="flex flex-col gap-2 overflow-auto">
+                <p>Tags</p>
+                <div
+                  class="flex items-center gap-4 w-full pb-5 font-rubik font-light text-nowrap overflow-auto"
+                >
+                  @for(tag of (tags$ | async); track tag){ @if((selectedTags$ |
+                  async)?.includes(tag.name)){
+                  <div
+                    (click)="removeFromSelectedTags(tag.name)"
+                    class="badge bg-primary-color text-black cursor-pointer px-3 py-4 font-rubik"
+                  >
+                    {{ tag.name }}
+                  </div>
+                  } @else{
+                  <div
+                    (click)="addToSelectedTags(tag.name)"
+                    class="badge badge-outline cursor-pointer px-3 py-4 font-rubik"
+                  >
+                    {{ tag.name }}
+                  </div>
+                  } }
+                </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <p>Price Range</p>
+                <div class="pb-3">
+                  @for(rangeType of priceRangeTypes; track rangeType){
+                  @if(rangeType === selectedPriceRangeType) {
+                  <div
+                    class="badge badge-outline bg-primary-color rounded-none p-4"
+                  >
+                    {{ rangeType }}
+                  </div>
+                  } @else{
+                  <div
+                    (click)="selectedPriceRangeType = rangeType"
+                    class="badge badge-outline rounded-none p-4 cursor-pointer"
+                  >
+                    {{ rangeType }}
+                  </div>
+                  } }
+                </div>
                 <input
+                  *ngIf="
+                    selectedPriceRangeType !== 'Between' &&
+                    selectedPriceRangeType !== 'None'
+                  "
                   type="number"
                   [placeholder]="userCurrency$ | async"
                   class="input input-bordered bg-edit-input-color w-24 h-9"
                   [formControl]="lowerBoundPrice"
                 />
-                <ng-icon name="matArrowForwardOutline" class="text-2xl" />
-                <input
-                  type="number"
-                  [placeholder]="userCurrency$ | async"
-                  class="input input-bordered bg-edit-input-color w-24 h-9"
-                  [formControl]="upperBoundPrice"
-                />
+                <div
+                  *ngIf="selectedPriceRangeType === 'Between'"
+                  class="flex gap-5 items-center"
+                >
+                  <input
+                    type="number"
+                    [placeholder]="userCurrency$ | async"
+                    class="input input-bordered bg-edit-input-color w-24 h-9"
+                    [formControl]="lowerBoundPrice"
+                  />
+                  <ng-icon name="matArrowForwardOutline" class="text-2xl" />
+                  <input
+                    type="number"
+                    [placeholder]="userCurrency$ | async"
+                    class="input input-bordered bg-edit-input-color w-24 h-9"
+                    [formControl]="upperBoundPrice"
+                  />
+                </div>
               </div>
             </div>
+            <button
+              (click)="confirmFilters()"
+              class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
+            >
+              Done
+            </button>
           </div>
-          <button
-            (click)="confirmFilters()"
-            class="w-42 sm:w-52 lg:w-52 btn bg-secondary-color rounded-3xl shadow-xl text-whiteSmoke"
-          >
-            Done
-          </button>
         </div>
       </div>
-    </div>
-    @if (!(allProducts$ | async)?.length){
-    <div class="grow flex flex-col justify-center items-center h-56">
-      <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
-      <p class="text-lg font-semibold">No products found</p>
-    </div>
-    } @else {
-    <div
-      class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
-    >
-      @for(product of (allProducts$ | async); track product){
-      <app-preview-card
-        [product]="product"
-        class="w-72"
-        (onClick)="routeToProduct($event)"
-        (onAddToCart)="addProductToCart($event)"
-        [conversionData]="conversionData$ | async"
-        [userCurrency]="userCurrency$ | async"
-      />
-      }
-    </div>
-    } }
-  </section>
-  <dialog id="my_modal_2" class="modal">
-    <div class="modal-box bg-search-color">
-      <h3 class="font-bold text-lg">Select Currency</h3>
-      <p class="py-4">Select your preffered currency below:</p>
-      <select
-        class="select w-full bg-edit-input-color"
-        [formControl]="currency"
-      >
-        <option value="ZAR">ZAR - Rand</option>
-        <option value="GBP">GBP - Pound Sterling</option>
-        <option value="USD">USD - Us Dollars</option>
-        <option value="EUR">EUR - Euro</option>
-      </select>
-      <div class="modal-action">
-        <form method="dialog" class="flex gap-4">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
-            Close
-          </button>
-          <button
-            class="btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
-            (click)="onSelectUserCurrency()"
-          >
-            Confirm
-            <ng-icon name="matCheck" class="text-2xl" />
-          </button>
-        </form>
+      @if (!(allProducts$ | async)?.length){
+      <div class="grow flex flex-col justify-center items-center h-56">
+        <img src="../../../assets/images/noInfoFound.svg" alt="" class="w-20" />
+        <p class="text-lg font-semibold">No products found</p>
       </div>
-    </div>
-  </dialog>
-</main>
+      } @else {
+      <div
+        class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
+      >
+        @for(product of (allProducts$ | async); track product){
+        <app-preview-card
+          [product]="product"
+          class="w-72"
+          (onClick)="routeToProduct($event)"
+          (onAddToCart)="addProductToCart($event)"
+          [conversionData]="conversionData$ | async"
+          [userCurrency]="userCurrency$ | async"
+        />
+        }
+      </div>
+      } }
+    </section>
+    <dialog id="my_modal_2" class="modal">
+      <div class="modal-box bg-search-color">
+        <h3 class="font-bold text-lg">Select Currency</h3>
+        <p class="py-4">Select your preffered currency below:</p>
+        <select
+          class="select w-full bg-edit-input-color"
+          [formControl]="currency"
+        >
+          <option value="ZAR">ZAR - Rand</option>
+          <option value="GBP">GBP - Pound Sterling</option>
+          <option value="USD">USD - Us Dollars</option>
+          <option value="EUR">EUR - Euro</option>
+        </select>
+        <div class="modal-action">
+          <form method="dialog" class="flex gap-4">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-outline rounded-3xl border-2 shadow-lg">
+              Close
+            </button>
+            <button
+              class="btn bg-secondary-color text-whiteSmoke rounded-3xl shadow-xl"
+              (click)="onSelectUserCurrency()"
+            >
+              Confirm
+              <ng-icon name="matCheck" class="text-2xl" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </main>
+</div>
 }

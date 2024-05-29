@@ -119,6 +119,7 @@
       </div>
       <div class="flex flex-col gap-6 pt-4 h-full overflow-scroll">
         @for(order of (orders$ | async); track order?.orderItem?.id){
+        @if(order?.orderItem){
         <app-dashboard-orders
           [customerName]="order.orderItem.customerName"
           [customerAvatar]="order.orderItem.customerAvatar"
@@ -129,7 +130,7 @@
           [userCurrency]="(userCurrency$ | async) ?? 'ZAR'"
           [conversionData]="conversionData$ | async"
         />
-        }
+        } }
       </div>
     </div>
     <div class="bg-edit-input-color grow p-6 rounded-3xl h-96 shadow-lg">

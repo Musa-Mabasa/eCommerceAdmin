@@ -51,6 +51,7 @@ export class PreviewProductComponent {
   userCurrency$ = this.store.select(selectCurrency);
 
   constructor() {
+    this.adminStore.dispatch(insidePreview());
     this.cart$.pipe(takeUntilDestroyed()).subscribe((cart) => {
       if (cart) this.cartId = cart?.id;
     });
@@ -62,7 +63,6 @@ export class PreviewProductComponent {
   }
 
   addProductToCart() {
-    this.adminStore.dispatch(insidePreview());
     if (this.cartId && this.product) {
       this.store.dispatch(
         addProductToCart({

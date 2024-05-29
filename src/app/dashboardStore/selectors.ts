@@ -60,7 +60,7 @@ export const selectProductsSoldIncrease = createSelector(
     });
     const formattedDate = dateTimeFormatter.format(today);
     const todaysOrdersCount =
-      items?.filter((item) => item.orderItem?.date == formattedDate).length ??
+      items?.filter((item) => item?.orderItem?.date == formattedDate).length ??
       0;
     const previousCount = sold - todaysOrdersCount;
     if (previousCount === 0) return 0;
@@ -76,24 +76,33 @@ export const selectRevenue = createSelector(
     let revenue = 0;
     if (items)
       for (const item of items) {
-        if (item.productCurrency === "EUR" && item.productQuantity > 0) {
+        if (item?.productCurrency === "EUR" && item?.productQuantity > 0) {
           revenue += convertToCurrency(
-            item.productPrice,
+            item?.productPrice,
             previewState.currencyConversion?.["EUR"].value
           );
-        } else if (item.productCurrency === "ZAR" && item.productQuantity > 0) {
+        } else if (
+          item?.productCurrency === "ZAR" &&
+          item?.productQuantity > 0
+        ) {
           revenue += convertToCurrency(
-            item.productPrice,
+            item?.productPrice,
             previewState.currencyConversion?.["ZAR"].value
           );
-        } else if (item.productCurrency === "GBP" && item.productQuantity > 0) {
+        } else if (
+          item?.productCurrency === "GBP" &&
+          item?.productQuantity > 0
+        ) {
           revenue += convertToCurrency(
-            item.productPrice,
+            item?.productPrice,
             previewState.currencyConversion?.["GBP"].value
           );
-        } else if (item.productCurrency === "USD" && item.productQuantity > 0) {
+        } else if (
+          item?.productCurrency === "USD" &&
+          item?.productQuantity > 0
+        ) {
           revenue += convertToCurrency(
-            item.productPrice,
+            item?.productPrice,
             previewState.currencyConversion?.["USD"].value
           );
         }
@@ -113,7 +122,7 @@ export const selectRevenueIncrease = createSelector(
     });
     const formattedDate = dateTimeFormatter.format(today);
     const yesterdaysOrders = items?.filter(
-      (item) => item.orderItem?.date != formattedDate
+      (item) => item?.orderItem?.date != formattedDate
     );
 
     let initialRevenue = 0;
@@ -161,7 +170,7 @@ export const selectTotalCustomers = createSelector(
   selectOrderItems,
   (items) =>
     items
-      ?.map((item) => item.orderItem?.customerName)
+      ?.map((item) => item?.orderItem?.customerName)
       .filter(
         (name, index, currentValue) => currentValue.indexOf(name) === index
       ).length ?? 0
@@ -178,8 +187,8 @@ export const selectTotalCustomersIncrease = createSelector(
     const formattedDate = dateTimeFormatter.format(today);
 
     const yesterdaysCustomers = items
-      ?.filter((item) => item.orderItem?.date != formattedDate)
-      .map((item) => item.orderItem?.customerName)
+      ?.filter((item) => item?.orderItem?.date != formattedDate)
+      .map((item) => item?.orderItem?.customerName)
       .filter(
         (name, index, currentValue) => currentValue.indexOf(name) === index
       );
@@ -224,7 +233,7 @@ export const selectTotalQuantityDecrease = createSelector(
     const formattedDate = dateTimeFormatter.format(today);
 
     const todaysOrders =
-      items?.filter((item) => item.orderItem?.date == formattedDate).length ??
+      items?.filter((item) => item?.orderItem?.date == formattedDate).length ??
       0;
 
     const yesterdaysOrders = quantity + todaysOrders;
@@ -258,12 +267,20 @@ export const selectStockReport = createSelector(
         };
 
       const itemsOrdered = items?.filter(
-        (item) => item.orderItem?.productId === prod.id
+        (item) => item?.orderItem?.productId === prod.id
       ).length;
 
       if (itemsOrdered > 0) {
         const remainingPercentage =
           ((prod.quantity - itemsOrdered) / prod.quantity) * 100;
+
+        if (prod.quantity - itemsOrdered < 0) {
+          return {
+            product: prod,
+            remaining: 0,
+            remainingPercentage: 0,
+          };
+        }
 
         return {
           product: prod,
@@ -288,7 +305,7 @@ export const selectTopProducts = createSelector(
       .map((prod) => ({
         product: prod,
         sold:
-          items?.filter((item) => item.orderItem?.productId === prod.id)
+          items?.filter((item) => item?.orderItem?.productId === prod.id)
             .length ?? 0,
       }))
       .sort((a, b) => b.sold - a.sold)
@@ -329,7 +346,7 @@ export const selectLastSevenDaysSales = createSelector(
           });
           const formattedDate = dateTimeFormatter.format(day);
 
-          return item.orderItem?.date == formattedDate;
+          return item?.orderItem?.date == formattedDate;
         }).length ?? 0
     );
   }
