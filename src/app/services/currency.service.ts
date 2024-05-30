@@ -13,7 +13,7 @@ export class CurrencyService {
   getCurrencyExchangeRates(userCurrency: string) {
     return this.currencyAPi
       .get<CurrencyExhangeRates>(
-        `ttps://api.currencyapi.com/v3/latest?apikey=${currencyAPI_KEY}&currencies=EUR%2CUSD%2CGBP%2CZAR&base_currency=${userCurrency}`
+        `https://api.currencyapi.com/v3/latest?apikey=${currencyAPI_KEY}&currencies=EUR%2CUSD%2CGBP%2CZAR&base_currency=${userCurrency}`
       )
       .pipe(
         catchError((err) => {

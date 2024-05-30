@@ -290,7 +290,7 @@
       </div>
       } @else {
       <div
-        class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
+        class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
       >
         @for(product of (allProducts$ | async); track product){
         <app-preview-card

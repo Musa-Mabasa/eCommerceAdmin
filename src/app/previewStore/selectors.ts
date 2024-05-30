@@ -193,10 +193,9 @@ export const selectCategories = createSelector(
   }
 );
 
-export const selectTags = createSelector(
-  previewSelectFeature,
-  (state) => state.tags
-);
+export const selectTags = createSelector(previewSelectFeature, (state) => [
+  ...new Map(state.tags.map((tag) => [tag["name"], tag])).values(),
+]);
 
 export const selectSelectedTags = createSelector(
   previewSelectFeature,
