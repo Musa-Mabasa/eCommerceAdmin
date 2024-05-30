@@ -95,7 +95,7 @@ export class SalesChartComponent implements OnInit {
         },
         plugins: {
           tooltip: {
-            enabled: false,
+            enabled: true,
           },
           legend: {
             display: false,
