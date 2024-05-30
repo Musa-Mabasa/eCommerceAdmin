@@ -21,6 +21,8 @@ export default {
       fontFamily: {
         rubik: ['"Rubik"', ...defaultTheme.fontFamily.sans],
         "rubik-scribble": ["Rubik Scribble", "system-ui"],
+        "rubik-glitch": ["Rubik Glitch Pop", "system-ui"],
+        "rubik-doodle": ["Rubik Doodle Shadow", "system-ui"],
       },
       gridTemplateColumns: {
         edit: "2fr 1fr",

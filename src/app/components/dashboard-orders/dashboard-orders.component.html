@@ -1,9 +1,7 @@
-<div
-  class="h-10 w-full gap-10 sm:grid grid-cols-5 items-center truncate hidden"
->
-  <div class="flex gap-4 items-center col-span-2">
+<div class="h-10 w-full gap-8 sm:grid grid-cols-5 items-center truncate hidden">
+  <div class="flex gap-2 items-center col-span-2">
     <div
-      class="avatar min-w-8 h-8 rounded-full bg-secondary-color text-center flex justify-center items-center"
+      class="avatar min-w-6 h-8 rounded-full bg-secondary-color text-center flex justify-center items-center"
     >
       @if(customerAvatar != ''){
       <img
@@ -25,7 +23,7 @@
   <p>{{ orderName }}</p>
   <p>{{ orderDate }}</p>
   @if(userCurrency){ @switch (orderCurrency) { @case ('EUR') {
-  <p class="font-semibold">
+  <p class="font-semibold truncate">
     {{
       orderPrice
         | currencyConversion : conversionData?.EUR?.value
@@ -34,7 +32,7 @@
   </p>
 
   } @case ('ZAR') {
-  <p class="font-semibold">
+  <p class="font-semibold truncate">
     {{
       orderPrice
         | currencyConversion : conversionData?.ZAR?.value
@@ -42,7 +40,7 @@
     }}
   </p>
   }@case ('USD') {
-  <p class="font-semibold">
+  <p class="font-semibold truncate">
     {{
       orderPrice
         | currencyConversion : conversionData?.USD?.value
@@ -50,7 +48,7 @@
     }}
   </p>
   }@case ('GBP') {
-  <p class="font-semibold">
+  <p class="font-semibold truncate">
     {{
       orderPrice
         | currencyConversion : conversionData?.GBP?.value

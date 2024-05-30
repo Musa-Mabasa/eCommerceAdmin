@@ -1,4 +1,6 @@
-<section class="w-full h-lvh px-6 py-10 grid grid-cols-1 xl:grid-cols-2 gap-10 overflow-scroll">
+<section
+  class="w-full h-lvh px-6 py-10 grid grid-cols-1 xl:grid-cols-2 gap-10 overflow-scroll"
+>
   <img
     *ngIf="(product$ | async)?.product?.imageUrl"
     class="rounded-xl w-full h-80 sm:h-[400px] lg:h-[450px] xl:h-[500px] object-cover"
@@ -67,7 +69,7 @@
         <p class="text-lg font-medium">Tags:</p>
         <div class="flex gap-2">
           @for(tag of tags; track tag.id){
-          <div class="badge badge-outline cursor-pointer px-3 py-4 font-rubik">
+          <div class="badge badge-outline px-3 py-4 font-rubik">
             {{ tag.name }}
           </div>
           }

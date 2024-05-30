@@ -5,7 +5,7 @@
   <header class="w-full py-3 px-8 flex justify-between items-center shadow-md">
     <div class="flex items-center">
       <img class="w-8" src="../../../assets/images/logo.png" alt="" />
-      <h1 class="text-2xl font-bold font-rubik-scribble text-secondary-color">
+      <h1 class="text-2xl font-bold font-rubik-doodle text-secondary-color">
         <a routerLink="/home/dashboard">
           <img
             src="https://www.flaticon.com/free-icons/mobile-shopping"
@@ -290,7 +290,7 @@
       </div>
       } @else {
       <div
-        class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 2xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
+        class="w-full py-8 grid gap-6 grid-cols-1 sm:grid-cols-2 min-[950px]:grid-cols-3 xl:grid-cols-4 min-[1800px]:grid-cols-5 justify-items-center h-full overflow-hidden"
       >
         @for(product of (allProducts$ | async); track product){
         <app-preview-card
